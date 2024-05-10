@@ -8,7 +8,7 @@ Cylinder::Cylinder()
 
 	for (int i = 0; i < nr_of_points_cylinder; ++i)
 	{
-		GLfloat u = i / (GLfloat)nr_of_points_cylinder;
+		GLfloat u = i / (GLfloat)nr_of_points_cylinder; //
 		EachPole pole;
 		pole.x = 4 + cylinder_radius * cos(2 * M_PI * u); // 4 is center.x
 
