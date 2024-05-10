@@ -209,9 +209,7 @@ void OpenGLWindow::initializeGL()
 	Q_ASSERT(m_normalMatrixUniform != -1);
 	m_lightPosUniform = mProgram->uniformLocation("lightPos");
 	Q_ASSERT(m_lightPosUniform != -1);
-
 }
-
 
 void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 {

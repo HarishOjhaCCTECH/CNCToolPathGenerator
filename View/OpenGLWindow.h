@@ -30,7 +30,6 @@ private:
     void zoomIn();
     void zoomOut();
 
-
 private:
     bool mAnimating = false;
     QOpenGLContext* mContext = nullptr;
@@ -39,16 +38,6 @@ private:
     QOpenGLShader* mVshader = nullptr;
     QOpenGLShader* mFshader = nullptr;
     QOpenGLShaderProgram* mProgram = nullptr;
-
-    vector<float> mControlVertices;
-    vector<float> mVertices;
-    vector<float> mColors;
-    vector<float> mOffsetVertices;
-    vector<float> mConnectingVertices;
-    vector<float> mNormalVertices;
-
-    vector<float> mSelectedCurveGeneratedPoints;
-    vector<float> mSelectedCurveColors;
 
     QList<QVector3D> mNormals;
     QOpenGLBuffer mVbo;
