@@ -73,8 +73,8 @@ void OpenGLWindow::paintGL()
 	glEnableVertexAttribArray(m_posAttr);
 	glEnableVertexAttribArray(m_colAttr);
 
-	int boxes = 1;
-	for (int i = 0; i < boxes; i++)
+	int totalBoxes = 1000;
+	for (int i = 0; i <totalBoxes; i++)
 	{
 		int startIndex = (i * 15 );
 		QVector<GLfloat> vertices1 = vx1->getVertices1().mid(startIndex, 15);
@@ -134,18 +134,47 @@ void OpenGLWindow::paintGL()
 	glDrawArrays(GL_POINTS, 0, points.size() / 3);
 	glDisable(GL_PROGRAM_POINT_SIZE);
 
-	if ((points.at(0) > vx1->boxMinAndMax.at(0) && points.at(0) <vx1->boxMinAndMax.at(3) ) && (points.at(1) > vx1->boxMinAndMax.at(1) && points.at(1) < vx1->boxMinAndMax.at(4)) && (points.at(2) > vx1->boxMinAndMax.at(2) && points.at(2) < vx1->boxMinAndMax.at(5)))
+	//check point is inside or not
+	/*
+	* point is (2,2,2)
+	* points of box?
+	* got the points into a QVector
+	* now checking statement
+	* 
+	*
+	*/
+	for (int k = 0; k < pow(totalBoxes, 1 / 3); k++)
 	{
-		points.clear();
-		colors.clear();
-		points << -1 << -1 << -1;
-		colors << 0 << 0 << 1;
-		glEnable(GL_PROGRAM_POINT_SIZE);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, points.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_POINTS, 0, points.size() / 3);
-		glDisable(GL_PROGRAM_POINT_SIZE);
+		for (int j = 0; j < pow(totalBoxes, 1 / 3); j++)
+		{
+			for (int i = 0; i < pow(totalBoxes, 1 / 3); i++)
+			{
+				float px = points.at(0);
+				float py = points.at(1);
+				float pz = points.at(2);
+				float xMin = vx1->getBlocks()[i][j][k].minima.X(); // getBlocks()[i][j][k].minima.X();
+				float xMax = vx1->getBlocks()[i][j][k].maxima.X();
+				float yMin = vx1->getBlocks()[i][j][k].minima.Y();
+				float yMax = vx1->getBlocks()[i][j][k].maxima.Y();
+				float zMin = vx1->getBlocks()[i][j][k].minima.Z();
+				float zMax = vx1->getBlocks()[i][j][k].maxima.Z();
+				if ((px > xMin && px < xMax) && (py > yMin && py < yMax) && (pz > zMin && pz<zMax))
+				{
+					points.clear();
+					colors.clear();
+					points << -1 << -1 << -1;
+					colors << 0 << 0 << 1;
+					glEnable(GL_PROGRAM_POINT_SIZE);
+					glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, points.data());
+					glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+					glDrawArrays(GL_POINTS, 0, points.size() / 3);
+					glDisable(GL_PROGRAM_POINT_SIZE);
+				}
+			}
+		}
 	}
+	
+	
 	glDisableVertexAttribArray(m_colAttr);
 	glDisableVertexAttribArray(m_posAttr);
 }

@@ -19,7 +19,7 @@ Cylinder::Cylinder()
 	}
 }
 
-Cylinder::Cylinder(GLfloat drillRadius) 
+Cylinder::Cylinder(const GLfloat& drillRadius) 
 {
 	GLfloat cylinderHeight = 1.0f;
 	GLfloat cylinderRadius = drillRadius;
@@ -38,7 +38,7 @@ Cylinder::Cylinder(GLfloat drillRadius)
 
 Cylinder::~Cylinder() {}
 
-QVector<EachPole> Cylinder::getPoles()
+const QVector<EachPole>& Cylinder::getPoles()
 {
 	return poles;
 }

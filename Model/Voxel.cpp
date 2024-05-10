@@ -1,16 +1,27 @@
 #include "stdafx.h"
 #include "Voxel.h"
 
-Voxel::Voxel() {}
+Voxel::Voxel() 
+{
+	int sizeX = 10;
+	int sizeY = 10;
+	int sizeZ = 10;
+	boxes.resize(sizeX, std::vector<std::vector<BoundingBox>>(sizeY, std::vector<BoundingBox>(sizeZ)));
+}
 
 Voxel::Voxel(float xLen, float yLen, float zLen)
 {
-	int boxLimit = 2;
-	for (int k = 0; k < boxLimit; k++)
+	int sizeX = 10;
+	int sizeY = 10;
+	int sizeZ = 10;
+	boxes.resize(sizeX, std::vector<std::vector<BoundingBox>>(sizeY, std::vector<BoundingBox>(sizeZ)));
+
+	int boxLimitPerAxis = 10;
+	for (int k = 0; k < boxLimitPerAxis; k++)
 	{
-		for (int j = 0; j < boxLimit; j++)
+		for (int j = 0; j < boxLimitPerAxis; j++)
 		{
-			for (int i = 0; i < boxLimit; i++)
+			for (int i = 0; i < boxLimitPerAxis; i++)
 			{
 				float x_min = startPoint[0] + (i * xLen);
 				float x_max = x_min + (xLen);
@@ -21,35 +32,42 @@ Voxel::Voxel(float xLen, float yLen, float zLen)
 				float z_min = startPoint[2] + (k * zLen);
 				float z_max = z_min + (zLen);
 				
-				boxMinAndMax << x_min << y_min << z_min;
-				boxMinAndMax << x_max << y_max << z_max;
+				boxes[i][j][k].minima.setX(x_min);
+				boxes[i][j][k].minima.setY(y_min);
+				boxes[i][j][k].minima.setZ(z_min);
+
+				boxes[i][j][k].maxima.setX(x_max);
+				boxes[i][j][k].maxima.setY(y_max);
+				boxes[i][j][k].maxima.setZ(z_max);
 				
+				boxes[i][j][k].existence = false;
+
 				//front
-				vertices1 << x_min << y_min << z_max;
-				vertices1 << x_max << y_min << z_max;
-				vertices1 << x_max << y_max << z_max;
-				vertices1 << x_min << y_max << z_max;
-				vertices1 << x_min << y_min << z_max;
+				mvertices1 << x_min << y_min << z_max;
+				mvertices1 << x_max << y_min << z_max;
+				mvertices1 << x_max << y_max << z_max;
+				mvertices1 << x_min << y_max << z_max;
+				mvertices1 << x_min << y_min << z_max;
 				
 				// back
-				vertices2 << x_min << y_min << z_min;
-				vertices2 << x_max << y_min << z_min;
-				vertices2 << x_max << y_max << z_min;
-				vertices2 << x_min << y_max << z_min;
-				vertices2 << x_min << y_min << z_min;
+				mvertices2 << x_min << y_min << z_min;
+				mvertices2 << x_max << y_min << z_min;
+				mvertices2 << x_max << y_max << z_min;
+				mvertices2 << x_min << y_max << z_min;
+				mvertices2 << x_min << y_min << z_min;
 
 				// sides
-				vertices3 << x_min << y_min << z_max;
-				vertices3 << x_min << y_min << z_min;
+				mvertices3 << x_min << y_min << z_max;
+				mvertices3 << x_min << y_min << z_min;
 
-				vertices3 << x_max << y_min << z_max;
-				vertices3 << x_max << y_min << z_min;
+				mvertices3 << x_max << y_min << z_max;
+				mvertices3 << x_max << y_min << z_min;
 
-				vertices3 << x_max << y_max << z_max;
-				vertices3 << x_max << y_max << z_min;
+				mvertices3 << x_max << y_max << z_max;
+				mvertices3 << x_max << y_max << z_min;
 
-				vertices3 << x_min << y_max << z_max;
-				vertices3 << x_min << y_max << z_min;
+				mvertices3 << x_min << y_max << z_max;
+				mvertices3 << x_min << y_max << z_min;
 			}
 		}
 	}
@@ -62,19 +80,24 @@ Voxel::Voxel(float xLen, float yLen, float zLen)
 
 Voxel::~Voxel() {}
 
-QVector<GLfloat> Voxel::getVertices1()
+const QVector<GLfloat>& Voxel::getVertices1()
 {
-	return vertices1;
+	return mvertices1;
 }
-QVector<GLfloat> Voxel::getVertices2()
+const QVector<GLfloat>& Voxel::getVertices2()
 {
-	return vertices2;
+	return mvertices2;
 }
-QVector<GLfloat> Voxel::getVertices3()
+const QVector<GLfloat>& Voxel::getVertices3()
 {
-	return vertices3;
+	return mvertices3;
 }
-QVector<GLfloat> Voxel::getColors()
+const QVector<GLfloat>& Voxel::getColors()
 {
 	return colors;
+}
+
+const vector<vector<vector<BoundingBox>>>& Voxel::getBlocks()
+{
+	return boxes;
 }

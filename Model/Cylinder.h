@@ -6,10 +6,10 @@ class Cylinder
 {
 public:
 	Cylinder();
-	Cylinder(GLfloat drillRadius);
+	Cylinder(const GLfloat& drillRadius);
 	~Cylinder();
 	
-	QVector<EachPole> getPoles();
+	const QVector<EachPole>& getPoles();
 
 private:
 	QVector<EachPole> poles;

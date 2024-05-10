@@ -41,9 +41,6 @@ private:
 
     QList<QVector3D> mNormals;
     QOpenGLBuffer mVbo;
-    int mVertexAttr;
-    int mNormalAttr;
-    int mMatrixUniform;
 
     QColor mBackground;
     QMetaObject::Connection mContextWatchConnection;
@@ -64,6 +61,6 @@ private:
     QPoint lastPos;
     float scaleFactor = 5;
 
-    Voxel* vx1 = new Voxel(5,5,5);
+    Voxel* vx1 = new Voxel(.5,.5,.5);
     Cylinder* cyn1 = new Cylinder(0.25);
 };
