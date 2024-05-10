@@ -1,46 +1,43 @@
 #include "stdafx.h"
 #include "Cylinder.h"
+
 Cylinder::Cylinder() 
 {	
-	GLfloat cylinder_height = 1.0f;
-	GLfloat cylinder_radius = 0.5f;
-	GLfloat nr_of_points_cylinder = 360.f;
+	GLfloat cylinderHeight = 1.0f;
+	GLfloat cylinderRadius = 0.5f;
+	GLfloat numOfCylinderPeriferryPoints = 360.f;
 
-	for (int i = 0; i < nr_of_points_cylinder; ++i)
+	for (int i = 0; i < numOfCylinderPeriferryPoints; ++i)
 	{
-		GLfloat u = i / (GLfloat)nr_of_points_cylinder; //
+		GLfloat u = i / (GLfloat)numOfCylinderPeriferryPoints;
 		EachPole pole;
-		pole.x = 4 + cylinder_radius * cos(2 * M_PI * u); // 4 is center.x
-
-		pole.z = -5 + cylinder_radius * sin(2 * M_PI * u);// -5 iscenter.z
-
-		pole.y_start = 0.0f;
-		pole.y_end = cylinder_height;
-
-		poles.push_back(pole); // Add the pole to the vector
+		pole.x = 4 + cylinderRadius * cos(2 * M_PI * u);
+		pole.z = -5 + cylinderRadius * sin(2 * M_PI * u);
+		pole.yStart = 0.0f;
+		pole.yEnd = cylinderHeight;
+		poles.push_back(pole);
 	}
 }
+
 Cylinder::Cylinder(GLfloat drillRadius) 
 {
-	GLfloat cylinder_height = 1.0f;
-	GLfloat cylinder_radius = drillRadius;
-	GLfloat nr_of_points_cylinder = 360.f;
-
-	for (int i = 0; i < nr_of_points_cylinder; ++i)
+	GLfloat cylinderHeight = 1.0f;
+	GLfloat cylinderRadius = drillRadius;
+	GLfloat numOfCylinderPeriferryPoints = 360.f;
+	for (int i = 0; i < numOfCylinderPeriferryPoints; ++i)
 	{
-		GLfloat u = i / (GLfloat)nr_of_points_cylinder;
+		GLfloat u = i / (GLfloat)numOfCylinderPeriferryPoints;
 		EachPole pole;
-		pole.x = 4 + cylinder_radius * cos(2 * M_PI * u); // 4 is center.x
-
-		pole.z = -5 + cylinder_radius * sin(2 * M_PI * u);// -5 iscenter.z
-
-		pole.y_start = 0.0f;
-		pole.y_end = cylinder_height;
-
-		poles.push_back(pole); // Add the pole to the vector
+		pole.x = 4 + cylinderRadius * cos(2 * M_PI * u);
+		pole.z = -5 + cylinderRadius * sin(2 * M_PI * u);
+		pole.yStart = 0.0f;
+		pole.yEnd = cylinderHeight;
+		poles.push_back(pole);
 	}
 }
+
 Cylinder::~Cylinder() {}
+
 QVector<EachPole> Cylinder::getPoles()
 {
 	return poles;

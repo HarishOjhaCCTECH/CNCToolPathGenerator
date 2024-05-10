@@ -20,8 +20,10 @@ Voxel::Voxel(float xLen, float yLen, float zLen)
 
 				float z_min = startPoint[2] + (k * zLen);
 				float z_max = z_min + (zLen);
+				
 				boxMinAndMax << x_min << y_min << z_min;
 				boxMinAndMax << x_max << y_max << z_max;
+				
 				//front
 				vertices1 << x_min << y_min << z_max;
 				vertices1 << x_max << y_min << z_max;
@@ -29,18 +31,14 @@ Voxel::Voxel(float xLen, float yLen, float zLen)
 				vertices1 << x_min << y_max << z_max;
 				vertices1 << x_min << y_min << z_max;
 				
-
-
-
-
+				// back
 				vertices2 << x_min << y_min << z_min;
 				vertices2 << x_max << y_min << z_min;
 				vertices2 << x_max << y_max << z_min;
 				vertices2 << x_min << y_max << z_min;
 				vertices2 << x_min << y_min << z_min;
 
-
-
+				// sides
 				vertices3 << x_min << y_min << z_max;
 				vertices3 << x_min << y_min << z_min;
 
@@ -54,15 +52,12 @@ Voxel::Voxel(float xLen, float yLen, float zLen)
 				vertices3 << x_min << y_max << z_min;
 			}
 		}
-
 	}
 	
 	for (int i = 0; i < 24; i++)
 	{
 		colors << 1 << 1 << 1;
 	}
-
-	
 }
 
 Voxel::~Voxel() {}

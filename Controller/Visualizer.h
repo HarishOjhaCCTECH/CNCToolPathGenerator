@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QtWidgets/QMainWindow>
 #include "Visualizer.h"
 
@@ -22,6 +21,5 @@ private:
     QWidget* mCentralWidget;
     QStatusBar* mStatusBar;
     OpenGLWindow* mRenderer;
-
 
 };

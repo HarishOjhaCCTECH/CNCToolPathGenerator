@@ -1,14 +1,11 @@
 #include "stdafx.h"
 #include "OpenGLWindow.h"
-
 #include <QOpenGLContext>
 #include <QOpenGLPaintDevice>
 #include <QOpenGLShaderProgram>
 #include <QPainter>
 #include <iostream>
 #include <qopenglvertexarrayobject.h>
-
-
 
 OpenGLWindow::OpenGLWindow(const QColor& background, QMainWindow* parent) :
     mBackground(background)
@@ -116,8 +113,8 @@ void OpenGLWindow::paintGL()
 	{
 		QVector<GLfloat> cylinderVertices;
 		QVector<EachPole> polesVector = cyn1->getPoles();
-		cylinderVertices << polesVector[i].x << polesVector[i].y_start << polesVector[i].z;
-		cylinderVertices << polesVector[i].x << polesVector[i].y_end << polesVector[i].z;
+		cylinderVertices << polesVector[i].x << polesVector[i].yStart << polesVector[i].z;
+		cylinderVertices << polesVector[i].x << polesVector[i].yEnd << polesVector[i].z;
 		QVector<GLfloat> colors;
 		colors << 0 << 1 << 0;
 		colors << 0 << 1 << 0;
@@ -134,18 +131,8 @@ void OpenGLWindow::paintGL()
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, points.data());
 	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-
 	glDrawArrays(GL_POINTS, 0, points.size() / 3);
 	glDisable(GL_PROGRAM_POINT_SIZE);
-
-	//check point is inside or not
-	/*
-	* point is (2,2,2)
-	* points of box?
-	* got the points into a QVector
-	* now checking statement
-	* 
-	*/
 
 	if ((points.at(0) > vx1->boxMinAndMax.at(0) && points.at(0) <vx1->boxMinAndMax.at(3) ) && (points.at(1) > vx1->boxMinAndMax.at(1) && points.at(1) < vx1->boxMinAndMax.at(4)) && (points.at(2) > vx1->boxMinAndMax.at(2) && points.at(2) < vx1->boxMinAndMax.at(5)))
 	{
@@ -156,16 +143,11 @@ void OpenGLWindow::paintGL()
 		glEnable(GL_PROGRAM_POINT_SIZE);
 		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, points.data());
 		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-
 		glDrawArrays(GL_POINTS, 0, points.size() / 3);
 		glDisable(GL_PROGRAM_POINT_SIZE);
 	}
-
-
 	glDisableVertexAttribArray(m_colAttr);
 	glDisableVertexAttribArray(m_posAttr);
-
-
 }
 
 
@@ -202,8 +184,6 @@ void OpenGLWindow::initializeGL()
 		"   highp vec3 col1 = clamp(color * 0.2 + color * 0.8 * NL, 0.0, 1.0);\n"
 		"   gl_FragColor = vec4(col1, 1.0);\n"
 		"}\n";
-
-
 
 	rotationAngle = QQuaternion::fromAxisAndAngle(180.0f, 0.0f, 1.0f, 0.0f);
 
@@ -271,113 +251,3 @@ void OpenGLWindow::zoomOut()
 	scaleFactor /= 1.1f;
 	update();
 }
-
-
-
-/*
-QVector3D cylinderColor(0.0f, 0.0f, 0.0f); // Black color
-
-	// Calculate vertices around the perimeter of the rectangle to form the sides of the cylinder
-	QVector<GLfloat> vertices;
-	QVector<GLuint> indices;
-
-	// Vertices for the rectangle
-	QVector3D rectVertices[] = {
-		QVector3D(0, 0, 0),
-		QVector3D(5, 0, 0),
-		QVector3D(5, 5, 0),
-		QVector3D(0, 5, 0)
-	};
-
-	// Number of vertices in the rectangle
-	int rectVertexCount = sizeof(rectVertices) / sizeof(rectVertices[0]);
-
-	// Number of vertices to draw the sides of the cylinder
-	int cylinderVertexCount = rectVertexCount * 2; // Two vertices for each rectangle vertex to create the sides of the cylinder
-
-	// Add vertices around the perimeter of the rectangle
-	for (int i = 0; i < rectVertexCount; ++i) {
-		vertices << rectVertices[i].x() << rectVertices[i].y() << rectVertices[i].z(); // Vertex on the bottom of the cylinder
-		vertices << rectVertices[i].x() << rectVertices[i].y() << rectVertices[i].z() + 5; // Vertex on the top of the cylinder
-	}
-
-	// Add indices to connect vertices to form triangles that create the sides of the cylinder
-	for (int i = 0; i < rectVertexCount; ++i) {
-		int nextIndex = (i + 1) % rectVertexCount;
-		// Indices for the bottom triangle
-		indices << i * 2 << nextIndex * 2 << i * 2 + 1;
-		// Indices for the top triangle
-		indices << i * 2 + 1 << nextIndex * 2 << nextIndex * 2 + 1;
-	}
-
-	// Draw the cylinder
-	mProgram->setUniformValue("color", cylinderColor);
-
-	QOpenGLVertexArrayObject vao;
-	vao.create();
-	vao.bind();
-
-	QOpenGLBuffer vbo(QOpenGLBuffer::VertexBuffer);
-	vbo.create();
-	vbo.bind();
-	vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-	vbo.allocate(vertices.constData(), vertices.size() * sizeof(GLfloat));
-
-	glEnableVertexAttribArray(m_posAttr);
-	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-	QOpenGLBuffer ebo(QOpenGLBuffer::IndexBuffer);
-	ebo.create();
-	ebo.bind();
-	ebo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-	ebo.allocate(indices.constData(), indices.size() * sizeof(GLuint));
-
-	// Draw the cylinder
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-
-	// Clean up
-	vao.release();
-	mProgram->release();
-*/
-
-////////////////////////////////////////////////////////////////////////////
-//RECTANGLE
-/*
-QVector3D rectColor(0.0f, 1.0f, 0.0f); // Red color
-	mProgram->setUniformValue("color", rectColor);
-
-	// Draw the rectangle using glDrawElements()
-	QVector<GLfloat> vertices;
-	vertices << 0 << 0 << 0;
-	vertices << 5 << 0 << 0;
-	vertices << 5 << 5 << 0;
-	vertices << 0 << 5 << 0;
-
-	QVector<GLuint> indices;
-	indices << 0 << 1 << 2 << 3 << 0;
-
-	QOpenGLVertexArrayObject vao;
-	vao.create();
-	vao.bind();
-
-	QOpenGLBuffer vbo(QOpenGLBuffer::VertexBuffer);
-	vbo.create();
-	vbo.bind();
-	vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-	vbo.allocate(vertices.constData(), vertices.size() * sizeof(GLfloat));
-
-	glEnableVertexAttribArray(m_posAttr);
-	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-	QOpenGLBuffer ebo(QOpenGLBuffer::IndexBuffer);
-	ebo.create();
-	ebo.bind();
-	ebo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-	ebo.allocate(indices.constData(), indices.size() * sizeof(GLuint));
-
-	// Draw the rectangle
-	glDrawElements(GL_TRIANGLE_FAN, indices.size(), GL_UNSIGNED_INT, nullptr);
-
-	vao.release();
-	mProgram->release();
-*/

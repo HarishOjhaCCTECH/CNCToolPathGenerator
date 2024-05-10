@@ -1,4 +1,5 @@
 #pragma once
+
 class Voxel
 {
 public:
@@ -18,6 +19,5 @@ private:
 	QVector<GLfloat> vertices2;
 	QVector<GLfloat> vertices3;
 	QVector<GLfloat> colors;
-	float startPoint[3] = { 1,1,1 };
-	
+	float startPoint[3] = { 1,1,1 };	
 };
