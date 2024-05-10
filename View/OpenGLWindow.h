@@ -18,6 +18,7 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
+    void renderingAttributes(Voxel& stockMaterial);
 
 protected:
     void paintGL() override;
@@ -61,6 +62,11 @@ private:
     QPoint lastPos;
     float scaleFactor = 5;
 
-    Voxel* vx1 = new Voxel(.5,.5,.5);
-    Cylinder* cyn1 = new Cylinder(0.25);
+    //Voxel* vx1 = new Voxel(.5,.5,.5);
+    //Cylinder* cyn1 = new Cylinder(0.25);
+    
+    QVector<GLfloat> mVerticesFront;
+    QVector<GLfloat> mGridColors;
+    QVector<GLfloat> mVerticesBack;
+    QVector<GLfloat> mVerticesSide;
 };

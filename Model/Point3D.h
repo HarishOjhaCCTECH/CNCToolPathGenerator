@@ -15,6 +15,11 @@ public:
 	const float& Y() const;
 	const float& Z() const;
 
+    bool operator<(const Point3D& other) const;
+    bool operator>(const Point3D& other) const;
+    bool operator<=(const Point3D& other) const;
+	bool operator>=(const Point3D& other) const;
+
 private:
 	float mx;
 	float my;

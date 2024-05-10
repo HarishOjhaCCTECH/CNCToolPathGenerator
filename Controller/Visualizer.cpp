@@ -22,3 +22,8 @@ void Visualizer::setupUi()
     setCentralWidget(mRenderer);
     setWindowTitle(QCoreApplication::translate("Visualiser", "Visualiser", nullptr));
 }
+
+void Visualizer::dataPass(Voxel& stockMaterial)
+{
+    mRenderer->renderingAttributes(stockMaterial);
+}
