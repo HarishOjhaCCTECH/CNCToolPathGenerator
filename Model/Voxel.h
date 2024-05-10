@@ -14,7 +14,6 @@ public:
 	QVector<GLfloat> boxMinAndMax;
 
 private:
-	bool existence[3][3][3];
 	QVector<GLfloat> vertices1;
 	QVector<GLfloat> vertices2;
 	QVector<GLfloat> vertices3;
