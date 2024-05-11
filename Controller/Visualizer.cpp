@@ -5,6 +5,7 @@
 Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr)
 {
     setupUi();
+    
 }
 
 Visualizer::~Visualizer(){}
@@ -21,9 +22,12 @@ void Visualizer::setupUi()
     mRenderer = new OpenGLWindow(QColor(0, 0, 0), this);
     setCentralWidget(mRenderer);
     setWindowTitle(QCoreApplication::translate("Visualiser", "Visualiser", nullptr));
+    mDataStorage = new DataStorage(this);
+    dataPass();
 }
 
-void Visualizer::dataPass(Voxel& stockMaterial)
+
+void Visualizer::dataPass()
 {
-    mRenderer->renderingAttributes(stockMaterial);
+    mRenderer->setRenderingAttributes(*mDataStorage->stockMaterial);
 }

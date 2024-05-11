@@ -105,23 +105,7 @@ void OpenGLWindow::paintGL()
 	int totalBoxes = 1000;
 	for (int i = 0; i < totalBoxes; i++)
 	{
-		/*
-		//render front
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mVerticesFront.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mGridColors.data());
-		glDrawArrays(GL_LINE_STRIP, 0, mVerticesFront.size() / 3);
-
-		// render back
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mVerticesBack.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mGridColors.data());
-		glDrawArrays(GL_LINE_STRIP, 0, mVerticesBack.size() / 3);
-
-		//render sides
-
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mVerticesSide.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mGridColors.data());
-		glDrawArrays(GL_LINES, 0, mVerticesSide.size() / 3);
-		*/
+		
 		int startIndex = (i * 15);
 		QVector<GLfloat> vertices1 = mVerticesFront.mid(startIndex, 15);
 		QVector<GLfloat> colors = mGridColors;
@@ -322,23 +306,15 @@ void OpenGLWindow::zoomOut()
 	update();
 }
 
-void OpenGLWindow::renderingAttributes(Voxel& stockMaterial)
+void OpenGLWindow::setRenderingAttributes(Voxel& stockMaterial)
 {
 	mVerticesFront.clear();
-	int totalBoxes = 1000;
-	for (int i = 0; i < totalBoxes; i++)
-	{
-		int startIndex = (i * 15);
-		mVerticesFront = stockMaterial.getVertices1();// .mid(startIndex, 15);
-		mGridColors = stockMaterial.getColors();
+	mGridColors.clear();
 
-		// gldrawarrays of front
-		mVerticesBack = stockMaterial.getVertices2();// .mid(startIndex, 15);
-		// gldrawarrays of back
-
-		startIndex = (i * 24);
-		mVerticesSide = stockMaterial.getVertices3();// .mid(startIndex, 24);
-		//render sides
-
-	}
+	mVerticesFront = stockMaterial.getVertices1();
+	mGridColors = stockMaterial.getColors();
+	mVerticesBack = stockMaterial.getVertices2();
+	mVerticesSide = stockMaterial.getVertices3();
+	
+	
 }

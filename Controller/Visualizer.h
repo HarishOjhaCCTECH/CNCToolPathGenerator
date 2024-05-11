@@ -2,8 +2,10 @@
 #include <QtWidgets/QMainWindow>
 #include "Visualizer.h"
 #include "Voxel.h"
+#include "DataStorage.h"
 
 class OpenGLWindow;
+class DataStorage;
 
 class Visualizer : public QMainWindow
 {
@@ -12,7 +14,7 @@ class Visualizer : public QMainWindow
 public:
     Visualizer(QWindow* parent = nullptr);
     ~Visualizer();
-    void dataPass(Voxel& stockMaterial);
+    void dataPass();
 
 private:
     void setupUi();
@@ -23,6 +25,8 @@ private:
     QWidget* mCentralWidget;
     QStatusBar* mStatusBar;
     OpenGLWindow* mRenderer;
+    DataStorage* mDataStorage;
+
 
 
 

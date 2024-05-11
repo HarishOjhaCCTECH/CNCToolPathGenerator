@@ -12,7 +12,7 @@ using namespace std;
 class DataStorage
 {
 public:
-    DataStorage();
+    DataStorage(QMainWindow* parent);
     ~DataStorage();
 
     Triangulation triguObj;
@@ -24,7 +24,7 @@ public:
     
     Voxel* stockMaterial;
     Cylinder* drillTool;
-
-    Visualizer controller;
+    
+    
 };
 

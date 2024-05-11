@@ -18,7 +18,7 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
-    void renderingAttributes(Voxel& stockMaterial);
+    void setRenderingAttributes(Voxel& stockMaterial);
 
 protected:
     void paintGL() override;
