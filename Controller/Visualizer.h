@@ -27,7 +27,7 @@ private:
     QStatusBar* mStatusBar;
     OpenGLWindow* mRenderer;
     DataStorage* mDataStorage;
-
+    
 
 
 

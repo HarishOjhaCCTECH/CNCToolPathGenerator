@@ -9,8 +9,7 @@ Voxel::Voxel()
 Voxel::Voxel(float stlLargestModulusInteger, float distBetweenPoints)
 {
 	
-	boxLimitPerAxis = stlLargestModulusInteger * 2;
-	//boxLimitPerAxis = inBoxLimitPerAxis;
+	boxLimitPerAxis = stlLargestModulusInteger;
 	int sizeX = boxLimitPerAxis;
 	int sizeY = boxLimitPerAxis;
 	int sizeZ = boxLimitPerAxis;
@@ -18,9 +17,6 @@ Voxel::Voxel(float stlLargestModulusInteger, float distBetweenPoints)
 	boxes.resize(sizeX, vector<vector<BoundingBox>>(sizeY, vector<BoundingBox>(sizeZ)));
 
 	float startPoint[3]{- stlLargestModulusInteger ,-stlLargestModulusInteger ,-stlLargestModulusInteger };
-	//startPoint[0] = -stlLargestModulusInteger;
-	//startPoint[1] = -stlLargestModulusInteger;
-	//startPoint[2] = -stlLargestModulusInteger;
 	
 	float xLen = distBetweenPoints/2;
 	float yLen = distBetweenPoints / 2;
@@ -106,10 +102,8 @@ const QVector<GLfloat>& Voxel::getColors()
 	return colors;
 }
 
-const vector<vector<vector<BoundingBox>>>& Voxel::getBlocks()
-{
-	return boxes;
-}
+const vector<vector<vector<BoundingBox>>>& Voxel::getBlocks(){return boxes;}
+
 
 
 void Voxel::stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop)
@@ -184,33 +178,47 @@ void Voxel::stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop)
 
 					float z_min = boxes[i][j][k].minima.Z();
 					float z_max = boxes[i][j][k].maxima.Z();
-					//front
-					mSTLVertices1<< x_min << y_min << z_max;
-					mSTLVertices1 << x_max << y_min << z_max;
-					mSTLVertices1 << x_max << y_max << z_max;
-					mSTLVertices1 << x_min << y_max << z_max;
-					mSTLVertices1 << x_min << y_min << z_max;
 
-					//back
-					mSTLVertices2 << x_min << y_min << z_min;
-					mSTLVertices2 << x_max << y_min << z_min;
-					mSTLVertices2 << x_max << y_max << z_min;
-					mSTLVertices2 << x_min << y_max << z_min;
-					mSTLVertices2 << x_min << y_min << z_min;
 
-					// sides
-					mSTLVertices3 << x_min << y_min << z_max;
-					mSTLVertices3 << x_min << y_min << z_min;
+					//////////////////////////////////////
+					// front face
+					mSTLVertices << x_min << y_min << z_max;
+					mSTLVertices << x_max << y_min << z_max;
+					mSTLVertices << x_max << y_max << z_max;
+					mSTLVertices << x_min << y_max << z_max;
 
-					mSTLVertices3 << x_max << y_min << z_max;
-					mSTLVertices3 << x_max << y_min << z_min;
+					//back face
+					mSTLVertices << x_min << y_min << z_min;
+					mSTLVertices << x_max << y_min << z_min;
+					mSTLVertices << x_max << y_max << z_min;
+					mSTLVertices << x_min << y_max << z_min;
 
-					mSTLVertices3 << x_max << y_max << z_max;
-					mSTLVertices3 << x_max << y_max << z_min;
+					// top
+					mSTLVertices << x_min << y_max << z_max;
+					mSTLVertices << x_max << y_max << z_max;
+					mSTLVertices << x_max << y_max << z_min;
+					mSTLVertices << x_min << y_max << z_min;
 
-					mSTLVertices3 << x_min << y_max << z_max;
-					mSTLVertices3 << x_min << y_max << z_min;
-					numboxesSTL2++;
+					//left of box
+					mSTLVertices << x_max << y_max << z_max;
+					mSTLVertices << x_max << y_min << z_max;
+					mSTLVertices << x_max << y_min << z_min;
+					mSTLVertices << x_max << y_max << z_min;
+
+					// bottom
+					mSTLVertices << x_max << y_min << z_max;
+					mSTLVertices << x_min << y_min << z_max;
+					mSTLVertices << x_min << y_min << z_min;
+					mSTLVertices << x_max << y_min << z_min;
+
+					// right of the box
+					mSTLVertices << x_min << y_min << z_max;
+					mSTLVertices << x_min << y_max << z_max;
+					mSTLVertices << x_min << y_max << z_min;
+					mSTLVertices << x_min << y_min << z_min;
+
+
+
 				}
 
 
@@ -222,17 +230,8 @@ void Voxel::stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop)
 	
 }
 
-const QVector<GLfloat>& Voxel::getSTLVertices1()
-{
-	return mSTLVertices1;
-}
-const QVector<GLfloat>& Voxel::getSTLVertices2()
-{
-	return mSTLVertices2;
-}
-const QVector<GLfloat>& Voxel::getSTLVertices3()
-{
-	return mSTLVertices3;
-}
+
 
 const int& Voxel::getBoxLimitPerAxis() { return boxLimitPerAxis; }
+
+const QVector<GLfloat>& Voxel::getSTLVertices(){return mSTLVertices;}

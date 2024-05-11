@@ -4,6 +4,7 @@
 #include <QOpenGLBuffer>
 #include "Voxel.h"
 #include "Cylinder.h"
+#include "ToolPath.h"
 
 using namespace std;
 class QOpenGLTexture;
@@ -18,7 +19,7 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
-    void setRenderingAttributes(Voxel& stockMaterial);
+    void setRenderingAttributes(Voxel& stockMaterial, Cylinder& toolCylinder, ToolPath& generatedToolPath);
 
 protected:
     void paintGL() override;
@@ -67,11 +68,12 @@ private:
     QVector<GLfloat> mGridVerticesBack;
     QVector<GLfloat> mGridVerticesSide;
 
-    QVector<GLfloat> mSTLVerticesFront;
+    
     QVector<GLfloat> mSTLGridColors;
-    QVector<GLfloat> mSTLVerticesBack;
-    QVector<GLfloat> mSTLVerticesSide;
 
     int boxLimitPerAxisRender = 0;
 
+    QVector<GLfloat> mSTLVertices;
+    QVector<GLfloat> mCylPoleVertices;
+    QVector<GLfloat> mToolPathVertices;
 };

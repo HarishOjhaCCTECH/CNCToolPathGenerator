@@ -122,8 +122,10 @@
     <ClInclude Include="Model\Triangle.h" />
     <ClInclude Include="Model\Triangulation.h" />
     <ClInclude Include="Model\Voxel.h" />
+    <ClInclude Include="Model\ToolPath.h" />
     <QtRcc Include="View\Visualizer.qrc" />
     <QtMoc Include="Controller\Visualizer.h" />
+    <ClCompile Include="Model\ToolPath.cpp" />
     <ClCompile Include="View\OpenGLWindow.cpp" />
     <ClCompile Include="Controller\Visualizer.cpp" />
     <ClCompile Include="main.cpp">

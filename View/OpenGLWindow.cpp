@@ -73,9 +73,29 @@ void OpenGLWindow::paintGL()
 	glEnableVertexAttribArray(m_posAttr);
 	glEnableVertexAttribArray(m_colAttr);
 	
+	int startIndex = 0;
+	/*
+	//rendering stl with faces
+	
+	for (int i = 0; i < mSTLVertices.size()/12; i++)
+	{
+		QVector<GLfloat> faceVertices = mSTLVertices.mid(startIndex, 12);
+		QVector<GLfloat> faceColors;
+		for (int i = 0; i < faceVertices.size() / 3; i++)
+		{
+			faceColors << 1 << 0 << 0;
+		}
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, faceVertices.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, faceColors.data());
+		glDrawArrays(GL_POLYGON, 0, faceVertices.size() / 3);
+		startIndex += 12;
+		
+	}
+	
+
 	//rendering grid
 	
-	/*
+	
 	
 	for (int i = 0; i < pow(boxLimitPerAxisRender,3); i++)
 	{
@@ -106,84 +126,39 @@ void OpenGLWindow::paintGL()
 
 
 	}
-	*/
 	
-	//rendering stl
-	
-	int totalBoxes = mSTLVerticesFront.size()/15;
-	for (int i = 0; i < totalBoxes; i++)
-	{
 
-		int startIndex = (i * 15);
-		QVector<GLfloat> vertices1 = mSTLVerticesFront.mid(startIndex, 15);
-		QVector<GLfloat> colors = mGridColors;
-		colors.clear();
-		for (int i = 0; i < 24; i++)
-		{
-			colors << 0 << 0 << 1;
-		}
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINE_STRIP, 0, vertices1.size() / 3);
-
-		QVector<GLfloat> vertices2 = mSTLVerticesBack.mid(startIndex, 15);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices2.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINE_STRIP, 0, vertices2.size() / 3);
-
-		startIndex = (i * 24);
-		QVector<GLfloat> vertices3 = mSTLVerticesSide.mid(startIndex, 24);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices3.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINES, 0, vertices3.size() / 3);
-
-
-		vertices1.clear();
-		vertices2.clear();
-		vertices3.clear();
-		colors.clear();
-
-
-	}
-	/*
-	//renderingstl points
-	int totalBoxes = mSTLVerticesFront.size() / 15;
-	for (int i = 0; i < totalBoxes; i++)
-	{
-
-		int startIndex = (i * 15);
-		QVector<GLfloat> vertices1 = mSTLVerticesFront.mid(startIndex, 15);
-		QVector<GLfloat> colors = mGridColors;
-		colors.clear();
-		for (int i = 0; i < 24; i++)
-		{
-			colors << 0 << 0 << 1;
-		}
-		glEnable(GL_PROGRAM_POINT_SIZE);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_POINTS, 0, vertices1.size() / 3);
-
-		QVector<GLfloat> vertices2 = mSTLVerticesBack.mid(startIndex, 15);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices2.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_POINTS, 0, vertices2.size() / 3);
-		glDisable(GL_PROGRAM_POINT_SIZE);
-		startIndex = (i * 24);
-		QVector<GLfloat> vertices3 = mSTLVerticesSide.mid(startIndex, 24);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices3.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINES, 0, vertices3.size() / 3);
-
-
-		vertices1.clear();
-		vertices2.clear();
-		vertices3.clear();
-		colors.clear();
-
-
-	}
 	*/
+	// rendering cylinder
+	startIndex = 0;
+	
+	for (int i = 0; i < 360; i++)
+	{
+		QVector<GLfloat> poleVertices;
+		poleVertices = mCylPoleVertices.mid(startIndex, 6);
+		QVector<GLfloat> colors;
+		colors << 0 << 1 << 0;
+		colors << 0 << 1 << 0;
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, poleVertices.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_LINES, 0, poleVertices.size() / 3);
+		startIndex += 6;
+	}
+
+
+	// rendering tool path
+	glLineWidth(5.0f);
+	QVector<GLfloat> pathVertices = mToolPathVertices;
+	QVector<GLfloat> pathColors;
+	for (int i = 0; i < pathVertices.size(); i++)
+	{
+		pathColors << 0 << 0 << 1;
+	}
+	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, pathVertices.data());
+	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, pathColors.data());
+	glDrawArrays(GL_LINE_STRIP, 0, pathVertices.size() / 3);
+	glLineWidth(2.5f);
+
 	QVector<GLfloat> points;
 	points << 0 << 0 << 0;
 	QVector<GLfloat> colors;
@@ -193,23 +168,7 @@ void OpenGLWindow::paintGL()
 	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
 	glDrawArrays(GL_POINTS, 0, points.size() / 3);
 	glDisable(GL_PROGRAM_POINT_SIZE);
-	/*
-	// rendering cylinder
-	for (int i = 0; i < 360; i++)
-	{
-		QVector<GLfloat> cylinderVertices;
-		QVector<EachPole> polesVector = cyn1->getPoles();
-		cylinderVertices << polesVector[i].x << polesVector[i].yStart << polesVector[i].z;
-		cylinderVertices << polesVector[i].x << polesVector[i].yEnd << polesVector[i].z;
-		QVector<GLfloat> colors;
-		colors << 0 << 1 << 0;
-		colors << 0 << 1 << 0;
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, cylinderVertices.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINES, 0, cylinderVertices.size() / 3);
 
-	}
-	*/
 	points.clear();
 	colors.clear();
 	points << -2 << -2 << -2;
@@ -277,8 +236,8 @@ void OpenGLWindow::initializeGL()
 
 		glViewport(0, 0, width(), height());
 		float aspectRatio = static_cast<float>(width()) / static_cast<float>(height());
-		float nearPlane = 0.1f; // Near clipping plane
-		float farPlane = 100.0f; // Far clipping plane
+		float nearPlane = 1.0f; // Near clipping plane
+		float farPlane = 1000.0f; // Far clipping plane
 		QMatrix4x4 projectionMatrix;
 		projectionMatrix.perspective(45.0f, aspectRatio, nearPlane, farPlane);
 		mProgram->setUniformValue(m_projectionMatrixUniform, projectionMatrix);
@@ -341,16 +300,13 @@ void OpenGLWindow::zoomOut()
 	update();
 }
 
-void OpenGLWindow::setRenderingAttributes(Voxel& stockMaterial)
+void OpenGLWindow::setRenderingAttributes(Voxel& stockMaterial, Cylinder& toolCylinder, ToolPath& generatedToolPath)
 {
 	mGridVerticesFront.clear();
 	mGridVerticesBack.clear();
 	mGridVerticesSide.clear();
 	mGridColors.clear();
 
-	mSTLVerticesFront.clear();
-	mSTLVerticesBack.clear();
-	mSTLVerticesSide.clear();
 
 	////////////////////////////////////
 	mGridVerticesFront = stockMaterial.getGridVertices1();
@@ -358,11 +314,11 @@ void OpenGLWindow::setRenderingAttributes(Voxel& stockMaterial)
 	mGridVerticesBack = stockMaterial.getGridVertices2();
 	mGridVerticesSide = stockMaterial.getGridVertices3();
 	
-	////////////////////////////////////////
-	mSTLVerticesFront = stockMaterial.getSTLVertices1();
-	mSTLVerticesBack = stockMaterial.getSTLVertices2();
-	mSTLVerticesSide = stockMaterial.getSTLVertices3();
-
-	//////////////////////////////////
 	boxLimitPerAxisRender = stockMaterial.getBoxLimitPerAxis();
+
+	///////////////////////////
+	mSTLVertices = stockMaterial.getSTLVertices();
+	mCylPoleVertices = toolCylinder.getPoleVertices();
+	/////////////////////
+	mToolPathVertices = generatedToolPath.ToolPathVertices();
 }

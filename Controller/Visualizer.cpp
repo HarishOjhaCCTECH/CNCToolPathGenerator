@@ -29,5 +29,5 @@ void Visualizer::setupUi()
 
 void Visualizer::dataPass()
 {
-    mRenderer->setRenderingAttributes(*mDataStorage->stockMaterial);
+    mRenderer->setRenderingAttributes(*mDataStorage->stockMaterial, *mDataStorage->toolCylinder, *mDataStorage->generatedToolPath);
 }

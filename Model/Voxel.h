@@ -19,9 +19,8 @@ public:
     const vector<vector<vector<BoundingBox>>>& getBlocks();
     void stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop);
 
-    const QVector<GLfloat>& getSTLVertices1();
-    const QVector<GLfloat>& getSTLVertices2();
-    const QVector<GLfloat>& getSTLVertices3();
+
+    const QVector<GLfloat>& getSTLVertices();
 
     const int& getBoxLimitPerAxis();
 
@@ -30,12 +29,10 @@ private:
     QVector<GLfloat> mGridVertices2;
     QVector<GLfloat> mGridVertices3;
     QVector<GLfloat> colors;
-    //float startPoint[3] = { -10,-10,-10 };
+    
     vector<vector<vector<BoundingBox>>> boxes;
 
-    QVector<GLfloat> mSTLVertices1;
-    QVector<GLfloat> mSTLVertices2;
-    QVector<GLfloat> mSTLVertices3;
+    QVector<GLfloat> mSTLVertices;
 
     int boxLimitPerAxis;
 

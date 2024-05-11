@@ -7,6 +7,7 @@
 #include "Visualizer.h"
 #include "Voxel.h"
 #include "Cylinder.h"
+#include "ToolPath.h"
 using namespace std;
 
 class DataStorage
@@ -22,8 +23,9 @@ public:
     
     Voxel* stockMaterial;
     
-    Cylinder* drillTool;
+    Cylinder* toolCylinder;
     
+    ToolPath* generatedToolPath;
     
 };
 
