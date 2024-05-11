@@ -15,6 +15,7 @@ public:
     Visualizer(QWindow* parent = nullptr);
     ~Visualizer();
     void dataPass();
+    
 
 private:
     void setupUi();

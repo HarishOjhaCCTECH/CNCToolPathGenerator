@@ -12,17 +12,22 @@ STLReader::~STLReader() {}
 
 void STLReader::read(const string& stlFilePath, vector<Triangle>& lot, vector<Point3D>& lop)
 {
+    
     map<Point3D, int> comparisonMap;
     ifstream stlFile;
     string stlLine;
     stlFile.open(stlFilePath);
     // Check if the file is opened successfully
+    int i = 1;
     if (!stlFile.is_open()) {
         cerr << "Error opening file!" << endl;
+        i++;
     }
     int triangleIndices[3] = { 0,0,0 };
-    int triangleIndicesCurrentIndex = 0; // 
+    int triangleIndicesCurrentIndex = 0;
     int lopCurrentIndex = 0;
+    ///////////////
+    
     while (getline(stlFile, stlLine)) { // checking everyline
         int positionVertex = stlLine.find("vertex ");
         int positionEndLoop = stlLine.find("endloop");
@@ -34,6 +39,19 @@ void STLReader::read(const string& stlFilePath, vector<Triangle>& lot, vector<Po
                 threeCoordinatesArr[i] = stod(str.substr(0, pos3));
                 str = str.substr(pos3 + 1);
             }
+            ////////////////////////////////
+            if (abs(threeCoordinatesArr[0]) > largestModulusInteger) {
+                largestModulusInteger = abs(threeCoordinatesArr[0]);
+            }
+            if (abs(threeCoordinatesArr[1]) > largestModulusInteger) {
+                largestModulusInteger = abs(threeCoordinatesArr[1]);
+            }
+            if (abs(threeCoordinatesArr[2]) > largestModulusInteger) {
+                largestModulusInteger = abs(threeCoordinatesArr[2]);
+            }
+            
+
+                ///////////////////////////////
             bool foundPoint = false;
             //checking a point through map
             for (const auto& i : comparisonMap) {

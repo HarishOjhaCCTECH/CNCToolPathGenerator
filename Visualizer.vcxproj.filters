@@ -105,4 +105,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Cube.stl" />
+    <None Include="Model\Sphere.stl" />
+  </ItemGroup>
 </Project>

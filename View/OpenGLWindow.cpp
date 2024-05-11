@@ -72,54 +72,28 @@ void OpenGLWindow::paintGL()
 
 	glEnableVertexAttribArray(m_posAttr);
 	glEnableVertexAttribArray(m_colAttr);
+	
+	//rendering grid
+	
 	/*
-	// rendering boxes
-	int totalBoxes = 1000;
-	for (int i = 0; i <totalBoxes; i++)
-	{
-		int startIndex = (i * 15 );
-		QVector<GLfloat> vertices1 = vx1->getVertices1().mid(startIndex, 15);
-		QVector<GLfloat> colors = vx1->getColors();
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINE_STRIP, 0, vertices1.size() / 3);
-
-		QVector<GLfloat> vertices2 = vx1->getVertices2().mid(startIndex, 15);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices2.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINE_STRIP, 0, vertices2.size() / 3);
-
-		startIndex = (i * 24);
-		QVector<GLfloat> vertices3 = vx1->getVertices3().mid(startIndex, 24);
-		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices3.data());
-		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-		glDrawArrays(GL_LINES, 0, vertices3.size() / 3);
-
-		
-		vertices1.clear();
-		vertices2.clear();
-		vertices3.clear();
-		colors.clear();
-	}
-	*/
-	int totalBoxes = 1000;
-	for (int i = 0; i < totalBoxes; i++)
+	
+	for (int i = 0; i < pow(boxLimitPerAxisRender,3); i++)
 	{
 		
 		int startIndex = (i * 15);
-		QVector<GLfloat> vertices1 = mVerticesFront.mid(startIndex, 15);
+		QVector<GLfloat> vertices1 = mGridVerticesFront.mid(startIndex, 15);
 		QVector<GLfloat> colors = mGridColors;
 		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
 		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
 		glDrawArrays(GL_LINE_STRIP, 0, vertices1.size() / 3);
 
-		QVector<GLfloat> vertices2 = mVerticesBack.mid(startIndex, 15);
+		QVector<GLfloat> vertices2 = mGridVerticesBack.mid(startIndex, 15);
 		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices2.data());
 		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
 		glDrawArrays(GL_LINE_STRIP, 0, vertices2.size() / 3);
 
 		startIndex = (i * 24);
-		QVector<GLfloat> vertices3 = mVerticesSide.mid(startIndex, 24);
+		QVector<GLfloat> vertices3 = mGridVerticesSide.mid(startIndex, 24);
 		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices3.data());
 		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
 		glDrawArrays(GL_LINES, 0, vertices3.size() / 3);
@@ -132,6 +106,84 @@ void OpenGLWindow::paintGL()
 
 
 	}
+	*/
+	
+	//rendering stl
+	
+	int totalBoxes = mSTLVerticesFront.size()/15;
+	for (int i = 0; i < totalBoxes; i++)
+	{
+
+		int startIndex = (i * 15);
+		QVector<GLfloat> vertices1 = mSTLVerticesFront.mid(startIndex, 15);
+		QVector<GLfloat> colors = mGridColors;
+		colors.clear();
+		for (int i = 0; i < 24; i++)
+		{
+			colors << 0 << 0 << 1;
+		}
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_LINE_STRIP, 0, vertices1.size() / 3);
+
+		QVector<GLfloat> vertices2 = mSTLVerticesBack.mid(startIndex, 15);
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices2.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_LINE_STRIP, 0, vertices2.size() / 3);
+
+		startIndex = (i * 24);
+		QVector<GLfloat> vertices3 = mSTLVerticesSide.mid(startIndex, 24);
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices3.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_LINES, 0, vertices3.size() / 3);
+
+
+		vertices1.clear();
+		vertices2.clear();
+		vertices3.clear();
+		colors.clear();
+
+
+	}
+	/*
+	//renderingstl points
+	int totalBoxes = mSTLVerticesFront.size() / 15;
+	for (int i = 0; i < totalBoxes; i++)
+	{
+
+		int startIndex = (i * 15);
+		QVector<GLfloat> vertices1 = mSTLVerticesFront.mid(startIndex, 15);
+		QVector<GLfloat> colors = mGridColors;
+		colors.clear();
+		for (int i = 0; i < 24; i++)
+		{
+			colors << 0 << 0 << 1;
+		}
+		glEnable(GL_PROGRAM_POINT_SIZE);
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_POINTS, 0, vertices1.size() / 3);
+
+		QVector<GLfloat> vertices2 = mSTLVerticesBack.mid(startIndex, 15);
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices2.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_POINTS, 0, vertices2.size() / 3);
+		glDisable(GL_PROGRAM_POINT_SIZE);
+		startIndex = (i * 24);
+		QVector<GLfloat> vertices3 = mSTLVerticesSide.mid(startIndex, 24);
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices3.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+		glDrawArrays(GL_LINES, 0, vertices3.size() / 3);
+
+
+		vertices1.clear();
+		vertices2.clear();
+		vertices3.clear();
+		colors.clear();
+
+
+	}
+	*/
 	QVector<GLfloat> points;
 	points << 0 << 0 << 0;
 	QVector<GLfloat> colors;
@@ -168,39 +220,10 @@ void OpenGLWindow::paintGL()
 	glDrawArrays(GL_POINTS, 0, points.size() / 3);
 	glDisable(GL_PROGRAM_POINT_SIZE);
 
-	/*
-	// checking points from stl
-	for (int k = 0; k < pow(totalBoxes, 1 / 3); k++)
-	{
-		for (int j = 0; j < pow(totalBoxes, 1 / 3); j++)
-		{
-			for (int i = 0; i < pow(totalBoxes, 1 / 3); i++)
-			{
-				float px = points.at(0);
-				float py = points.at(1);
-				float pz = points.at(2);
-				float xMin = vx1->getBlocks()[i][j][k].minima.X();
-				float xMax = vx1->getBlocks()[i][j][k].maxima.X();
-				float yMin = vx1->getBlocks()[i][j][k].minima.Y();
-				float yMax = vx1->getBlocks()[i][j][k].maxima.Y();
-				float zMin = vx1->getBlocks()[i][j][k].minima.Z();
-				float zMax = vx1->getBlocks()[i][j][k].maxima.Z();
-				if ((px >= xMin && px <= xMax) && (py >= yMin && py <= yMax) && (pz >= zMin && pz <= zMax))
-				{
-					points.clear();
-					colors.clear();
-					points << -1 << -1 << -1;
-					colors << 0 << 0 << 1;
-					glEnable(GL_PROGRAM_POINT_SIZE);
-					glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, points.data());
-					glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-					glDrawArrays(GL_POINTS, 0, points.size() / 3);
-					glDisable(GL_PROGRAM_POINT_SIZE);
-				}
-			}
-		}
-	}
-	*/
+	
+
+
+	
 	
 	glDisableVertexAttribArray(m_colAttr);
 	glDisableVertexAttribArray(m_posAttr);
@@ -241,6 +264,7 @@ void OpenGLWindow::initializeGL()
 			"   gl_FragColor = vec4(col1, 1.0);\n"
 			"}\n";
 
+
 		rotationAngle = QQuaternion::fromAxisAndAngle(180.0f, 0.0f, 1.0f, 0.0f);
 
 		initializeOpenGLFunctions();
@@ -249,6 +273,17 @@ void OpenGLWindow::initializeGL()
 		mProgram->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
 		mProgram->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
 		mProgram->link();
+
+
+		glViewport(0, 0, width(), height());
+		float aspectRatio = static_cast<float>(width()) / static_cast<float>(height());
+		float nearPlane = 0.1f; // Near clipping plane
+		float farPlane = 100.0f; // Far clipping plane
+		QMatrix4x4 projectionMatrix;
+		projectionMatrix.perspective(45.0f, aspectRatio, nearPlane, farPlane);
+		mProgram->setUniformValue(m_projectionMatrixUniform, projectionMatrix);
+
+
 		m_posAttr = mProgram->attributeLocation("posAttr");
 		Q_ASSERT(m_posAttr != -1);
 		m_colAttr = mProgram->attributeLocation("colAttr");
@@ -308,13 +343,26 @@ void OpenGLWindow::zoomOut()
 
 void OpenGLWindow::setRenderingAttributes(Voxel& stockMaterial)
 {
-	mVerticesFront.clear();
+	mGridVerticesFront.clear();
+	mGridVerticesBack.clear();
+	mGridVerticesSide.clear();
 	mGridColors.clear();
 
-	mVerticesFront = stockMaterial.getVertices1();
+	mSTLVerticesFront.clear();
+	mSTLVerticesBack.clear();
+	mSTLVerticesSide.clear();
+
+	////////////////////////////////////
+	mGridVerticesFront = stockMaterial.getGridVertices1();
 	mGridColors = stockMaterial.getColors();
-	mVerticesBack = stockMaterial.getVertices2();
-	mVerticesSide = stockMaterial.getVertices3();
+	mGridVerticesBack = stockMaterial.getGridVertices2();
+	mGridVerticesSide = stockMaterial.getGridVertices3();
 	
-	
+	////////////////////////////////////////
+	mSTLVerticesFront = stockMaterial.getSTLVertices1();
+	mSTLVerticesBack = stockMaterial.getSTLVertices2();
+	mSTLVerticesSide = stockMaterial.getSTLVertices3();
+
+	//////////////////////////////////
+	boxLimitPerAxisRender = stockMaterial.getBoxLimitPerAxis();
 }

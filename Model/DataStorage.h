@@ -18,11 +18,10 @@ public:
     Triangulation triguObj;
     STLReader stlReaderObj;
     vector<Triangle> lot = triguObj.listOfTriangles();
-    vector<Point3D> lop = triguObj.listOfPoints();
-    
-    
+    vector<Point3D> lop = triguObj.listOfPoints();   
     
     Voxel* stockMaterial;
+    
     Cylinder* drillTool;
     
     

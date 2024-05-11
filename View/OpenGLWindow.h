@@ -61,12 +61,17 @@ private:
     QQuaternion rotationAngle;
     QPoint lastPos;
     float scaleFactor = 5;
-
-    //Voxel* vx1 = new Voxel(.5,.5,.5);
-    //Cylinder* cyn1 = new Cylinder(0.25);
     
-    QVector<GLfloat> mVerticesFront;
+    QVector<GLfloat> mGridVerticesFront;
     QVector<GLfloat> mGridColors;
-    QVector<GLfloat> mVerticesBack;
-    QVector<GLfloat> mVerticesSide;
+    QVector<GLfloat> mGridVerticesBack;
+    QVector<GLfloat> mGridVerticesSide;
+
+    QVector<GLfloat> mSTLVerticesFront;
+    QVector<GLfloat> mSTLGridColors;
+    QVector<GLfloat> mSTLVerticesBack;
+    QVector<GLfloat> mSTLVerticesSide;
+
+    int boxLimitPerAxisRender = 0;
+
 };

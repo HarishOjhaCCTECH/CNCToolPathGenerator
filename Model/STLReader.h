@@ -10,4 +10,6 @@ public:
 	STLReader();
 	~STLReader();
 	void read(const string& stlFilePath, vector<Triangle>& lot, vector<Point3D>& lop);
+	float largestModulusInteger = 0;
+	float distBetweenPoints=0;
 };
