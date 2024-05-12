@@ -37,7 +37,7 @@ private:
     ToolCylinder* mToolCylinder;
     ToolPath* mGeneratedToolPath;
     const char* mShapeFilePath = "";
-    float mToolSize;
+    float mToolSize = 0;
     Point3D mToolStartPoint;
     ToolPathTxtWriter* mToolPathTxt;
 };

@@ -12,14 +12,9 @@ void ToolPathTxtWriter::generateFile(const QVector<GLfloat>& pathData)
 		fileData += tempStr;
 	}
 	ofstream outputFile;
-
 	outputFile.open("D:/GeneratedToolPath.txt");
 	if (outputFile.is_open()) {
-		// Write the user input to the file
 		outputFile << fileData;
-		// Close the file
 		outputFile.close();
-		
 	}
-	
 }

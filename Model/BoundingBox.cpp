@@ -21,7 +21,4 @@ void BoundingBox::setMaxima(const Point3D& inPoint) {
 	mMaxima.setZ(inPoint.Z());
 }
 
-void BoundingBox::setExistence(const bool& inBool)
-{
-	mExistence = inBool;
-}
+void BoundingBox::setExistence(const bool& inBool){	mExistence = inBool;}

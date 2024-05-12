@@ -119,4 +119,30 @@
     <None Include="Model\Sphere.stl" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Model\Icons\FinishAndSave.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\OpenSTL.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\PauseResume.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\ShowSTLShape.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\ShowStockMaterial.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\ShowToolPath.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\SimulateOperation.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Model\Icons\ToolTipSize.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

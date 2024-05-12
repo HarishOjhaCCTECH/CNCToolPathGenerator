@@ -27,11 +27,7 @@ private:
     QVector<GLfloat> mGridVertices2;
     QVector<GLfloat> mGridVertices3;
     QVector<GLfloat> colors;
-    
     vector<vector<vector<BoundingBox>>> boxes;
-
     QVector<GLfloat> mSTLVertices;
-
     int boxLimitPerAxis;
-
 };

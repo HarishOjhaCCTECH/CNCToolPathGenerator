@@ -32,15 +32,23 @@ void Visualizer::setupUi()
     centralWidget->setLayout(mToolLayout);
     setCentralWidget(centralWidget);
 
+    QString currentPathIcon = QCoreApplication::applicationDirPath();
+    QDir dir(currentPathIcon);
+    dir.cdUp();
+    dir.cdUp();
+    QString parentPathIcon = dir.path();
 
-    mOpenSTLAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/OpenSTL.png"), "Open Desired STL file", this);
-    mSelectToolSizeAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/ToolTipSize.png"), "Choose tool size", this);
-    mSimulateOperationAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/SimulateOperation.png"), "Simulate Operation", this);
-    mPauseResumeAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/PauseResume.png"), "Pause", this);
-    mFinishAndSaveAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/FinishAndSave.png"), "Finish and save the tool path generated", this);
-    mShowStockMaterialAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/ShowStockMaterial.png"), "Show stock material", this);
-    mShowToolPathAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/ShowToolPath.png"), "Show tool path", this);
-    mShowSTLShapeAction = new QAction(QIcon("C:/Users/Harish Ojha/Downloads/ShowSTLShape.png"), "Show STL Shape", this);
+
+
+
+    mOpenSTLAction = new QAction(QIcon(parentPathIcon+"/Model/Icons/OpenSTL.png"), "Open Desired STL file", this);
+    mSelectToolSizeAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/ToolTipSize.png"), "Choose tool size", this);
+    mSimulateOperationAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/SimulateOperation.png"), "Simulate Operation", this);
+    mPauseResumeAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/PauseResume.png"), "Pause", this);
+    mFinishAndSaveAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/FinishAndSave.png"), "Finish and save the tool path generated", this);
+    mShowStockMaterialAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/ShowStockMaterial.png"), "Show stock material", this);
+    mShowToolPathAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/ShowToolPath.png"), "Show tool path", this);
+    mShowSTLShapeAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/ShowSTLShape.png"), "Show STL Shape", this);
 
     connect(mOpenSTLAction, &QAction::triggered, this, &Visualizer::onOpenSTLActionClicked);
     connect(mSelectToolSizeAction, &QAction::triggered, this, &Visualizer::onSelectToolSizeActionClicked);
@@ -144,7 +152,6 @@ void Visualizer::onSelectToolSizeActionClicked()
 void Visualizer::onSimulateOperationActionClicked()
 {
     mRenderer->mShowSimulation = true;
-  
     mRenderer->mShowStockMaterial = true;
     mRenderer->mShowSTL = true;
     mRenderer->mShowToolPath = true;
@@ -152,29 +159,22 @@ void Visualizer::onSimulateOperationActionClicked()
     
     for (int i = 0; i < 5; i++)//mRenderer->toolPathVerticesSize() / 3
     {
-        
         mDataManager->simulate();
         dataPass();
         mRenderer->update();
         delay(1000);
-        // Allow UI events to be processed
         QCoreApplication::processEvents();
         if (!mRenderer->mShowSimulation)
         {
             break;
         }
-
-    }
-
-    
-    
+    }    
 }
 
 void Visualizer::onPauseResumeActionClicked()
 {
     mIsPaused = !mIsPaused;
     updatePauseResumeTooltip();
- 
 }
 void Visualizer::onFinishAndSaveActionClicked()
 {
@@ -186,9 +186,6 @@ void Visualizer::onFinishAndSaveActionClicked()
     mRenderer->update();
     QCoreApplication::processEvents();
     mDataManager->savefile();
-
-
-
 }
 
 void Visualizer::updatePauseResumeTooltip()

@@ -1,7 +1,13 @@
 #include "stdafx.h"
 #include "DataManager.h"
 
-DataManager::DataManager(QMainWindow* parent) {}
+DataManager::DataManager(QMainWindow* parent)
+{
+	mGeneratedToolPath = new ToolPath();
+	mStockMaterial = new Voxel();
+	mToolCylinder = new ToolCylinder();
+	mToolPathTxt = new ToolPathTxtWriter();
+}
 DataManager::~DataManager()
 {
 	delete mStockMaterial;
@@ -35,10 +41,7 @@ void DataManager::processData()
 	{
 		distBetweenPoints = sqrt(pow(lop.at(0).X() - lop.at(1).X(), 2) + pow(lop.at(0).Y() - lop.at(1).Y(), 2) + pow(lop.at(0).Z() - lop.at(1).Z(), 2));
 		boxPerAxis = stlReaderObj.largestModulusInteger();
-
-		mStockMaterial = new Voxel(boxPerAxis, mToolSize);
-		
-
+		mStockMaterial = new Voxel(boxPerAxis, mToolSize);		
 		xStart = (mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).maxima().X() + mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).minima().X())/2;
 		yStart = (mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).maxima().Y() + mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).minima().Y())/2;
 		zStart = mToolSize+((mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).maxima().Z() + mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).minima().Z())/2);
@@ -46,12 +49,9 @@ void DataManager::processData()
 		mToolStartPoint.setY(yStart);
 		mToolStartPoint.setZ(zStart);
 		mToolCylinder = new ToolCylinder(mToolSize/4, xStart, yStart, zStart);
-
-		mStockMaterial->stlVoxels(lot, lop);
-		
+		mStockMaterial->stlVoxels(lot, lop);	
 		mGeneratedToolPath = new ToolPath(mStockMaterial->getBlocks(), Point3D(xStart, yStart, zStart));
 	}
-	
 }
 
 void DataManager::simulate()

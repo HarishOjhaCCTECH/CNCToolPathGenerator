@@ -148,6 +148,16 @@
     <None Include="Model\Sphere.stl" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Model\Icons\FinishAndSave.png" />
+    <Image Include="Model\Icons\OpenSTL.png" />
+    <Image Include="Model\Icons\PauseResume.png" />
+    <Image Include="Model\Icons\ShowSTLShape.png" />
+    <Image Include="Model\Icons\ShowStockMaterial.png" />
+    <Image Include="Model\Icons\ShowToolPath.png" />
+    <Image Include="Model\Icons\SimulateOperation.png" />
+    <Image Include="Model\Icons\ToolTipSize.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

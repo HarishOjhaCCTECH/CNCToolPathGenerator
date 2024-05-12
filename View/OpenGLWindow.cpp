@@ -167,7 +167,6 @@ void OpenGLWindow::paintGL()
 		glLineWidth(2.5f);
 	}
 	
-///////////////////////////////////////////////////////////////////
 	QVector<GLfloat> points;
 	points << 0 << 0 << 0;
 	QVector<GLfloat> colors;
@@ -187,7 +186,7 @@ void OpenGLWindow::paintGL()
 	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
 	glDrawArrays(GL_POINTS, 0, points.size() / 3);
 	glDisable(GL_PROGRAM_POINT_SIZE);
-	///////////////////////////////////////////////////////////////////	
+	
 	
 	glDisableVertexAttribArray(m_colAttr);
 	glDisableVertexAttribArray(m_posAttr);

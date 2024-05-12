@@ -51,8 +51,6 @@ private:
     QAction* mShowSTLShapeAction;
     QHBoxLayout* hBox;
     QVBoxLayout* vBox;
-
-    ////////////////////////////
     QBoxLayout* mToolLayout;
     QToolBar* toolBar;
     QBoxLayout* contentsLayout;
