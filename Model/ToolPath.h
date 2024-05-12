@@ -5,7 +5,7 @@ class ToolPath
 public:
 
 	ToolPath();
-	ToolPath(const vector<vector<vector<BoundingBox>>>& boxes);
+	ToolPath(const vector<vector<vector<BoundingBox>>>& boxes, const Point3D& toolStart);
 	~ToolPath();
 
 	const QVector<GLfloat>& ToolPathVertices() const;

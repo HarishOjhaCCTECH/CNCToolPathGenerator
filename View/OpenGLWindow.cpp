@@ -34,7 +34,7 @@ void OpenGLWindow::reset()
 
 void OpenGLWindow::paintGL()
 {
-	glClearColor(0.5f, 0.75f, 1.75f, 1.0);
+	glClearColor(0.92f, 0.53f, 0.92f, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	mProgram->bind();
 	glLineWidth(2.5f);
@@ -120,10 +120,14 @@ void OpenGLWindow::paintGL()
 	
 	// rendering cylinder
 	startIndex = 0;
+	QVector<GLfloat> toolBottomVers;
+	QVector<GLfloat> toolBottomColors;
 	for (int i = 0; i < 360; i++)
 	{
 		QVector<GLfloat> poleVertices;
 		poleVertices = mCylPoleVertices.mid(startIndex, 6);
+		toolBottomVers << mCylPoleVertices.mid(startIndex,1)<< mCylPoleVertices.mid(startIndex+1,1)<< mCylPoleVertices.mid(startIndex+2,1);
+		toolBottomColors << 0 << 0 << 0;
 		QVector<GLfloat> colors;
 		colors << 0 << 1 << 0;
 		colors << 0 << 1 << 0;
@@ -132,6 +136,11 @@ void OpenGLWindow::paintGL()
 		glDrawArrays(GL_LINES, 0, poleVertices.size() / 3);
 		startIndex += 6;
 	}
+	// rendering cylinder's bottom
+	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, toolBottomVers.data());
+	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, toolBottomColors.data());
+	glDrawArrays(GL_POLYGON, 0, toolBottomVers.size() / 3);
+	
 
 	// rendering tool path
 	glLineWidth(5.0f);

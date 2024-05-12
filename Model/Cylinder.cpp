@@ -8,7 +8,7 @@ Cylinder::Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float
 	mCenter.setX(inCenX);
 	mCenter.setY(inCenY);
 	mCenter.setZ(inCenZ);
-	GLfloat cylinderHeight = drillRadius*2;
+	GLfloat cylinderHeight = 20;
 	GLfloat cylinderRadius = drillRadius;
 	GLfloat numOfCylinderPeriferryPoints = 360.f;
 	for (int i = 0; i < numOfCylinderPeriferryPoints; ++i)
@@ -18,7 +18,7 @@ Cylinder::Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float
 		pole.x = mCenter.X() + cylinderRadius * cos(2 * M_PI * u);
 		pole.z = mCenter.Z() + cylinderRadius * sin(2 * M_PI * u);
 		pole.yStart = mCenter.Y();
-		pole.yEnd = cylinderHeight;
+		pole.yEnd = pole.yStart+cylinderHeight;
 		poles.push_back(pole);
 	}
 	for (int i = 0; i < numOfCylinderPeriferryPoints; i++)

@@ -21,6 +21,10 @@ public:
     const Cylinder& toolCylinder();
     const ToolPath& generatedToolPath();
 
+    void setShapeFilePath(const char* inChar);
+    void setToolSize(const float& inFloat);
+    void processData();
+
 private:
     Triangulation triguObj;
     STLReader stlReaderObj;
@@ -29,5 +33,7 @@ private:
     Voxel* mStockMaterial;
     Cylinder* mToolCylinder;
     ToolPath* mGeneratedToolPath;
+    const char* mShapeFilePath = "";
+    float mToolSize;
 };
 

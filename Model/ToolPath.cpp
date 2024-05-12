@@ -2,14 +2,20 @@
 #include "ToolPath.h"
 
 ToolPath::ToolPath() {}
-ToolPath::ToolPath(const vector<vector<vector<BoundingBox>>>& boxes)
+ToolPath::ToolPath(const vector<vector<vector<BoundingBox>>>& boxes, const Point3D& toolStart)
 {
-	float cubeLen = abs(boxes[0][0][0].maxima().X() - boxes[0][0][0].minima().X());
-	for (int i = 9; i >= 0; i--)
+	float cubeLen;
+
+	if (boxes.size() != 0) 
 	{
-		for (int j = 9; j >= 0; j--)
+		cubeLen = abs(boxes[0][0][0].maxima().X() - boxes[0][0][0].minima().X());
+		mToolPathVertices << toolStart.X() << toolStart.Y() << toolStart.Z();
+	}
+	for (int i = boxes.size()-1; i >= 0; i--)
+	{
+		for (int j = boxes.at(0).size()-1; j >= 0; j--)
 		{
-			for (int k = 9; k >= 0; k--)
+			for (int k = boxes.at(0).at(0).size()-1; k >= 0; k--)
 			{
 				if (!boxes[i][j][k].existence())
 				{

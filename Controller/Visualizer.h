@@ -4,6 +4,8 @@
 #include "Voxel.h"
 #include "DataStorage.h"
 
+using namespace std;
+
 class OpenGLWindow;
 class DataStorage;
 
@@ -18,6 +20,17 @@ public:
 private:
     void setupUi();
     void dataPass();
+    void updatePauseResumeTooltip();
+
+private slots:
+    void onOpenSTLActionClicked();
+    void onSelectToolSizeActionClicked();
+    void onSimulateOperationActionClicked();
+    void onPauseResumeActionClicked();
+    void onFinishAndSaveActionClicked();
+    void onShowStockMaterialActionClicked();
+    void onShowToolPathActionClicked();
+    void onShowSTLShapeActionClicked();
 
 private:
     QMenuBar* mMenuBar;
@@ -26,4 +39,21 @@ private:
     QStatusBar* mStatusBar;
     OpenGLWindow* mRenderer;
     DataStorage* mDataStorage;
+    QAction* mOpenSTLAction;
+    QAction* mSelectToolSizeAction;
+    QAction* mSimulateOperationAction;
+    QAction* mPauseResumeAction;
+    QAction* mFinishAndSaveAction;
+    QAction* mShowStockMaterialAction;
+    QAction* mShowToolPathAction;
+    QAction* mShowSTLShapeAction;
+    QHBoxLayout* hBox;
+    QVBoxLayout* vBox;
+
+    ////////////////////////////
+    QBoxLayout* mToolLayout;
+    QToolBar* toolBar;
+    QBoxLayout* contentsLayout;
+
+    bool mIsPaused;
 };
