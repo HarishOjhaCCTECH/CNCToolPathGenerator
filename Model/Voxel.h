@@ -12,17 +12,15 @@ public:
     Voxel(float largeModulusInteger, float distBetweenPoints);
     ~Voxel();
 
-    const QVector<GLfloat>& getGridVertices1();
-    const QVector<GLfloat>& getGridVertices2();
-    const QVector<GLfloat>& getGridVertices3();
-    const QVector<GLfloat>& getColors();
-    const vector<vector<vector<BoundingBox>>>& getBlocks();
     void stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop);
 
-
-    const QVector<GLfloat>& getSTLVertices();
-
-    const int& getBoxLimitPerAxis();
+    const QVector<GLfloat>& getGridVertices1() const;
+    const QVector<GLfloat>& getGridVertices2() const;
+    const QVector<GLfloat>& getGridVertices3() const;
+    const QVector<GLfloat>& getColors() const;
+    const vector<vector<vector<BoundingBox>>>& getBlocks() const;
+    const QVector<GLfloat>& getSTLVertices() const;
+    const int& getBoxLimitPerAxis() const;
 
 private:
     QVector<GLfloat> mGridVertices1;

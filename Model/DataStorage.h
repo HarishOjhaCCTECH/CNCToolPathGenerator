@@ -8,6 +8,7 @@
 #include "Voxel.h"
 #include "Cylinder.h"
 #include "ToolPath.h"
+
 using namespace std;
 
 class DataStorage
@@ -16,16 +17,17 @@ public:
     DataStorage(QMainWindow* parent);
     ~DataStorage();
 
+    const Voxel& stockMaterial();
+    const Cylinder& toolCylinder();
+    const ToolPath& generatedToolPath();
+
+private:
     Triangulation triguObj;
     STLReader stlReaderObj;
     vector<Triangle> lot = triguObj.listOfTriangles();
     vector<Point3D> lop = triguObj.listOfPoints();   
-    
-    Voxel* stockMaterial;
-    
-    Cylinder* toolCylinder;
-    
-    ToolPath* generatedToolPath;
-    
+    Voxel* mStockMaterial;
+    Cylinder* mToolCylinder;
+    ToolPath* mGeneratedToolPath;
 };
 

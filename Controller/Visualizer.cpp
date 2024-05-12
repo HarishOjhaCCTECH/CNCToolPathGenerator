@@ -4,8 +4,7 @@
 
 Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr)
 {
-    setupUi();
-    
+    setupUi();   
 }
 
 Visualizer::~Visualizer(){}
@@ -24,10 +23,13 @@ void Visualizer::setupUi()
     setWindowTitle(QCoreApplication::translate("Visualiser", "Visualiser", nullptr));
     mDataStorage = new DataStorage(this);
     dataPass();
-}
 
+    QAction* action = new QAction("Action", this);
+    mMainToolBar->addAction(action);
+
+}
 
 void Visualizer::dataPass()
 {
-    mRenderer->setRenderingAttributes(*mDataStorage->stockMaterial, *mDataStorage->toolCylinder, *mDataStorage->generatedToolPath);
+    mRenderer->setRenderingAttributes(mDataStorage->stockMaterial(), mDataStorage->toolCylinder(), mDataStorage->generatedToolPath());
 }

@@ -1,7 +1,14 @@
 #pragma once
 #include <gl/GL.h>
-#include <EachPole.h>
 #include "Point3D.h"
+
+class EachPole {
+public:
+	GLfloat x;
+	GLfloat z;
+	GLfloat yStart;
+	GLfloat yEnd;
+};
 
 class Cylinder
 {
@@ -10,7 +17,7 @@ public:
 	Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float inCenZ);
 	~Cylinder();
 	
-	const QVector<GLfloat> getPoleVertices();
+	const QVector<GLfloat> getPoleVertices() const;
 
 private:
 	QVector<EachPole> poles;

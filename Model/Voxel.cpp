@@ -1,24 +1,20 @@
 #include "stdafx.h"
 #include "Voxel.h"
 
-Voxel::Voxel() 
-{
-	boxLimitPerAxis = 10;
-}
+Voxel::Voxel(){	boxLimitPerAxis = 10;}
 
 Voxel::Voxel(float stlLargestModulusInteger, float distBetweenPoints)
 {
-	
 	boxLimitPerAxis = stlLargestModulusInteger;
+
 	int sizeX = boxLimitPerAxis;
 	int sizeY = boxLimitPerAxis;
-	int sizeZ = boxLimitPerAxis;
-	
+	int sizeZ = boxLimitPerAxis;	
 	boxes.resize(sizeX, vector<vector<BoundingBox>>(sizeY, vector<BoundingBox>(sizeZ)));
 
 	float startPoint[3]{- stlLargestModulusInteger ,-stlLargestModulusInteger ,-stlLargestModulusInteger };
 	
-	float xLen = distBetweenPoints/2;
+	float xLen = distBetweenPoints / 2;
 	float yLen = distBetweenPoints / 2;
 	float zLen = distBetweenPoints / 2;
 
@@ -37,15 +33,11 @@ Voxel::Voxel(float stlLargestModulusInteger, float distBetweenPoints)
 				float z_min = startPoint[2] + (k * zLen);
 				float z_max = z_min + (zLen);
 				
-				boxes[i][j][k].minima.setX(x_min);
-				boxes[i][j][k].minima.setY(y_min);
-				boxes[i][j][k].minima.setZ(z_min);
+				boxes[i][j][k].setMinima(Point3D(x_min, y_min, z_min));
 
-				boxes[i][j][k].maxima.setX(x_max);
-				boxes[i][j][k].maxima.setY(y_max);
-				boxes[i][j][k].maxima.setZ(z_max);
+				boxes[i][j][k].setMaxima(Point3D(x_max, y_max, z_max));
 				
-				boxes[i][j][k].existence = false;
+				boxes[i][j][k].setExistence(false);
 
 				//front
 				mGridVertices1 << x_min << y_min << z_max;
@@ -77,59 +69,28 @@ Voxel::Voxel(float stlLargestModulusInteger, float distBetweenPoints)
 		}
 	}
 	
-	for (int i = 0; i < 24; i++)
-	{
-		colors << 1 << 1 << 1;
-	}
+	for (int i = 0; i < 24; i++){colors << 1 << 1 << 1;}
 }
 
 Voxel::~Voxel() {}
 
-const QVector<GLfloat>& Voxel::getGridVertices1()
-{
-	return mGridVertices1;
-}
-const QVector<GLfloat>& Voxel::getGridVertices2()
-{
-	return mGridVertices2;
-}
-const QVector<GLfloat>& Voxel::getGridVertices3()
-{
-	return mGridVertices3;
-}
-const QVector<GLfloat>& Voxel::getColors()
-{
-	return colors;
-}
-
-const vector<vector<vector<BoundingBox>>>& Voxel::getBlocks(){return boxes;}
-
-
-
 void Voxel::stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop)
 {
-	int numOfStlBoxes = 0;
-	int numboxesSTL2= 0;
-	int temp = 0;
 	float triangleVertices[3][3];
-	for (auto& k : lot) {
+	for (auto& k : lot)
+	{
 		triangleVertices[0][0] = lop[k.v1()].X();
 		triangleVertices[0][1] = lop[k.v1()].Y();
 		triangleVertices[0][2] = lop[k.v1()].Z();
 
-
 		triangleVertices[1][0] = lop[k.v2()].X();
 		triangleVertices[1][1] = lop[k.v2()].Y();
 		triangleVertices[1][2] = lop[k.v2()].Z();
-		
+
 		triangleVertices[2][0] = lop[k.v3()].X();
 		triangleVertices[2][1] = lop[k.v3()].Y();
 		triangleVertices[2][2] = lop[k.v3()].Z();
 
-		
-		
-		// checking points from stl, rendering 
-		
 		for (int l = 0; l < 3; l++)
 		{
 			for (int i = 0; i < boxLimitPerAxis; i++)
@@ -141,97 +102,63 @@ void Voxel::stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop)
 						float px = triangleVertices[l][0];
 						float py = triangleVertices[l][1];
 						float pz = triangleVertices[l][2];
-						float xMin = boxes[i][j][k].minima.X();
-						float xMax = boxes[i][j][k].maxima.X();
-						float yMin = boxes[i][j][k].minima.Y();
-						float yMax = boxes[i][j][k].maxima.Y();
-						float zMin = boxes[i][j][k].minima.Z();
-						float zMax = boxes[i][j][k].maxima.Z();
+						float x_min = boxes[i][j][k].minima().X();
+						float x_max = boxes[i][j][k].maxima().X();
+						float y_min = boxes[i][j][k].minima().Y();
+						float y_max = boxes[i][j][k].maxima().Y();
+						float z_min = boxes[i][j][k].minima().Z();
+						float z_max = boxes[i][j][k].maxima().Z();
 
-						if ((px >= xMin && px <= xMax) && (py >= yMin && py <= yMax) && (pz >= zMin && pz <= zMax))
+						if ((px >= x_min && px <= x_max) && (py >= y_min && py <= y_max) && (pz >= z_min && pz <= z_max))
 						{
-							boxes[i][j][k].existence = true;
-							numOfStlBoxes++;
+							boxes[i][j][k].setExistence(true);
+							// front face
+							mSTLVertices << x_min << y_min << z_max;
+							mSTLVertices << x_max << y_min << z_max;
+							mSTLVertices << x_max << y_max << z_max;
+							mSTLVertices << x_min << y_max << z_max;
+
+							//back face
+							mSTLVertices << x_min << y_min << z_min;
+							mSTLVertices << x_max << y_min << z_min;
+							mSTLVertices << x_max << y_max << z_min;
+							mSTLVertices << x_min << y_max << z_min;
+
+							// top
+							mSTLVertices << x_min << y_max << z_max;
+							mSTLVertices << x_max << y_max << z_max;
+							mSTLVertices << x_max << y_max << z_min;
+							mSTLVertices << x_min << y_max << z_min;
+
+							//left of box
+							mSTLVertices << x_max << y_max << z_max;
+							mSTLVertices << x_max << y_min << z_max;
+							mSTLVertices << x_max << y_min << z_min;
+							mSTLVertices << x_max << y_max << z_min;
+
+							// bottom
+							mSTLVertices << x_max << y_min << z_max;
+							mSTLVertices << x_min << y_min << z_max;
+							mSTLVertices << x_min << y_min << z_min;
+							mSTLVertices << x_max << y_min << z_min;
+
+							// right of the box
+							mSTLVertices << x_min << y_min << z_max;
+							mSTLVertices << x_min << y_max << z_max;
+							mSTLVertices << x_min << y_max << z_min;
+							mSTLVertices << x_min << y_min << z_min;
 						}
-						temp++;
 					}
 				}
 			}
 		}
-		
-		
 	}
-	
-	for (int i = 0; i < boxLimitPerAxis; i++)
-	{
-		for (int j = 0; j < boxLimitPerAxis; j++)
-		{
-			for (int k = 0; k < boxLimitPerAxis; k++)
-			{
-				if (boxes[i][j][k].existence)
-				{
-					float x_min = boxes[i][j][k].minima.X();
-					float x_max = boxes[i][j][k].maxima.X();
-
-					float y_min = boxes[i][j][k].minima.Y();
-					float y_max = boxes[i][j][k].maxima.Y();
-
-					float z_min = boxes[i][j][k].minima.Z();
-					float z_max = boxes[i][j][k].maxima.Z();
-
-
-					//////////////////////////////////////
-					// front face
-					mSTLVertices << x_min << y_min << z_max;
-					mSTLVertices << x_max << y_min << z_max;
-					mSTLVertices << x_max << y_max << z_max;
-					mSTLVertices << x_min << y_max << z_max;
-
-					//back face
-					mSTLVertices << x_min << y_min << z_min;
-					mSTLVertices << x_max << y_min << z_min;
-					mSTLVertices << x_max << y_max << z_min;
-					mSTLVertices << x_min << y_max << z_min;
-
-					// top
-					mSTLVertices << x_min << y_max << z_max;
-					mSTLVertices << x_max << y_max << z_max;
-					mSTLVertices << x_max << y_max << z_min;
-					mSTLVertices << x_min << y_max << z_min;
-
-					//left of box
-					mSTLVertices << x_max << y_max << z_max;
-					mSTLVertices << x_max << y_min << z_max;
-					mSTLVertices << x_max << y_min << z_min;
-					mSTLVertices << x_max << y_max << z_min;
-
-					// bottom
-					mSTLVertices << x_max << y_min << z_max;
-					mSTLVertices << x_min << y_min << z_max;
-					mSTLVertices << x_min << y_min << z_min;
-					mSTLVertices << x_max << y_min << z_min;
-
-					// right of the box
-					mSTLVertices << x_min << y_min << z_max;
-					mSTLVertices << x_min << y_max << z_max;
-					mSTLVertices << x_min << y_max << z_min;
-					mSTLVertices << x_min << y_min << z_min;
-
-
-
-				}
-
-
-				
-			}
-		}
-	}
-	int yi = 0;
-	
 }
 
-
-
-const int& Voxel::getBoxLimitPerAxis() { return boxLimitPerAxis; }
-
-const QVector<GLfloat>& Voxel::getSTLVertices(){return mSTLVertices;}
+const QVector<GLfloat>& Voxel::getGridVertices1() const{return mGridVertices1;}
+const QVector<GLfloat>& Voxel::getGridVertices2() const{return mGridVertices2;}
+const QVector<GLfloat>& Voxel::getGridVertices3() const{return mGridVertices3;}
+const QVector<GLfloat>& Voxel::getColors() const{return colors;}
+const vector<vector<vector<BoundingBox>>>& Voxel::getBlocks() const{return boxes;}
+const int& Voxel::getBoxLimitPerAxis() const { return boxLimitPerAxis; }
+const QVector<GLfloat>& Voxel::getSTLVertices() const { return mSTLVertices; }

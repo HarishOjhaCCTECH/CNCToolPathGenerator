@@ -19,7 +19,7 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
-    void setRenderingAttributes(Voxel& stockMaterial, Cylinder& toolCylinder, ToolPath& generatedToolPath);
+    void setRenderingAttributes(const Voxel& stockMaterial, const Cylinder& toolCylinder, const ToolPath& generatedToolPath);
 
 protected:
     void paintGL() override;
@@ -67,13 +67,9 @@ private:
     QVector<GLfloat> mGridColors;
     QVector<GLfloat> mGridVerticesBack;
     QVector<GLfloat> mGridVerticesSide;
-
-    
     QVector<GLfloat> mSTLGridColors;
-
-    int boxLimitPerAxisRender = 0;
-
     QVector<GLfloat> mSTLVertices;
     QVector<GLfloat> mCylPoleVertices;
     QVector<GLfloat> mToolPathVertices;
+    int boxLimitPerAxisRender = 0;
 };

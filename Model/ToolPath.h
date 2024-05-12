@@ -8,8 +8,9 @@ public:
 	ToolPath(const vector<vector<vector<BoundingBox>>>& boxes);
 	~ToolPath();
 
-	const QVector<GLfloat>& ToolPathVertices();
-	int BoxCheck(const vector<vector<vector<BoundingBox>>>& boxes, int i, int j, int k);
+	const QVector<GLfloat>& ToolPathVertices() const;
+	const int BoxCheck(const vector<vector<vector<BoundingBox>>>& boxes, int i, int j, int k);
+
 private:
 	QVector<GLfloat> mToolPathVertices;
 };

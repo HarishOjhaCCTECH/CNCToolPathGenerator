@@ -86,9 +86,6 @@
     <ClInclude Include="Model\Cylinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\EachPole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Model\Point3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>

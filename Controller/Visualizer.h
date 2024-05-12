@@ -14,11 +14,10 @@ class Visualizer : public QMainWindow
 public:
     Visualizer(QWindow* parent = nullptr);
     ~Visualizer();
-    void dataPass();
-    
-
+        
 private:
     void setupUi();
+    void dataPass();
 
 private:
     QMenuBar* mMenuBar;
@@ -27,8 +26,4 @@ private:
     QStatusBar* mStatusBar;
     OpenGLWindow* mRenderer;
     DataStorage* mDataStorage;
-    
-
-
-
 };

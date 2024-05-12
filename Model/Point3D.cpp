@@ -9,7 +9,7 @@ void Point3D::setX(const float& inX) {mx = inX;}
 void Point3D::setY(const float& inY) {my = inY;}
 void Point3D::setZ(const float& inZ) {mz = inZ;}
 
-const float& Point3D::X()  const{return mx;}
+const float& Point3D::X() const{return mx;}
 const float& Point3D::Y() const{return my;}
 const float& Point3D::Z() const{return mz;}
 
@@ -26,15 +26,6 @@ bool Point3D::operator<(const Point3D& other) const
     else
         return mz < other.mz;
 }
-bool Point3D::operator>(const Point3D& other) const
-{
-    return other < *this;
-}
-bool Point3D::operator<=(const Point3D& other) const
-{
-    return !(other < *this);
-}
-bool Point3D::operator>=(const Point3D& other) const
-{
-    return !(*this < other);
-}
+bool Point3D::operator>(const Point3D& other) const{return other < *this;}
+bool Point3D::operator<=(const Point3D& other) const{return !(other < *this);}
+bool Point3D::operator>=(const Point3D& other) const{return !(*this < other);}

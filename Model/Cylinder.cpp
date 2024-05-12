@@ -31,4 +31,4 @@ Cylinder::Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float
 
 Cylinder::~Cylinder() {}
 
-const QVector<GLfloat> Cylinder::getPoleVertices() { return mPolesVertices; }
+const QVector<GLfloat> Cylinder::getPoleVertices() const { return mPolesVertices; }
