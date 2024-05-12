@@ -3,7 +3,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
 #include "Voxel.h"
-#include "Cylinder.h"
+#include "ToolCylinder.h"
 #include "ToolPath.h"
 
 using namespace std;
@@ -19,7 +19,13 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
-    void setRenderingAttributes(const Voxel& stockMaterial, const Cylinder& toolCylinder, const ToolPath& generatedToolPath);
+    void setRenderingAttributes(const Voxel& stockMaterial, const ToolCylinder& toolCylinder, const ToolPath& generatedToolPath);
+    int toolPathVerticesSize();
+    bool mShowSTL = false;
+    bool mShowStockMaterial = false;
+    bool mShowToolPath = false;
+    bool mShowToolCylinder = false;
+    bool mShowSimulation = false;
 
 protected:
     void paintGL() override;
@@ -72,4 +78,5 @@ private:
     QVector<GLfloat> mCylPoleVertices;
     QVector<GLfloat> mToolPathVertices;
     int boxLimitPerAxisRender = 0;
+    
 };

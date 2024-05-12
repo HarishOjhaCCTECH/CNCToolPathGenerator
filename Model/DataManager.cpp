@@ -1,25 +1,22 @@
 #include "stdafx.h"
-#include "DataStorage.h"
+#include "DataManager.h"
 
-DataStorage::DataStorage(QMainWindow* parent) 
-{
-	
-}
-DataStorage::~DataStorage() 
+DataManager::DataManager(QMainWindow* parent) {}
+DataManager::~DataManager()
 {
 	delete mStockMaterial;
 	delete mToolCylinder;
 	delete mGeneratedToolPath;
 }
 
-const Voxel& DataStorage::stockMaterial() {	return *mStockMaterial;}
-const Cylinder& DataStorage::toolCylinder() { return *mToolCylinder; }
-const ToolPath& DataStorage::generatedToolPath() { return *mGeneratedToolPath; }
+const Voxel& DataManager::stockMaterial() {	return *mStockMaterial;}
+const ToolCylinder& DataManager::toolCylinder() { return *mToolCylinder; }
+const ToolPath& DataManager::generatedToolPath() { return *mGeneratedToolPath; }
 
-void DataStorage::setShapeFilePath(const char* inChar) { mShapeFilePath = inChar; }
-void DataStorage::setToolSize(const float& inFloat) { mToolSize = inFloat; }
+void DataManager::setShapeFilePath(const char* inChar) { mShapeFilePath = inChar; }
+void DataManager::setToolSize(const float& inFloat) { mToolSize = inFloat; }
 
-void DataStorage::processData()
+void DataManager::processData()
 {
 	QString currentPath = QCoreApplication::applicationDirPath();
 	QDir dir(currentPath);
@@ -45,13 +42,60 @@ void DataStorage::processData()
 		xStart = (mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).maxima().X() + mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).minima().X())/2;
 		yStart = (mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).maxima().Y() + mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).minima().Y())/2;
 		zStart = mToolSize+((mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).maxima().Z() + mStockMaterial->getBlocks().at(boxPerAxis - 1).at(boxPerAxis - 1).at(boxPerAxis - 1).minima().Z())/2);
-		mToolCylinder = new Cylinder(mToolSize/4, xStart, yStart, zStart);
+		mToolStartPoint.setX(xStart);
+		mToolStartPoint.setY(yStart);
+		mToolStartPoint.setZ(zStart);
+		mToolCylinder = new ToolCylinder(mToolSize/4, xStart, yStart, zStart);
 
 		mStockMaterial->stlVoxels(lot, lop);
 		
 		mGeneratedToolPath = new ToolPath(mStockMaterial->getBlocks(), Point3D(xStart, yStart, zStart));
 	}
+	
+}
+
+void DataManager::simulate()
+{
+	float p = 0;
+	float q = 0;
+	float r = mToolSize*(-1);
+
+	float translateMatrix[4][4]{
+		{1,0,0,p},
+		{0,1,0,q},
+		{0,0,1,r},
+		{0,0,0,1}
+	};
+
+	float translateStartPoint[4][1]{
+		{mToolCylinder->Center().X()},
+		{mToolCylinder->Center().Y()},
+		{mToolCylinder->Center().Z()},
+		{1}
+	};
+
+	float finalPoint[4][1]{
+		{0},
+		{0},
+		{0},
+		{0}
+	};
+	for (int i = 0; i < 4; i++)
+	{
+		for (int k = 0; k < 4; k++)
+		{
+			finalPoint[i][0] += translateMatrix[i][k] * translateStartPoint[k][0];
+		}
+	}
+	mToolCylinder = new ToolCylinder(mToolSize / 4, finalPoint[0][0], finalPoint[1][0], finalPoint[2][0]);
 
 
 
+
+}
+
+void DataManager::savefile()
+{
+	mToolPathTxt = new ToolPathTxtWriter();
+	mToolPathTxt->generateFile(mGeneratedToolPath->ToolPathVertices());
 }

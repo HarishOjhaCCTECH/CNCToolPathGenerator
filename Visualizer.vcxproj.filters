@@ -49,7 +49,7 @@
     <ClCompile Include="Model\Voxel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\Cylinder.cpp">
+    <ClCompile Include="Model\ToolCylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\Point3D.cpp">
@@ -67,10 +67,13 @@
     <ClCompile Include="Model\STLReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\DataStorage.cpp">
+    <ClCompile Include="Model\DataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\ToolPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ToolPathTxtWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,7 +86,7 @@
     <ClInclude Include="Model\Voxel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Cylinder.h">
+    <ClInclude Include="Model\ToolCylinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\Point3D.h">
@@ -101,15 +104,19 @@
     <ClInclude Include="Model\STLReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\DataStorage.h">
+    <ClInclude Include="Model\DataManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\ToolPath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ToolPathTxtWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Model\Cube.stl" />
     <None Include="Model\Sphere.stl" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

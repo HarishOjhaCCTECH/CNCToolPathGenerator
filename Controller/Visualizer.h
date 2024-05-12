@@ -2,12 +2,14 @@
 #include <QtWidgets/QMainWindow>
 #include "Visualizer.h"
 #include "Voxel.h"
-#include "DataStorage.h"
+#include "DataManager.h"
+#include "chrono"
+#include "thread"
 
 using namespace std;
 
 class OpenGLWindow;
-class DataStorage;
+class DataManager;
 
 class Visualizer : public QMainWindow
 {
@@ -38,7 +40,7 @@ private:
     QWidget* mCentralWidget;
     QStatusBar* mStatusBar;
     OpenGLWindow* mRenderer;
-    DataStorage* mDataStorage;
+    DataManager* mDataManager;
     QAction* mOpenSTLAction;
     QAction* mSelectToolSizeAction;
     QAction* mSimulateOperationAction;

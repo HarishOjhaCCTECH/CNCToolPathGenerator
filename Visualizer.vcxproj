@@ -6,6 +6,7 @@
 ***************************************************************************************************
 -->
 <Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -105,19 +106,21 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Model\DataStorage.cpp" />
+    <ClCompile Include="Model\DataManager.cpp" />
     <ClCompile Include="Model\BoundingBox.cpp" />
-    <ClCompile Include="Model\Cylinder.cpp" />
+    <ClCompile Include="Model\ToolCylinder.cpp" />
     <ClCompile Include="Model\Point3D.cpp" />
     <ClCompile Include="Model\STLReader.cpp" />
+    <ClCompile Include="Model\ToolPathTxtWriter.cpp" />
     <ClCompile Include="Model\Triangle.cpp" />
     <ClCompile Include="Model\Triangulation.cpp" />
     <ClCompile Include="Model\Voxel.cpp" />
-    <ClInclude Include="Model\DataStorage.h" />
+    <ClInclude Include="Model\DataManager.h" />
     <ClInclude Include="Model\BoundingBox.h" />
-    <ClInclude Include="Model\Cylinder.h" />
+    <ClInclude Include="Model\ToolCylinder.h" />
     <ClInclude Include="Model\Point3D.h" />
     <ClInclude Include="Model\STLReader.h" />
+    <ClInclude Include="Model\ToolPathTxtWriter.h" />
     <ClInclude Include="Model\Triangle.h" />
     <ClInclude Include="Model\Triangulation.h" />
     <ClInclude Include="Model\Voxel.h" />
@@ -143,11 +146,20 @@
   <ItemGroup>
     <None Include="Model\Cube.stl" />
     <None Include="Model\Sphere.stl" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />
   </ImportGroup>
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+  </Target>
 </Project>

@@ -1,10 +1,11 @@
 #include "stdafx.h"
-#include "Cylinder.h"
+#include "ToolCylinder.h"
 
-Cylinder::Cylinder() {}
+ToolCylinder::ToolCylinder() {}
 
-Cylinder::Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float inCenZ) 
+ToolCylinder::ToolCylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float inCenZ)
 {
+	mPolesVertices.clear();
 	mCenter.setX(inCenX);
 	mCenter.setY(inCenY);
 	mCenter.setZ(inCenZ);
@@ -29,6 +30,7 @@ Cylinder::Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float
 	
 }
 
-Cylinder::~Cylinder() {}
+ToolCylinder::~ToolCylinder() {}
 
-const QVector<GLfloat> Cylinder::getPoleVertices() const { return mPolesVertices; }
+const Point3D& ToolCylinder::Center() { return mCenter; }
+const QVector<GLfloat> ToolCylinder::getPoleVertices() const { return mPolesVertices; }

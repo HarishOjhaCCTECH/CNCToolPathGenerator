@@ -10,13 +10,14 @@ public:
 	GLfloat yEnd;
 };
 
-class Cylinder
+class ToolCylinder
 {
 public:
-	Cylinder();
-	Cylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float inCenZ);
-	~Cylinder();
+	ToolCylinder();
+	ToolCylinder(const GLfloat& drillRadius, float inCenX, float inCenY, float inCenZ);
+	~ToolCylinder();
 	
+	const Point3D& Center();
 	const QVector<GLfloat> getPoleVertices() const;
 
 private:

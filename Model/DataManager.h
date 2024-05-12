@@ -6,24 +6,27 @@
 #include "STLReader.h"
 #include "Visualizer.h"
 #include "Voxel.h"
-#include "Cylinder.h"
+#include "ToolCylinder.h"
 #include "ToolPath.h"
+#include "ToolPathTxtWriter.h"
 
 using namespace std;
 
-class DataStorage
+class DataManager
 {
 public:
-    DataStorage(QMainWindow* parent);
-    ~DataStorage();
+    DataManager(QMainWindow* parent);
+    ~DataManager();
 
     const Voxel& stockMaterial();
-    const Cylinder& toolCylinder();
+    const ToolCylinder& toolCylinder();
     const ToolPath& generatedToolPath();
 
     void setShapeFilePath(const char* inChar);
     void setToolSize(const float& inFloat);
     void processData();
+    void simulate();
+    void savefile();
 
 private:
     Triangulation triguObj;
@@ -31,9 +34,11 @@ private:
     vector<Triangle> lot = triguObj.listOfTriangles();
     vector<Point3D> lop = triguObj.listOfPoints();   
     Voxel* mStockMaterial;
-    Cylinder* mToolCylinder;
+    ToolCylinder* mToolCylinder;
     ToolPath* mGeneratedToolPath;
     const char* mShapeFilePath = "";
     float mToolSize;
+    Point3D mToolStartPoint;
+    ToolPathTxtWriter* mToolPathTxt;
 };
 

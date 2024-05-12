@@ -4,13 +4,15 @@
 ToolPath::ToolPath() {}
 ToolPath::ToolPath(const vector<vector<vector<BoundingBox>>>& boxes, const Point3D& toolStart)
 {
-	float cubeLen;
+	float cubeLen = 0;
 
 	if (boxes.size() != 0) 
 	{
 		cubeLen = abs(boxes[0][0][0].maxima().X() - boxes[0][0][0].minima().X());
 		mToolPathVertices << toolStart.X() << toolStart.Y() << toolStart.Z();
+
 	}
+
 	for (int i = boxes.size()-1; i >= 0; i--)
 	{
 		for (int j = boxes.at(0).size()-1; j >= 0; j--)

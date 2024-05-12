@@ -2,7 +2,9 @@
 #include "Visualizer.h"
 #include "OpenGLWindow.h"
 
-
+void delay(int milliseconds) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
 
 Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr), mIsPaused(false)
 {
@@ -71,25 +73,26 @@ void Visualizer::setupUi()
 void Visualizer::dataPass()
 {
 
-    mRenderer->setRenderingAttributes(mDataStorage->stockMaterial(), mDataStorage->toolCylinder(), mDataStorage->generatedToolPath());
+    mRenderer->setRenderingAttributes(mDataManager->stockMaterial(), mDataManager->toolCylinder(), mDataManager->generatedToolPath());
 }
 
 void Visualizer::onOpenSTLActionClicked()
 {
+    
     QStringList shapes;
     shapes << "Cube" << "Sphere";
     bool ok;
     QString shape = QInputDialog::getItem(this, "Select Shape", "Choose a shape:", shapes, 0, false, &ok);
     if (ok && !shape.isEmpty()) {
         if (shape == "Cube") {
-            mDataStorage = new DataStorage(this);
-            mDataStorage->setShapeFilePath("/Model/Cube.stl");
+            mDataManager = new DataManager(this);
+            mDataManager->setShapeFilePath("/Model/Cube.stl");
             
         }
         else if (shape == "Sphere") {
-            mDataStorage = new DataStorage(this);
-            mDataStorage->setShapeFilePath("/Model/Sphere.stl");
-            mDataStorage->processData();
+            mDataManager = new DataManager(this);
+            mDataManager->setShapeFilePath("/Model/Sphere.stl");
+            mDataManager->processData();
             dataPass();
             mRenderer->update();
         }
@@ -110,15 +113,23 @@ void Visualizer::onSelectToolSizeActionClicked()
     QString size = QInputDialog::getItem(this, "Select Tool Size", "Choose a size:", sizes, 0, false, &ok);
     if (ok && !size.isEmpty()) {
         if (size == "10") {
-            mDataStorage->setToolSize(size.toFloat());
-            mDataStorage->processData();
+            mDataManager->setToolSize(size.toFloat());
+            mDataManager->processData();
             dataPass();
+            mRenderer->mShowStockMaterial = true;
+            mRenderer->mShowSTL = true;
+            mRenderer->mShowToolPath = true;
+            mRenderer->mShowToolCylinder = true;
             mRenderer->update();
         }
         else if (size == "20") {
-            mDataStorage->setToolSize(size.toFloat());
-            mDataStorage->processData();
+            mDataManager->setToolSize(size.toFloat());
+            mDataManager->processData();
             dataPass();
+            mRenderer->mShowStockMaterial = true;
+            mRenderer->mShowSTL = true;
+            mRenderer->mShowToolPath = true;
+            mRenderer->mShowToolCylinder = true;
             mRenderer->update();
         }
         else if (size == "30") {
@@ -132,7 +143,30 @@ void Visualizer::onSelectToolSizeActionClicked()
 
 void Visualizer::onSimulateOperationActionClicked()
 {
-    //
+    mRenderer->mShowSimulation = true;
+  
+    mRenderer->mShowStockMaterial = true;
+    mRenderer->mShowSTL = true;
+    mRenderer->mShowToolPath = true;
+    mRenderer->mShowToolCylinder = true;
+    
+    for (int i = 0; i < 5; i++)//mRenderer->toolPathVerticesSize() / 3
+    {
+        
+        mDataManager->simulate();
+        dataPass();
+        mRenderer->update();
+        delay(1000);
+        // Allow UI events to be processed
+        QCoreApplication::processEvents();
+        if (!mRenderer->mShowSimulation)
+        {
+            break;
+        }
+
+    }
+
+    
     
 }
 
@@ -144,6 +178,16 @@ void Visualizer::onPauseResumeActionClicked()
 }
 void Visualizer::onFinishAndSaveActionClicked()
 {
+    mRenderer->mShowSimulation = false;
+    mRenderer->mShowStockMaterial = false;
+    mRenderer->mShowSTL = false;
+    mRenderer->mShowToolPath = false;
+    mRenderer->mShowToolCylinder = false;
+    mRenderer->update();
+    QCoreApplication::processEvents();
+    mDataManager->savefile();
+
+
 
 }
 
@@ -157,13 +201,26 @@ void Visualizer::updatePauseResumeTooltip()
 
 void Visualizer::onShowStockMaterialActionClicked()
 {
-
+    mRenderer->mShowStockMaterial = true;
+    mRenderer->mShowSTL = false;
+    mRenderer->mShowToolPath = false;
+    mRenderer->mShowToolCylinder = false;
+    mRenderer->update();
 }
 void Visualizer::onShowToolPathActionClicked()
 {
-
+    mRenderer->mShowStockMaterial = false;
+    mRenderer->mShowSTL = false;
+    mRenderer->mShowToolPath = true;
+    mRenderer->mShowToolCylinder = false;
+    mRenderer->update();
 }
 void Visualizer::onShowSTLShapeActionClicked()
 {
-
+    mRenderer->mShowStockMaterial = false;
+    mRenderer->mShowSTL = true;
+    mRenderer->mShowToolPath = false;
+    mRenderer->mShowToolCylinder = false;
+    mRenderer->update();
 }
+
