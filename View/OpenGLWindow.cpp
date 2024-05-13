@@ -73,28 +73,15 @@ void OpenGLWindow::paintGL()
 	glEnableVertexAttribArray(m_posAttr);
 	glEnableVertexAttribArray(m_colAttr);
 	
-	int startIndex = 0;	
-	if(mShowSTL)
-	{
+	// render Stock material
 
-		for (int i = 0; i < mSTLVertices.size() / 12; i++)
-		{
-			QVector<GLfloat> faceVertices = mSTLVertices.mid(startIndex, 12);
-			QVector<GLfloat> faceColors;
-			for (int i = 0; i < faceVertices.size() / 3; i++)
-			{
-				faceColors << 1 << 0 << 0;
-			}
-			glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, faceVertices.data());
-			glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, faceColors.data());
-			glDrawArrays(GL_POLYGON, 0, faceVertices.size() / 3);
-			startIndex += 12;
+	QVector<GLfloat> vertices1;
+	QVector<GLfloat> colors;
+	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices1.data());
+	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
+	glDrawArrays(GL_POLYGON, 0, vertices1.size() / 3);
 
-		}
-
-	}
-	
-	if (mShowStockMaterial)
+	/*if (mShowStockMaterial)
 	{
 		for (int i = 0; i < pow(boxLimitPerAxisRender, 3); i++)
 		{
@@ -123,6 +110,28 @@ void OpenGLWindow::paintGL()
 		}
 
 	}
+	int startIndex = 0;	
+	if(mShowSTL)
+	{
+
+		for (int i = 0; i < mSTLVertices.size() / 12; i++)
+		{
+			QVector<GLfloat> faceVertices = mSTLVertices.mid(startIndex, 12);
+			QVector<GLfloat> faceColors;
+			for (int i = 0; i < faceVertices.size() / 3; i++)
+			{
+				faceColors << 1 << 0 << 0;
+			}
+			glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, faceVertices.data());
+			glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, faceColors.data());
+			glDrawArrays(GL_POLYGON, 0, faceVertices.size() / 3);
+			startIndex += 12;
+
+		}
+
+	}
+	
+	
 	
 	
 	if (mShowToolCylinder)
@@ -187,7 +196,7 @@ void OpenGLWindow::paintGL()
 	glDrawArrays(GL_POINTS, 0, points.size() / 3);
 	glDisable(GL_PROGRAM_POINT_SIZE);
 	
-	
+	*/
 	glDisableVertexAttribArray(m_colAttr);
 	glDisableVertexAttribArray(m_posAttr);
 }
@@ -304,26 +313,26 @@ void OpenGLWindow::zoomOut()
 	update();
 }
 
-void OpenGLWindow::setRenderingAttributes(const Voxel& stockMaterial, const ToolCylinder& toolCylinder, const ToolPath& generatedToolPath)
+void OpenGLWindow::setRenderingAttributes(const StockMaterial& stock)
 {
-	mGridColors.clear();
-	mGridVerticesFront.clear();
-	mGridVerticesBack.clear();
-	mGridVerticesSide.clear();
-	mSTLVertices.clear();
-	mCylPoleVertices.clear();
-	mToolPathVertices.clear();
+	mStockMaterialVertices.clear();
 
-	mGridColors = stockMaterial.getColors();
-	mGridVerticesFront = stockMaterial.getGridVertices1();
-	mGridVerticesBack = stockMaterial.getGridVertices2();
-	mGridVerticesSide = stockMaterial.getGridVertices3();
+	mStockMaterialVertices = stock.GridVertices();
+	//mGridVerticesFront.clear();
+	//mGridVerticesBack.clear();
+	//mGridVerticesSide.clear();
+	//mSTLVertices.clear();
+	//mCylPoleVertices.clear();
+	//mToolPathVertices.clear();
 
-	mSTLVertices = stockMaterial.getSTLVertices();
-	mCylPoleVertices = toolCylinder.getPoleVertices();
+	//mGridColors = stockMaterial.getColors();
+	//mGridVerticesFront = stockMaterial.getGridVertices1();
+	//mGridVerticesBack = stockMaterial.getGridVertices2();
+	//mGridVerticesSide = stockMaterial.getGridVertices3();
 
-	boxLimitPerAxisRender = stockMaterial.getBoxLimitPerAxis();
-	mToolPathVertices = generatedToolPath.ToolPathVertices();
+	//mSTLVertices = stockMaterial.getSTLVertices();
+	//mCylPoleVertices = toolCylinder.getPoleVertices();
+
+	//boxLimitPerAxisRender = stockMaterial.getBoxLimitPerAxis();
+	//mToolPathVertices = generatedToolPath.ToolPathVertices();
 }
-
-int OpenGLWindow::toolPathVerticesSize() { return mToolPathVertices.size(); }

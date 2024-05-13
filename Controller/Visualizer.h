@@ -1,7 +1,6 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
 #include "Visualizer.h"
-#include "Voxel.h"
 #include "DataManager.h"
 #include "chrono"
 #include "thread"

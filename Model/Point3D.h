@@ -4,16 +4,16 @@ class Point3D
 {
 public:
 	Point3D();
-	Point3D(const float& inX, const float& inY, const float& inZ);
+	Point3D(const double& inX, const double& inY, const double& inZ);
 	~Point3D();
 
-	void setX(const float& inX);
-	void setY(const float& inY);
-	void setZ(const float& inZ);
+	void setX(const double& inX);
+	void setY(const double& inY);
+	void setZ(const double& inZ);
 
-	const float& X() const;
-	const float& Y() const;
-	const float& Z() const;
+	const double& X() const;
+	const double& Y() const;
+	const double& Z() const;
 
     bool operator<(const Point3D& other) const;
     bool operator>(const Point3D& other) const;
@@ -21,7 +21,7 @@ public:
 	bool operator>=(const Point3D& other) const;
 
 private:
-	float mx;
-	float my;
-	float mz;
+	double mx;
+	double my;
+	double mz;
 };

@@ -36,13 +36,7 @@ void STLReader::read(const string& stlFilePath, vector<Triangle>& lot, vector<Po
                 threeCoordinatesArr[i] = stod(str.substr(0, pos3));
                 str = str.substr(pos3 + 1);
             }
-            
-            for (int i = 0; i < 3; i++)
-            {
-                if (abs(threeCoordinatesArr[i]) > mLargestModulusInteger) {
-                    mLargestModulusInteger = abs(threeCoordinatesArr[i]);
-                }
-            }
+
            
             bool foundPoint = false;
             for (const auto& i : comparisonMap) {
@@ -68,5 +62,3 @@ void STLReader::read(const string& stlFilePath, vector<Triangle>& lot, vector<Po
         }
     }
 }
-
-const float& STLReader::largestModulusInteger() const { return mLargestModulusInteger; }

@@ -1,5 +1,4 @@
 #pragma once
-#include "vector"
 #include "Triangle.h"
 #include "Point3D.h"
 

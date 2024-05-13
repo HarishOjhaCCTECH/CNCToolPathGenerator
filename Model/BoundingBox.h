@@ -8,17 +8,13 @@ public:
 	BoundingBox(const Point3D& min, const Point3D& max, bool exists);
 	~BoundingBox();
 	
-	const Point3D& minima() const;
-	const Point3D& maxima() const;
-	const bool& existence() const;
+	const Point3D& Minima() const;
+	const Point3D& Maxima() const;
 
 	void setMinima(const Point3D& inPoint);
 	void setMaxima(const Point3D& inPoint);
-	void setExistence(const bool& inBool);
-
+	
 private:
 	Point3D mMinima;
 	Point3D mMaxima;
-	bool mExistence;
-
 };

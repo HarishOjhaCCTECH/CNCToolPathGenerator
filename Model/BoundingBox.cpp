@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "BoundingBox.h"
 
-BoundingBox::BoundingBox() : mMinima(Point3D(0, 0, 0)), mMaxima(Point3D(0, 0, 0)), mExistence(false) {}
-BoundingBox::BoundingBox(const Point3D& min, const Point3D& max, bool exists): mMinima(min), mMaxima(max), mExistence(exists) {}
+BoundingBox::BoundingBox() : mMinima(Point3D(0, 0, 0)), mMaxima(Point3D(0, 0, 0)) {}
+BoundingBox::BoundingBox(const Point3D& min, const Point3D& max, bool exists): mMinima(min), mMaxima(max){}
 BoundingBox::~BoundingBox() {}
 
-const Point3D& BoundingBox::minima()  const { return mMinima; }
-const Point3D& BoundingBox::maxima()  const { return mMaxima; }
-const bool& BoundingBox::existence()  const { return mExistence; }
+const Point3D& BoundingBox::Minima()  const { return mMinima; }
+const Point3D& BoundingBox::Maxima()  const { return mMaxima; }
 
 void BoundingBox::setMinima(const Point3D& inPoint) {
 	mMinima.setX(inPoint.X());
@@ -20,5 +19,3 @@ void BoundingBox::setMaxima(const Point3D& inPoint) {
 	mMaxima.setY(inPoint.Y());
 	mMaxima.setZ(inPoint.Z());
 }
-
-void BoundingBox::setExistence(const bool& inBool){	mExistence = inBool;}

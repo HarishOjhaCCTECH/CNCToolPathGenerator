@@ -38,9 +38,6 @@ void Visualizer::setupUi()
     dir.cdUp();
     QString parentPathIcon = dir.path();
 
-
-
-
     mOpenSTLAction = new QAction(QIcon(parentPathIcon+"/Model/Icons/OpenSTL.png"), "Open Desired STL file", this);
     mSelectToolSizeAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/ToolTipSize.png"), "Choose tool size", this);
     mSimulateOperationAction = new QAction(QIcon(parentPathIcon + "/Model/Icons/SimulateOperation.png"), "Simulate Operation", this);
@@ -69,47 +66,26 @@ void Visualizer::setupUi()
     mMainToolBar->addAction(mShowToolPathAction);
     mMainToolBar->addAction(mShowSTLShapeAction);
 
-
     mStatusBar = new QStatusBar(this);
     setStatusBar(mStatusBar);
     mRenderer = new OpenGLWindow(QColor(0, 0, 0), this);
     setCentralWidget(mRenderer);
     setWindowTitle(QCoreApplication::translate("CNC Tool Path Generator", "CNC Tool Path Generator", nullptr));
-    
 }
 
 void Visualizer::dataPass()
 {
-
-    mRenderer->setRenderingAttributes(mDataManager->stockMaterial(), mDataManager->toolCylinder(), mDataManager->generatedToolPath());
+    mRenderer->setRenderingAttributes(mDataManager->Stock());
 }
 
 void Visualizer::onOpenSTLActionClicked()
 {
-    
-    QStringList shapes;
-    shapes << "Cube" << "Sphere";
-    bool ok;
-    QString shape = QInputDialog::getItem(this, "Select Shape", "Choose a shape:", shapes, 0, false, &ok);
-    if (ok && !shape.isEmpty()) {
-        if (shape == "Cube") {
-            mDataManager = new DataManager(this);
-            mDataManager->setShapeFilePath("/Model/Cube.stl");
-            
-        }
-        else if (shape == "Sphere") {
-            mDataManager = new DataManager(this);
-            mDataManager->setShapeFilePath("/Model/Sphere.stl");
-            mDataManager->processData();
-            dataPass();
-            mRenderer->update();
-        }
-        else if (shape == "Cylinder") {
-    
-        }
-        else if (shape == "Custom") {
-    
-        }
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open STL File"), "", tr("STL Files (*.stl)"));
+    if (!filePath.isEmpty()) {
+        // Process the selected file path, for example:
+        qDebug() << "Selected file: " << filePath;
+        // Now you can do something with the file path, such as loading the STL file.
+        
     }
 }
 
@@ -121,8 +97,7 @@ void Visualizer::onSelectToolSizeActionClicked()
     QString size = QInputDialog::getItem(this, "Select Tool Size", "Choose a size:", sizes, 0, false, &ok);
     if (ok && !size.isEmpty()) {
         if (size == "10") {
-            mDataManager->setToolSize(size.toFloat());
-            mDataManager->processData();
+            mDataManager->processData(size.toDouble());
             dataPass();
             mRenderer->mShowStockMaterial = true;
             mRenderer->mShowSTL = true;
@@ -131,8 +106,7 @@ void Visualizer::onSelectToolSizeActionClicked()
             mRenderer->update();
         }
         else if (size == "20") {
-            mDataManager->setToolSize(size.toFloat());
-            mDataManager->processData();
+            mDataManager->processData(size.toDouble());
             dataPass();
             mRenderer->mShowStockMaterial = true;
             mRenderer->mShowSTL = true;
@@ -159,7 +133,7 @@ void Visualizer::onSimulateOperationActionClicked()
     
     for (int i = 0; i < 5; i++)//mRenderer->toolPathVerticesSize() / 3
     {
-        mDataManager->simulate();
+        //mDataManager->simulate();
         dataPass();
         mRenderer->update();
         delay(1000);
@@ -185,7 +159,7 @@ void Visualizer::onFinishAndSaveActionClicked()
     mRenderer->mShowToolCylinder = false;
     mRenderer->update();
     QCoreApplication::processEvents();
-    mDataManager->savefile();
+    //mDataManager->savefile();
 }
 
 void Visualizer::updatePauseResumeTooltip()

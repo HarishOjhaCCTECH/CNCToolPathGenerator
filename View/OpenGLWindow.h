@@ -2,9 +2,7 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
-#include "Voxel.h"
-#include "ToolCylinder.h"
-#include "ToolPath.h"
+#include "StockMaterial.h"
 
 using namespace std;
 class QOpenGLTexture;
@@ -19,7 +17,7 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
-    void setRenderingAttributes(const Voxel& stockMaterial, const ToolCylinder& toolCylinder, const ToolPath& generatedToolPath);
+    void setRenderingAttributes(const StockMaterial& stock);
     int toolPathVerticesSize();
     bool mShowSTL = false;
     bool mShowStockMaterial = false;
@@ -69,7 +67,7 @@ private:
     QPoint lastPos;
     float scaleFactor = 5;
     
-    QVector<GLfloat> mGridVerticesFront;
+   /* QVector<GLfloat> mGridVerticesFront;
     QVector<GLfloat> mGridColors;
     QVector<GLfloat> mGridVerticesBack;
     QVector<GLfloat> mGridVerticesSide;
@@ -78,5 +76,7 @@ private:
     QVector<GLfloat> mCylPoleVertices;
     QVector<GLfloat> mToolPathVertices;
     int boxLimitPerAxisRender = 0;
-    
+    */
+
+    QVector<GLfloat> mStockMaterialVertices;
 };

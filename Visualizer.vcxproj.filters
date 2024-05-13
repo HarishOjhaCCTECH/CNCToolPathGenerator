@@ -46,12 +46,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\Voxel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\ToolCylinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Model\Point3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,10 +64,10 @@
     <ClCompile Include="Model\DataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ToolPath.cpp">
+    <ClCompile Include="Model\VoxelGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ToolPathTxtWriter.cpp">
+    <ClCompile Include="Model\StockMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,12 +77,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Model\Voxel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\ToolCylinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Model\Point3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,16 +95,14 @@
     <ClInclude Include="Model\DataManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ToolPath.h">
+    <ClInclude Include="Model\VoxelGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ToolPathTxtWriter.h">
+    <ClInclude Include="Model\StockMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model\Cube.stl" />
-    <None Include="Model\Sphere.stl" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
