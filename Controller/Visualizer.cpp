@@ -80,45 +80,37 @@ void Visualizer::dataPass()
 
 void Visualizer::onOpenSTLActionClicked()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open STL File"), "", tr("STL Files (*.stl)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open STL File"), "C:/Users/Harish Ojha/Downloads", tr("STL Files (*.stl)"));
     if (!filePath.isEmpty()) {
-        // Process the selected file path, for example:
         qDebug() << "Selected file: " << filePath;
-        // Now you can do something with the file path, such as loading the STL file.
-        
     }
 }
 
 void Visualizer::onSelectToolSizeActionClicked()
 {
-    QStringList sizes;
-    sizes << "10" << "20" << "30" << "size4";
     bool ok;
-    QString size = QInputDialog::getItem(this, "Select Tool Size", "Choose a size:", sizes, 0, false, &ok);
+    QString size = QInputDialog::getText(this, "Select Tool Size", "Enter a size:", QLineEdit::Normal, QString(), &ok);
     if (ok && !size.isEmpty()) {
-        if (size == "10") {
-            mDataManager->processData(size.toDouble());
-            dataPass();
-            mRenderer->mShowStockMaterial = true;
-            mRenderer->mShowSTL = true;
-            mRenderer->mShowToolPath = true;
-            mRenderer->mShowToolCylinder = true;
-            mRenderer->update();
+        double sizeValue = size.toDouble(&ok);
+        if (ok) {
+            const double minimumSize = 10.0; // Set your minimum value here
+            if (sizeValue >= minimumSize) {
+                mDataManager->processData(sizeValue);
+                dataPass();
+                mRenderer->mShowStockMaterial = true;
+                mRenderer->mShowSTL = true;
+                mRenderer->mShowToolPath = true;
+                mRenderer->mShowToolCylinder = true;
+                mRenderer->update();
+            }
+            else {
+                // Handle value below minimum
+                QMessageBox::warning(this, "Invalid Input", "Please enter a value greater than or equal to " + QString::number(minimumSize) + ".");
+            }
         }
-        else if (size == "20") {
-            mDataManager->processData(size.toDouble());
-            dataPass();
-            mRenderer->mShowStockMaterial = true;
-            mRenderer->mShowSTL = true;
-            mRenderer->mShowToolPath = true;
-            mRenderer->mShowToolCylinder = true;
-            mRenderer->update();
-        }
-        else if (size == "30") {
-            
-        }
-        else if (size == "40") {
-            
+        else {
+            // Handle invalid input
+            QMessageBox::warning(this, "Invalid Input", "Please enter a valid number.");
         }
     }
 }
