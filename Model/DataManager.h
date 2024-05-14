@@ -24,7 +24,7 @@ public:
 
     
     void setToolSize(const float& inFloat);
-    void processData(string path);
+    void processData(double size, string path);
     void simulate();
     void savefile();
 

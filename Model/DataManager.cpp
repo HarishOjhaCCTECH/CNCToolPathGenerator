@@ -22,9 +22,9 @@ const ToolPath& DataManager::generatedToolPath() { return *mGeneratedToolPath; }
 
 void DataManager::setToolSize(const float& inFloat) { mToolSize = inFloat; }
 
-void DataManager::processData(string path)
+void DataManager::processData(double size, string path)
 {
-	
+	mToolSize = size;
 	stlReaderObj.read(path, lot, lop);
 	float distBetweenPoints = 0;
 	int boxPerAxis = 0;

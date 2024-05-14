@@ -96,6 +96,8 @@ void Visualizer::onOpenSTLActionClicked()
 
 void Visualizer::onSelectToolSizeActionClicked()
 {
+    
+    
     QStringList sizes;
     sizes << "10" << "20" << "30" << "size4";
     bool ok;
@@ -103,10 +105,8 @@ void Visualizer::onSelectToolSizeActionClicked()
     if (ok && !size.isEmpty()) {
         if (size == "10") {
             mDataManager = new DataManager(this);
-            
-
-            mDataManager->setToolSize(size.toFloat());
-            mDataManager->processData(mFilePath);
+            // mDataManager->setToolSize(size.toFloat());
+            mDataManager->processData(size.toInt(), mFilePath);
             dataPass();
             mRenderer->mShowStockMaterial = true;
             mRenderer->mShowSTL = true;
@@ -116,7 +116,7 @@ void Visualizer::onSelectToolSizeActionClicked()
         }
         else if (size == "20") {
             mDataManager->setToolSize(size.toFloat());
-            mDataManager->processData(mFilePath);
+            mDataManager->processData(10, mFilePath);
             dataPass();
             mRenderer->mShowStockMaterial = true;
             mRenderer->mShowSTL = true;
@@ -131,6 +131,7 @@ void Visualizer::onSelectToolSizeActionClicked()
             
         }
     }
+    
 }
 
 void Visualizer::onSimulateOperationActionClicked()
