@@ -9,7 +9,7 @@ class VoxelGrid
 public:
 	VoxelGrid();
 	~VoxelGrid();
-	void stlVoxelFinding(vector<Triangle>& lot, vector<Point3D>& lop, StockMaterial& stock);
+	void stlVoxelFinding(vector<Point3D>& lop, StockMaterial& stock);
 
 private:
 	vector<vector<vector<bool>>> mSTLGrid;

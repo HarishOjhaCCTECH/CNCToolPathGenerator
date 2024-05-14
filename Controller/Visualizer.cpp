@@ -84,6 +84,7 @@ void Visualizer::onOpenSTLActionClicked()
     if (!filePath.isEmpty()) {
         qDebug() << "Selected file: " << filePath;
     }
+    mFilePath = filePath.toStdString();
 }
 
 void Visualizer::onSelectToolSizeActionClicked()
@@ -95,7 +96,7 @@ void Visualizer::onSelectToolSizeActionClicked()
         if (ok) {
             const double minimumSize = 10.0; // Set your minimum value here
             if (sizeValue >= minimumSize) {
-                mDataManager->processData(sizeValue);
+                mDataManager->processData(sizeValue, mFilePath);
                 dataPass();
                 mRenderer->mShowStockMaterial = true;
                 mRenderer->mShowSTL = true;

@@ -3,7 +3,7 @@
 
 VoxelGrid::VoxelGrid() {}
 VoxelGrid::~VoxelGrid() {}
-void VoxelGrid::stlVoxelFinding(vector<Triangle>& lot, vector<Point3D>& lop, StockMaterial& stock)
+void VoxelGrid::stlVoxelFinding(vector<Point3D>& lop, StockMaterial& stock)
 {
 	int xDimension = int(stock.StockMaterialGrid().Maxima().X() - stock.StockMaterialGrid().Minima().X()) + 1;
 	int yDimension = int(stock.StockMaterialGrid().Maxima().Y() - stock.StockMaterialGrid().Minima().Y()) + 1;

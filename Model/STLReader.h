@@ -1,16 +1,14 @@
 #pragma once
-#include "string"
-#include "Triangle.h"
-#include "Point3D.h"
-#include "StockMaterial.h"
 
-using namespace std;
-
+#include <map>
+#include <string>
+#include <vector>
+#include "Triangulation.h"
 class STLReader
 {
 public:
-	STLReader();
-	~STLReader();
-	void read(const string& stlFilePath, vector<Triangle>& lot, vector<Point3D>& lop);
-
+    // Function to read data from an STL file and populate a Triangulation object
+    STLReader();
+    ~STLReader();
+    void readSTL(std::string& filePath, Triangulation& triangulation);
 };

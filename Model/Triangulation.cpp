@@ -1,8 +1,27 @@
 #include "stdafx.h"
 #include "Triangulation.h"
+#include <map>
+#include <vector>
+#include <iostream>
 
-Triangulation::Triangulation() {}
-Triangulation::~Triangulation() {}
+Triangulation::Triangulation()
+{
+}
+Triangulation::~Triangulation()
+{
+}
 
-const vector<Triangle>& Triangulation::listOfTriangles() const{return mListOflistOfTriangles;}
-const vector<Point3D>& Triangulation::listOfPoints() const{return mUniquelistOfPoints;}
+vector<Triangle>& Triangulation::triangles()
+{
+    return mTriangles;
+}
+
+vector<Point3D>& Triangulation::uniquePoints()
+{
+    return mUniquePoints;
+}
+
+vector<Point3D>& Triangulation::uniqueNormals()
+{
+    return mUniqeNormals;
+}

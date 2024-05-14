@@ -1,10 +1,27 @@
 #include "stdafx.h"
 #include "Triangle.h"
 
-Triangle::Triangle():mv1(0),mv2(0),mv3(0) {}
-Triangle::Triangle(const int inV1, const int inV2, const int inV3) :mv1(inV1), mv2(inV2), mv3(inV3) {}
-Triangle::~Triangle() {}
+Triangle::Triangle(int v1, int v2, int v3, int normalIndex) : mV1(v1), mV2(v2), mV3(v3), mNormalIndex(normalIndex) {}
 
-int Triangle::v1()const { return mv1; }
-int Triangle::v2()const { return mv2; }
-int Triangle::v3()const { return mv3; }
+Triangle::~Triangle()
+{
+}
+const int Triangle::v1() const
+{
+    return mV1;
+}
+
+const int Triangle::v2() const
+{
+    return mV2;
+}
+
+const int Triangle::v3() const
+{
+    return mV3;
+}
+
+const int Triangle::normalIndex() const
+{
+    return mNormalIndex;
+}

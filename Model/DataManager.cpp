@@ -4,20 +4,19 @@
 DataManager::DataManager() {}
 DataManager::~DataManager() {}
 
-void DataManager::processData(double size)
+void DataManager::processData(double size, string filePath)
 {
 	// read stl
-	QString stlFilePath= "C:/Users/Harish Ojha/Downloads/Cube.stl";
-	stlReaderObj.read(stlFilePath.toStdString(), lot, lop);
+	stlReader.readSTL(filePath, triangulation);
 
 	// find minima, maxima
-	mStockMaterial.findMinimaMaxima(lop);
+	mStockMaterial.findMinimaMaxima(triangulation.uniquePoints());
 
 	// take tool size from user
 	mStockMaterial.setConstituentSize(size);
 
 	// making stl's voxel grid
-	mStlVoxels.stlVoxelFinding(lot, lop, mStockMaterial);
+	mStlVoxels.stlVoxelFinding(triangulation.uniquePoints(), mStockMaterial);
 
 	// making vertices vector for rendering stock material
 	mStockMaterial.processVertices();

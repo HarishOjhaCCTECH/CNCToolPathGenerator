@@ -1,70 +1,108 @@
 #include "stdafx.h"
 #include "STLReader.h"
-#include "map"
-#include "Point3D.h"
-#include "fstream"
 #include <iostream>
-#include "Triangle.h"
-
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 STLReader::STLReader() {}
 STLReader::~STLReader() {}
-void STLReader::read(const string& stlFilePath, vector<Triangle>& lot, vector<Point3D>& lop) {//lot = listOfTriangles, lop = listOfPoints
-    map<Point3D, int> comparisonMap;
-    ifstream stlFile;
-    string stlLine;
-    stlFile.open(stlFilePath);
-    // Check if the file is opened successfully
-    if (!stlFile.is_open()) {
-        cerr << "Error opening file!" << endl;
+
+void STLReader::readSTL(std::string& filePath, Triangulation& triangulation)
+{
+    std::ifstream inputFile(filePath);
+    if (!inputFile.is_open())
+    {
+        std::cerr << "Error opening file: " << std::endl;
+        return;
     }
-    int triangleIndices[3] = { 0,0,0 };
-    int triangleIndicesCurrentIndex = 0; // 
-    int lopCurrentIndex = 0;
-    while (getline(stlFile, stlLine)) { // checking everyline
-        int positionVertex = stlLine.find("vertex ");
-        int positionEndLoop = stlLine.find("endloop");
-        if (positionVertex != string::npos) {
-            string str = stlLine.substr(positionVertex + 7);
-            double threeCoordinatesArr[3] = { 0,0,0 };
-            for (int i = 0; i < 3; i++) {
-                int pos3 = str.find(" ");
-                threeCoordinatesArr[i] = stod(str.substr(0, pos3));
-                str = str.substr(pos3 + 1);
+    // Map to store unique points and their corresponding indices
+    std::map<Point3D, int> mappedCoordinates;
+    std::map<Point3D, int> mappedNormals;
+    // Read each line of the STL file
+    std::string line;
+    int count = 1;
+    int normalIndex;
+    int index1;
+    int index2;
+    int index3;
+
+    while (std::getline(inputFile, line))
+    {
+
+        if (line.find("facet normal") != std::string::npos)
+        {
+            double x;
+            double y;
+            double z;
+            istringstream iss(line);
+            string token1;
+            string token2;
+            iss >> token1 >> token2 >> x >> y >> z;
+            // Create a Point3D object
+            Point3D point(x, y, z);
+
+            // Check if the point is already mapped
+            auto iterator = mappedNormals.find(point);
+
+            // If not mapped, add to uniquePoints and update the mapping
+            if (iterator == mappedNormals.end())
+            {
+                mappedNormals[point] = triangulation.uniqueNormals().size();
+                triangulation.uniqueNormals().push_back(point);
             }
-            bool foundPoint = false;
-            //checking a point through map
-            for (const auto& i : comparisonMap) {
-                if ((i.first.X() == threeCoordinatesArr[0]) && (i.first.Y() == threeCoordinatesArr[1]) && (i.first.Z() == threeCoordinatesArr[2])) {
-                    triangleIndices[triangleIndicesCurrentIndex] = i.second;
-                    triangleIndicesCurrentIndex++;
-                    foundPoint = true;
-                    break;
-                }
+
+            normalIndex = mappedNormals[point];
+        }
+        // Check if the line contains "vertex"
+        if (line.find("vertex") != std::string::npos)
+        {
+            // Extract x, y, z coordinates from the line
+            double x;
+            double y;
+            double z;
+            istringstream iss(line);
+            string token;
+            iss >> token >> x >> y >> z;
+
+            // Create a Point3D object
+            Point3D point(x, y, z);
+
+            // Check if the point is already mapped
+            auto iterator = mappedCoordinates.find(point);
+
+            // If not mapped, add to uniquePoints and update the mapping
+            if (iterator == mappedCoordinates.end())
+            {
+                mappedCoordinates[point] = triangulation.uniquePoints().size();
+                triangulation.uniquePoints().push_back(point);
             }
-            if (!foundPoint) {
-                // making a point obj and storing it in lop
-                lop.emplace_back(threeCoordinatesArr[0], threeCoordinatesArr[1], threeCoordinatesArr[2]);
-                // storing the same point in map for comaparison purpose
-                comparisonMap[Point3D(threeCoordinatesArr[0], threeCoordinatesArr[1], threeCoordinatesArr[2])] = lopCurrentIndex;
-                triangleIndices[triangleIndicesCurrentIndex] = lopCurrentIndex;
-                lopCurrentIndex++;
-                triangleIndicesCurrentIndex++;
+
+            // Assign indices based on the mapping
+            if (count == 1)
+            {
+                index1 = mappedCoordinates[point];
+                count++;
+            }
+            else if (count == 2)
+            {
+                index2 = mappedCoordinates[point];
+                count++;
+            }
+            else if (count == 3)
+            {
+                index3 = mappedCoordinates[point];
+                count++;
             }
         }
-        if (positionEndLoop != string::npos) {// this makes a triangle obj to store in lop only after getting all three vertices
-            lot.emplace_back(triangleIndices[0], triangleIndices[1], triangleIndices[2]);
-            triangleIndicesCurrentIndex = 0;
+
+        // When three vertices are processed, create a triangle and reset count
+        if (count == 4)
+        {
+            triangulation.triangles().push_back(Triangle(index1, index2, index3, normalIndex));
+            count = 1;
         }
-
     }
-    // the below commented code writes the coordinates to console in a structured way
-    /*
-    for (auto& k : lot) {
-        cout <<"triangle:\nVertex1 => X: " << lop[k.v1()].x() << " Y: " << lop[k.v1()].y() << " Z: " << lop[k.v1()].z() << endl;
-        cout<<"\nVertex2 => X: " << lop[k.v2()].x() << " Y: " << lop[k.v2()].y() << " Z: " << lop[k.v3()].z() << endl;
-        cout<<"\nVertex3 => X: " << lop[k.v3()].x() << " Y: " << lop[k.v3()].y() << " Z: " << lop[k.v3()].z() << endl;
-
-    } */
+    // Close the STL file
+    inputFile.close();
 }

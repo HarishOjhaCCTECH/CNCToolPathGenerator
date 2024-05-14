@@ -13,15 +13,13 @@ public:
 	~DataManager();
     
     const StockMaterial& Stock() const;
-    void processData(double size);
+    void processData(double size, string filePath);
     
 
 private:
-    // read stl and find minima, maxima of stock material' bounding box
-    Triangulation triguObj;
-    STLReader stlReaderObj;
-    vector<Triangle> lot = triguObj.listOfTriangles();
-    vector<Point3D> lop = triguObj.listOfPoints();
+    Triangulation triangulation;
+    STLReader stlReader;
+    
     StockMaterial mStockMaterial;
     VoxelGrid mStlVoxels;
 };

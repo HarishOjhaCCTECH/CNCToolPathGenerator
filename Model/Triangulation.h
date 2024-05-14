@@ -1,19 +1,21 @@
 #pragma once
-#include "Triangle.h"
-#include "Point3D.h"
-
+#include<vector>
+#include<map>
+#include"Triangle.h"
 using namespace std;
-
 class Triangulation
 {
 public:
-	Triangulation();
-	~Triangulation();
+    Triangulation();
+    ~Triangulation();
+    vector<Triangle>& triangles();
+    vector<Point3D>& uniquePoints();
+    vector<Point3D>& uniqueNormals();
 
-    const vector<Triangle>& listOfTriangles() const;
-    const vector<Point3D>& listOfPoints() const;
 
 private:
-    vector<Triangle> mListOflistOfTriangles;
-    vector<Point3D> mUniquelistOfPoints;
+    vector<Triangle> mTriangles;
+    vector<Point3D> mUniquePoints;
+    vector<Point3D>mUniqeNormals;
+
 };
