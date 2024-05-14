@@ -87,30 +87,11 @@ void Visualizer::dataPass()
 void Visualizer::onOpenSTLActionClicked()
 {
     
-    QStringList shapes;
-    shapes << "Cube" << "Sphere";
-    bool ok;
-    QString shape = QInputDialog::getItem(this, "Select Shape", "Choose a shape:", shapes, 0, false, &ok);
-    if (ok && !shape.isEmpty()) {
-        if (shape == "Cube") {
-            mDataManager = new DataManager(this);
-            mDataManager->setShapeFilePath("/Model/Cube.stl");
-            
-        }
-        else if (shape == "Sphere") {
-            mDataManager = new DataManager(this);
-            mDataManager->setShapeFilePath("/Model/Sphere.stl");
-            mDataManager->processData();
-            dataPass();
-            mRenderer->update();
-        }
-        else if (shape == "Cylinder") {
-    
-        }
-        else if (shape == "Custom") {
-    
-        }
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open STL File"), "C:/Users/Harish Ojha/Downloads", tr("STL Files (*.stl)"));
+    if (!filePath.isEmpty()) {
+        qDebug() << "Selected file: " << filePath;
     }
+    mFilePath = filePath.toStdString();
 }
 
 void Visualizer::onSelectToolSizeActionClicked()
@@ -121,8 +102,11 @@ void Visualizer::onSelectToolSizeActionClicked()
     QString size = QInputDialog::getItem(this, "Select Tool Size", "Choose a size:", sizes, 0, false, &ok);
     if (ok && !size.isEmpty()) {
         if (size == "10") {
+            mDataManager = new DataManager(this);
+            
+
             mDataManager->setToolSize(size.toFloat());
-            mDataManager->processData();
+            mDataManager->processData(mFilePath);
             dataPass();
             mRenderer->mShowStockMaterial = true;
             mRenderer->mShowSTL = true;
@@ -132,7 +116,7 @@ void Visualizer::onSelectToolSizeActionClicked()
         }
         else if (size == "20") {
             mDataManager->setToolSize(size.toFloat());
-            mDataManager->processData();
+            mDataManager->processData(mFilePath);
             dataPass();
             mRenderer->mShowStockMaterial = true;
             mRenderer->mShowSTL = true;

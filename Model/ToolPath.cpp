@@ -8,7 +8,7 @@ ToolPath::ToolPath(const vector<vector<vector<BoundingBox>>>& boxes, const Point
 
 	if (boxes.size() != 0) 
 	{
-		cubeLen = abs(boxes[0][0][0].maxima().X() - boxes[0][0][0].minima().X());
+		cubeLen = abs(boxes[0][0][0].Maxima().X() - boxes[0][0][0].Minima().X());
 		mToolPathVertices << toolStart.X() << toolStart.Y() << toolStart.Z();
 
 	}
@@ -21,28 +21,28 @@ ToolPath::ToolPath(const vector<vector<vector<BoundingBox>>>& boxes, const Point
 			{
 				if (!boxes[i][j][k].existence())
 				{
-					mToolPathVertices << (boxes[i][j][k].maxima().X() + boxes[i][j][k].minima().X()) / 2;
-					mToolPathVertices << (boxes[i][j][k].maxima().Y() + boxes[i][j][k].minima().Y()) / 2;
-					mToolPathVertices << (boxes[i][j][k].maxima().Z() + boxes[i][j][k].minima().Z()) / 2;
+					mToolPathVertices << (boxes[i][j][k].Maxima().X() + boxes[i][j][k].Minima().X()) / 2;
+					mToolPathVertices << (boxes[i][j][k].Maxima().Y() + boxes[i][j][k].Minima().Y()) / 2;
+					mToolPathVertices << (boxes[i][j][k].Maxima().Z() + boxes[i][j][k].Minima().Z()) / 2;
 				}
 				else {
 					int bhoot = 0;
 					int newJ = BoxCheck(boxes, i, j + 1, k);
-					mToolPathVertices << (boxes[i][newJ][k].maxima().X() + boxes[i][newJ][k].minima().X()) / 2;
-					mToolPathVertices << ((boxes[i][newJ][k].maxima().Y() + boxes[i][newJ][k].minima().Y()) / 2) + cubeLen;
-					mToolPathVertices << (boxes[i][newJ][k].maxima().Z() + boxes[i][newJ][k].minima().Z()) / 2;	
+					mToolPathVertices << (boxes[i][newJ][k].Maxima().X() + boxes[i][newJ][k].Minima().X()) / 2;
+					mToolPathVertices << ((boxes[i][newJ][k].Maxima().Y() + boxes[i][newJ][k].Minima().Y()) / 2) + cubeLen;
+					mToolPathVertices << (boxes[i][newJ][k].Maxima().Z() + boxes[i][newJ][k].Minima().Z()) / 2;	
 				}
 				if (k == 0)
 				{
 					if (!boxes[i][j][k].existence())
 					{
-						mToolPathVertices << (boxes[i][j][k].maxima().X() + boxes[i][j][k].minima().X()) / 2;
-						mToolPathVertices << ((boxes[i][j][k].maxima().Y() + boxes[i][j][k].minima().Y()) / 2) + cubeLen;
-						mToolPathVertices << (boxes[i][j][k].maxima().Z() + boxes[i][j][k].minima().Z()) / 2;
+						mToolPathVertices << (boxes[i][j][k].Maxima().X() + boxes[i][j][k].Minima().X()) / 2;
+						mToolPathVertices << ((boxes[i][j][k].Maxima().Y() + boxes[i][j][k].Minima().Y()) / 2) + cubeLen;
+						mToolPathVertices << (boxes[i][j][k].Maxima().Z() + boxes[i][j][k].Minima().Z()) / 2;
 					}
-					mToolPathVertices << (boxes[i][j][9].maxima().X() + boxes[i][j][9].minima().X()) / 2;
-					mToolPathVertices << ((boxes[i][j][9].maxima().Y() + boxes[i][j][9].minima().Y()) / 2) + cubeLen;
-					mToolPathVertices << (boxes[i][j][9].maxima().Z() + boxes[i][j][9].minima().Z()) / 2;
+					mToolPathVertices << (boxes[i][j][9].Maxima().X() + boxes[i][j][9].Minima().X()) / 2;
+					mToolPathVertices << ((boxes[i][j][9].Maxima().Y() + boxes[i][j][9].Minima().Y()) / 2) + cubeLen;
+					mToolPathVertices << (boxes[i][j][9].Maxima().Z() + boxes[i][j][9].Minima().Z()) / 2;
 				}
 			}
 		}

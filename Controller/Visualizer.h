@@ -54,6 +54,6 @@ private:
     QBoxLayout* mToolLayout;
     QToolBar* toolBar;
     QBoxLayout* contentsLayout;
-
+    string mFilePath;
     bool mIsPaused;
 };

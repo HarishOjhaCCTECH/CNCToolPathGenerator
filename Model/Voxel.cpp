@@ -102,12 +102,12 @@ void Voxel::stlVoxels(const vector<Triangle>& lot, const vector<Point3D>& lop)
 						float px = triangleVertices[l][0];
 						float py = triangleVertices[l][1];
 						float pz = triangleVertices[l][2];
-						float x_min = boxes[i][j][k].minima().X();
-						float x_max = boxes[i][j][k].maxima().X();
-						float y_min = boxes[i][j][k].minima().Y();
-						float y_max = boxes[i][j][k].maxima().Y();
-						float z_min = boxes[i][j][k].minima().Z();
-						float z_max = boxes[i][j][k].maxima().Z();
+						float x_min = boxes[i][j][k].Minima().X();
+						float x_max = boxes[i][j][k].Maxima().X();
+						float y_min = boxes[i][j][k].Minima().Y();
+						float y_max = boxes[i][j][k].Maxima().Y();
+						float z_min = boxes[i][j][k].Minima().Z();
+						float z_max = boxes[i][j][k].Maxima().Z();
 
 						if ((px >= x_min && px <= x_max) && (py >= y_min && py <= y_max) && (pz >= z_min && pz <= z_max))
 						{

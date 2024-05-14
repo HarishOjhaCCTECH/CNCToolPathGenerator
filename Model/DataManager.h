@@ -22,9 +22,9 @@ public:
     const ToolCylinder& toolCylinder();
     const ToolPath& generatedToolPath();
 
-    void setShapeFilePath(const char* inChar);
+    
     void setToolSize(const float& inFloat);
-    void processData();
+    void processData(string path);
     void simulate();
     void savefile();
 
