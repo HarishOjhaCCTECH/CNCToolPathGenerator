@@ -5,7 +5,7 @@ Point3D::Point3D(): mx(0),my(0),mz(0) {}
 Point3D::Point3D(const float& inX, const float& inY, const float& inZ) :mx(inX), my(inY), mz(inZ) {}
 Point3D::~Point3D() {}
 
-void Point3D::setX(const float& inX) {mx = inX;}
+void Point3D::setX(const float&  inX) {mx = inX;}
 void Point3D::setY(const float& inY) {my = inY;}
 void Point3D::setZ(const float& inZ) {mz = inZ;}
 
