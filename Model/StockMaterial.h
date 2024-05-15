@@ -16,9 +16,9 @@ public:
 	double ConstituentSize() const;
     QVector<GLfloat>& GridVertices();
 
-	void setConstituentSize(double size);
+	//void setConstituentSize(double size);
 	void findMinimaMaxima(const vector<Point3D>& lop);
-	void processVertices();
+	void processVertices(double size);
 
 private:
 	BoundingBox mGridBoundingBox;

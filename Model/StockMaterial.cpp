@@ -32,8 +32,9 @@ void StockMaterial::findMinimaMaxima(const vector<Point3D>& lop)
 BoundingBox StockMaterial::StockMaterialGrid() const { return mGridBoundingBox; }
 double StockMaterial::ConstituentSize() const { return mConstituentSize; }
 
-void StockMaterial::processVertices()
+void StockMaterial::processVertices(double size)
 {
+	mConstituentSize = size;
 	int xDimension = int(mGridBoundingBox.Maxima().X() - mGridBoundingBox.Minima().X()) + 1;
 	int yDimension = int(mGridBoundingBox.Maxima().Y() - mGridBoundingBox.Minima().Y()) + 1;
 	int zDimension = int(mGridBoundingBox.Maxima().Z() - mGridBoundingBox.Minima().Z()) + 1;
@@ -101,6 +102,6 @@ void StockMaterial::processVertices()
 	}
 }
 
-void StockMaterial::setConstituentSize(double size) { mConstituentSize = size; }
+//void StockMaterial::setConstituentSize(double size) { mConstituentSize = size; }
 
 QVector<GLfloat>& StockMaterial::GridVertices() { return mGridVertices; }

@@ -6,7 +6,7 @@ void delay(int milliseconds) {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr), mIsPaused(false), mDataManager(new DataManager())
+Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr), mIsPaused(false), mDataManager(new DataManager()), mRenderer(new OpenGLWindow(QColor(0, 0, 0), this))
 {
     setupUi();
 }
@@ -68,14 +68,21 @@ void Visualizer::setupUi()
 
     mStatusBar = new QStatusBar(this);
     setStatusBar(mStatusBar);
-    mRenderer = new OpenGLWindow(QColor(0, 0, 0), this);
+    
     setCentralWidget(mRenderer);
     setWindowTitle(QCoreApplication::translate("CNC Tool Path Generator", "CNC Tool Path Generator", nullptr));
 }
 
 void Visualizer::dataPass()
 {
-    mRenderer->setRenderingAttributes(mDataManager ->Stock());
+    if (mRenderer && mDataManager) {
+        qDebug() << "Passing data to renderer";
+        mRenderer->setRenderingAttributes(mDataManager->Stock());
+    }
+    else {
+        qDebug() << "mRenderer or mDataManager is null!";
+    }
+    
 }
 
 void Visualizer::onOpenSTLActionClicked()

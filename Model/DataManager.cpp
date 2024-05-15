@@ -13,7 +13,7 @@ void DataManager::processData(double size, string filePath)
 	mStockMaterial->findMinimaMaxima(triangulation.listOfPoints());
 
 	// take tool size from user
-	//mStockMaterial->processVertices(size);
+	mStockMaterial->processVertices(size);
 
 	// making stl's voxel grid
 	//mStlVoxels.stlVoxelFinding(triangulation.uniquePoints(), mStockMaterial);
