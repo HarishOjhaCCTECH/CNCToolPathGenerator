@@ -3,7 +3,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
 #include "StockMaterial.h"
-
+#include "VoxelGrid.h"
 using namespace std;
 class QOpenGLTexture;
 class QOpenGLShader;
@@ -17,7 +17,7 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
-    void setRenderingAttributes(StockMaterial& stock);
+    void setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl);
     bool mShowSTL = false;
     bool mShowStockMaterial = false;
     bool mShowToolPath = false;
@@ -66,17 +66,12 @@ private:
     QPoint lastPos;
     float scaleFactor = 5;
 
-    /* QVector<GLfloat> mGridVerticesFront;
-     QVector<GLfloat> mGridColors;
-     QVector<GLfloat> mGridVerticesBack;
-     QVector<GLfloat> mGridVerticesSide;
-     QVector<GLfloat> mSTLGridColors;
-     QVector<GLfloat> mSTLVertices;
-     QVector<GLfloat> mCylPoleVertices;
-     QVector<GLfloat> mToolPathVertices;
-     int boxLimitPerAxisRender = 0;
-     */
-
+    
     QVector<GLfloat> mStockMaterialVertices;
     QVector<GLfloat> mStockMaterialColors;
+
+    QVector<GLfloat> mSTLShapeVertices;
+    QVector<GLfloat> mSTLShapeColors;
+
+
 };

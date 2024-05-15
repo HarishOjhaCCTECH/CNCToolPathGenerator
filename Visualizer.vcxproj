@@ -29,10 +29,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
+    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
@@ -70,6 +72,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>View;Controller;Model;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -124,6 +127,7 @@
     <ClCompile Include="Model\StockMaterial.cpp" />
     <ClCompile Include="Model\Triangle.cpp" />
     <ClCompile Include="Model\Triangulation.cpp" />
+    <ClCompile Include="Model\VoxelGrid.cpp" />
     <ClCompile Include="View\OpenGLWindow.cpp" />
     <QtMoc Include="View\OpenGLWindow.h" />
     <QtRcc Include="Visualizer.qrc" />
@@ -141,6 +145,7 @@
     <ClInclude Include="Model\STLReader.h" />
     <ClInclude Include="Model\Triangle.h" />
     <ClInclude Include="Model\Triangulation.h" />
+    <ClInclude Include="Model\VoxelGrid.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

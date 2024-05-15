@@ -64,6 +64,9 @@
     <ClCompile Include="Model\StockMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\VoxelGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View\OpenGLWindow.h">
@@ -122,6 +125,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\StockMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\VoxelGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

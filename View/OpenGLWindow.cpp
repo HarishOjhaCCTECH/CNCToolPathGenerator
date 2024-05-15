@@ -21,12 +21,6 @@ OpenGLWindow::~OpenGLWindow()
 void OpenGLWindow::reset()
 {
 	makeCurrent();
-	delete mProgram;
-	mProgram = nullptr;
-	delete mVshader;
-	mVshader = nullptr;
-	delete mFshader;
-	mFshader = nullptr;
 	mVbo.destroy();
 	doneCurrent();
 	QObject::disconnect(mContextWatchConnection);
@@ -74,13 +68,25 @@ void OpenGLWindow::paintGL()
 	glEnableVertexAttribArray(m_colAttr);
 
 	// render Stock material
+	if (mShowStockMaterial)
+	{
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mStockMaterialVertices.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mStockMaterialColors.data());
+		glDrawArrays(GL_POLYGON, 0, mStockMaterialVertices.size() / 3);
 
-	//QVector<GLfloat> vertices1;
-	//QVector<GLfloat> colors;
-	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mStockMaterialVertices.data());
-	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mStockMaterialColors.data());
-	glDrawArrays(GL_POLYGON, 0, mStockMaterialVertices.size() / 3);
+	}
 
+	if (mShowSTL)
+	{
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mSTLShapeVertices.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mSTLShapeColors.data());
+		glDrawArrays(GL_POLYGON, 0, mSTLShapeVertices.size() / 3);
+
+	}
+
+	// render Stock material
+
+	
 	/*if (mShowStockMaterial)
 	{
 		for (int i = 0; i < pow(boxLimitPerAxisRender, 3); i++)
@@ -313,11 +319,17 @@ void OpenGLWindow::zoomOut()
 	update();
 }
 
-void OpenGLWindow::setRenderingAttributes(StockMaterial& stock)
+void OpenGLWindow::setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl)
 {
 	mStockMaterialVertices.clear();
+	mStockMaterialColors.clear();
+	mSTLShapeVertices.clear();
+	mSTLShapeColors.clear();
 
 	mStockMaterialVertices = stock.GridVertices();
+	mStockMaterialColors = stock.GridColors();
+	mSTLShapeVertices = stl.GridVers();
+	mSTLShapeColors = stl.GridColrs();
 	//mGridVerticesFront.clear();
 	//mGridVerticesBack.clear();
 	//mGridVerticesSide.clear();

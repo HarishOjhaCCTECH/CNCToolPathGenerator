@@ -11,7 +11,8 @@ Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr), mIsPaused(false)
     setupUi();
 }
 
-Visualizer::~Visualizer() {}
+Visualizer::~Visualizer() 
+{}
 
 void Visualizer::setupUi()
 {
@@ -77,7 +78,7 @@ void Visualizer::dataPass()
 {
     if (mRenderer && mDataManager) {
         qDebug() << "Passing data to renderer";
-        mRenderer->setRenderingAttributes(mDataManager->Stock());
+        mRenderer->setRenderingAttributes(mDataManager->Stock(), mDataManager->StlVoxels());
     }
     else {
         qDebug() << "mRenderer or mDataManager is null!";
@@ -96,18 +97,19 @@ void Visualizer::onOpenSTLActionClicked()
 
 void Visualizer::onSelectToolSizeActionClicked()
 {
+    
     bool ok;
     QString size = QInputDialog::getText(this, "Select Tool Size", "Enter a size:", QLineEdit::Normal, QString(), &ok);
     if (ok && !size.isEmpty()) {
         double sizeValue = size.toDouble(&ok);
         if (ok) {
-            const double minimumSize = 10.0; // Set your minimum value here
+            const double minimumSize = 5.0; // Set your minimum value here
             if (sizeValue >= minimumSize) {
                 mDataManager->processData(sizeValue, mFilePath);
                 dataPass();
                 mRenderer->mShowStockMaterial = true;
                 mRenderer->mShowSTL = true;
-                //mRenderer->mShowToolPath = true;
+                mRenderer->mShowToolPath = true;
                 //mRenderer->mShowToolCylinder = true;
                 mRenderer->update();
             }

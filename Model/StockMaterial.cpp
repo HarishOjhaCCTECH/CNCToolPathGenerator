@@ -15,9 +15,9 @@ void StockMaterial::findMinimaMaxima(const vector<Point3D>& lop)
 	for (int i = 0; i < lop.size(); i++)
 	{
 		//searching minima
-		if (lop.at(i).X() < xMin) { xMin = lop.at(0).X(); }
-		if (lop.at(i).Y() < yMin) { yMin = lop.at(0).Y(); }
-		if (lop.at(i).Z() < zMin) { zMin = lop.at(0).Z(); }
+		if (lop.at(i).X() < xMin) { xMin = lop.at(i).X(); }
+		if (lop.at(i).Y() < yMin) { yMin = lop.at(i).Y(); }
+		if (lop.at(i).Z() < zMin) { zMin = lop.at(i).Z(); }
 
 		//searching maxima
 		if (lop.at(i).X() > xMax) { xMax = lop.at(i).X(); }
@@ -35,9 +35,9 @@ double StockMaterial::ConstituentSize() const { return mConstituentSize; }
 void StockMaterial::processVertices(double size)
 {
 	mConstituentSize = size;
-	int xDimension = int(mGridBoundingBox.Maxima().X() - mGridBoundingBox.Minima().X()) + 1;
-	int yDimension = int(mGridBoundingBox.Maxima().Y() - mGridBoundingBox.Minima().Y()) + 1;
-	int zDimension = int(mGridBoundingBox.Maxima().Z() - mGridBoundingBox.Minima().Z()) + 1;
+	int xDimension = int((mGridBoundingBox.Maxima().X() - mGridBoundingBox.Minima().X()) / size) + 1;
+	int yDimension = int((mGridBoundingBox.Maxima().Y() - mGridBoundingBox.Minima().Y()) / size) + 1;
+	int zDimension = int((mGridBoundingBox.Maxima().Z() - mGridBoundingBox.Minima().Z()) / size) + 1;
 
 	Point3D startPoint(mGridBoundingBox.Minima().X(), mGridBoundingBox.Minima().Y(), mGridBoundingBox.Minima().Z());
 
@@ -95,13 +95,13 @@ void StockMaterial::processVertices(double size)
 
 				for (int ind = 0; ind < 24; ind++)
 				{
-					mGridColors << 1 << 1 << 0;
+					mGridColors << 1 << 0 << 0;
 				}
 			}
 		}
 	}
 }
 
-//void StockMaterial::setConstituentSize(double size) { mConstituentSize = size; }
+QVector<GLfloat>& StockMaterial::GridColors() { return mGridColors; }
 
 QVector<GLfloat>& StockMaterial::GridVertices() { return mGridVertices; }

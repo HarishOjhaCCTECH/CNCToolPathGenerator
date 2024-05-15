@@ -5,7 +5,7 @@
 #include "Point3D.h"
 #include "string"
 #include "StockMaterial.h"
-//#include "VoxelGrid.h"
+#include "VoxelGrid.h"
 using namespace std;
 class DataManager
 {
@@ -15,7 +15,7 @@ public:
 
     StockMaterial& Stock();
     void processData(double size, string filePath);
-
+    VoxelGrid& StlVoxels();
 
 private:
     Triangulation triangulation;
@@ -25,5 +25,5 @@ private:
 //    vector<Triangle> lot = triangulation.listOfTriangles();
 
     StockMaterial* mStockMaterial;
-    //VoxelGrid mStlVoxels;
+    VoxelGrid* mStlVoxels;
 };

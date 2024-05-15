@@ -15,6 +15,7 @@ public:
 	BoundingBox StockMaterialGrid() const;
 	double ConstituentSize() const;
     QVector<GLfloat>& GridVertices();
+	QVector<GLfloat>& GridColors();
 
 	//void setConstituentSize(double size);
 	void findMinimaMaxima(const vector<Point3D>& lop);

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "DataManager.h"
 
-DataManager::DataManager():mStockMaterial(new StockMaterial()) {}
-DataManager::~DataManager() { delete mStockMaterial; }
+DataManager::DataManager():mStockMaterial(new StockMaterial()), mStlVoxels(new VoxelGrid()) {}
+DataManager::~DataManager() {}
 
 void DataManager::processData(double size, string filePath)
 {
@@ -16,10 +16,11 @@ void DataManager::processData(double size, string filePath)
 	mStockMaterial->processVertices(size);
 
 	// making stl's voxel grid
-	//mStlVoxels.stlVoxelFinding(triangulation.uniquePoints(), mStockMaterial);
+	mStlVoxels->stlVoxelFinding(triangulation.listOfPoints(), mStockMaterial->StockMaterialGrid(), mStockMaterial->ConstituentSize());
 
 	// making vertices vector for rendering stock material
 	
 }
 
 StockMaterial& DataManager::Stock(){ return *mStockMaterial; }
+VoxelGrid& DataManager::StlVoxels() { return *mStlVoxels; }
