@@ -1,16 +1,18 @@
-// this is header file for triangulation class declaration
-// purpose - to store the points and triangles
 #pragma once
 #include <vector>
 #include "Triangle.h"
 #include "Point3D.h"
+using namespace std;
+
 class Triangulation {
 public:
-    Triangulation(); // default constructor
-    ~Triangulation(); // destructor
-    std::vector<Triangle>& listOfTriangles();// getter
-    std::vector<Point3D>& listOfPoints();//getter
+    Triangulation();
+    ~Triangulation();
+
+    vector<Triangle>& listOfTriangles();
+    vector<Point3D>& listOfPoints();
+
 private:
-    std::vector<Triangle> mListOflistOfTriangles; // storage area for all the Triangles object
-    std::vector<Point3D> mUniquelistOfPoints; // storage area for all the Points object
+    vector<Triangle> mListOflistOfTriangles;
+    vector<Point3D> mUniquelistOfPoints;
 };

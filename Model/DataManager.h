@@ -14,16 +14,13 @@ public:
     ~DataManager();
 
     StockMaterial& Stock();
-    void processData(double size, string filePath);
     VoxelGrid& StlVoxels();
+
+    void processData(double size, string filePath);
 
 private:
     Triangulation triangulation;
     STLReader stlReader;
-    //STLReader stlReader;
-  //  vector<Point3D> lop = triangulation.listOfPoints();
-//    vector<Triangle> lot = triangulation.listOfTriangles();
-
     StockMaterial* mStockMaterial;
     VoxelGrid* mStlVoxels;
 };

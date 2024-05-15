@@ -17,7 +17,9 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
 public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
+
     void setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl);
+
     bool mShowSTL = false;
     bool mShowStockMaterial = false;
     bool mShowToolPath = false;
@@ -66,12 +68,9 @@ private:
     QPoint lastPos;
     float scaleFactor = 5;
 
-    
     QVector<GLfloat> mStockMaterialVertices;
     QVector<GLfloat> mStockMaterialColors;
 
     QVector<GLfloat> mSTLShapeVertices;
     QVector<GLfloat> mSTLShapeColors;
-
-
 };

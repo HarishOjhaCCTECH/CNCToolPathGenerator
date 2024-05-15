@@ -10,9 +10,11 @@ class VoxelGrid
 public:
 	VoxelGrid();
 	~VoxelGrid();
-	void stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double size);
+
 	QVector<GLfloat> GridVers();
 	QVector<GLfloat> GridColrs();
+
+	void stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double size);
 
 private:
 	vector<vector<vector<bool>>> mSTLGrid;

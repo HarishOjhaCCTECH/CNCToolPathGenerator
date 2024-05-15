@@ -3,6 +3,12 @@
 
 StockMaterial::StockMaterial() {}
 StockMaterial::~StockMaterial() {}
+
+BoundingBox StockMaterial::StockMaterialGrid() const { return mGridBoundingBox; }
+double StockMaterial::ConstituentSize() const { return mConstituentSize; }
+QVector<GLfloat>& StockMaterial::GridColors() { return mGridColors; }
+QVector<GLfloat>& StockMaterial::GridVertices() { return mGridVertices; }
+
 void StockMaterial::findMinimaMaxima(const vector<Point3D>& lop)
 {
 	double xMin = DBL_MAX;
@@ -24,13 +30,10 @@ void StockMaterial::findMinimaMaxima(const vector<Point3D>& lop)
 		if (lop.at(i).Y() > yMax) { yMax = lop.at(i).Y(); }
 		if (lop.at(i).Z() > zMax) { zMax = lop.at(i).Z(); }
 	}
-
 	mGridBoundingBox.setMaxima(Point3D(xMax, yMax, zMax));
 	mGridBoundingBox.setMinima(Point3D(xMin, yMin, zMin));
 }
 
-BoundingBox StockMaterial::StockMaterialGrid() const { return mGridBoundingBox; }
-double StockMaterial::ConstituentSize() const { return mConstituentSize; }
 
 void StockMaterial::processVertices(double size)
 {
@@ -102,6 +105,3 @@ void StockMaterial::processVertices(double size)
 	}
 }
 
-QVector<GLfloat>& StockMaterial::GridColors() { return mGridColors; }
-
-QVector<GLfloat>& StockMaterial::GridVertices() { return mGridVertices; }

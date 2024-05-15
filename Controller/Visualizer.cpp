@@ -2,8 +2,9 @@
 #include "Visualizer.h"
 #include "OpenGLWindow.h"
 
+// delay function tool cylinder movement
 void delay(int milliseconds) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    this_thread::sleep_for(chrono::milliseconds(milliseconds));
 }
 
 Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr), mIsPaused(false), mDataManager(new DataManager()), mRenderer(new OpenGLWindow(QColor(0, 0, 0), this))
@@ -11,8 +12,7 @@ Visualizer::Visualizer(QWindow* parent) : QMainWindow(nullptr), mIsPaused(false)
     setupUi();
 }
 
-Visualizer::~Visualizer() 
-{}
+Visualizer::~Visualizer() {}
 
 void Visualizer::setupUi()
 {
@@ -33,12 +33,14 @@ void Visualizer::setupUi()
     centralWidget->setLayout(mToolLayout);
     setCentralWidget(centralWidget);
 
+    // finding file path of icons
     QString currentPathIcon = QCoreApplication::applicationDirPath();
     QDir dir(currentPathIcon);
     dir.cdUp();
     dir.cdUp();
     QString parentPathIcon = dir.path();
 
+    // Icons of the QAction buttons
     mOpenSTLAction = new QAction(QIcon(parentPathIcon + "/Resources/Icons/OpenSTL.png"), "Open Desired STL file", this);
     mSelectToolSizeAction = new QAction(QIcon(parentPathIcon + "/Resources/Icons/ToolTipSize.png"), "Choose tool size", this);
     mSimulateOperationAction = new QAction(QIcon(parentPathIcon + "/Resources/Icons/SimulateOperation.png"), "Simulate Operation", this);
@@ -76,14 +78,7 @@ void Visualizer::setupUi()
 
 void Visualizer::dataPass()
 {
-    if (mRenderer && mDataManager) {
-        qDebug() << "Passing data to renderer";
-        mRenderer->setRenderingAttributes(mDataManager->Stock(), mDataManager->StlVoxels());
-    }
-    else {
-        qDebug() << "mRenderer or mDataManager is null!";
-    }
-    
+    mRenderer->setRenderingAttributes(mDataManager->Stock(), mDataManager->StlVoxels());
 }
 
 void Visualizer::onOpenSTLActionClicked()
@@ -97,20 +92,19 @@ void Visualizer::onOpenSTLActionClicked()
 
 void Visualizer::onSelectToolSizeActionClicked()
 {
-    
     bool ok;
     QString size = QInputDialog::getText(this, "Select Tool Size", "Enter a size:", QLineEdit::Normal, QString(), &ok);
     if (ok && !size.isEmpty()) {
         double sizeValue = size.toDouble(&ok);
         if (ok) {
-            const double minimumSize = 5.0; // Set your minimum value here
+            const double minimumSize = 5.0; // minimum value of tool
             if (sizeValue >= minimumSize) {
                 mDataManager->processData(sizeValue, mFilePath);
                 dataPass();
                 mRenderer->mShowStockMaterial = true;
                 mRenderer->mShowSTL = true;
                 mRenderer->mShowToolPath = true;
-                //mRenderer->mShowToolCylinder = true;
+                mRenderer->mShowToolCylinder = true;
                 mRenderer->update();
             }
             else {
@@ -133,17 +127,14 @@ void Visualizer::onSimulateOperationActionClicked()
     mRenderer->mShowToolPath = true;
     mRenderer->mShowToolCylinder = true;
 
-    for (int i = 0; i < 5; i++)//mRenderer->toolPathVerticesSize() / 3
+    for (int i = 0; i < 5; i++)
     {
         //mDataManager->simulate();
         dataPass();
         mRenderer->update();
         delay(1000);
         QCoreApplication::processEvents();
-        if (!mRenderer->mShowSimulation)
-        {
-            break;
-        }
+        if (!mRenderer->mShowSimulation) { break; }
     }
 }
 
@@ -152,6 +143,7 @@ void Visualizer::onPauseResumeActionClicked()
     mIsPaused = !mIsPaused;
     updatePauseResumeTooltip();
 }
+
 void Visualizer::onFinishAndSaveActionClicked()
 {
     mRenderer->mShowSimulation = false;
@@ -166,10 +158,12 @@ void Visualizer::onFinishAndSaveActionClicked()
 
 void Visualizer::updatePauseResumeTooltip()
 {
-    if (mIsPaused)
+    if (mIsPaused) {
         mPauseResumeAction->setToolTip("Resume");
-    else
+    }
+    else {
         mPauseResumeAction->setToolTip("Pause");
+    }
 }
 
 void Visualizer::onShowStockMaterialActionClicked()
@@ -180,6 +174,7 @@ void Visualizer::onShowStockMaterialActionClicked()
     mRenderer->mShowToolCylinder = false;
     mRenderer->update();
 }
+
 void Visualizer::onShowToolPathActionClicked()
 {
     mRenderer->mShowStockMaterial = false;
@@ -188,6 +183,7 @@ void Visualizer::onShowToolPathActionClicked()
     mRenderer->mShowToolCylinder = false;
     mRenderer->update();
 }
+
 void Visualizer::onShowSTLShapeActionClicked()
 {
     mRenderer->mShowStockMaterial = false;

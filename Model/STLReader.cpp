@@ -5,10 +5,10 @@
 #include <string>
 #include "STLReader.h"
 #include "Point3D.h"
-using namespace std;
-STLReader::STLReader() {} // default constructor
-STLReader::~STLReader() {} // destructor
-// comparison stores unique points(lop) and their indices in triangle(lot)
+
+STLReader::STLReader() {}
+STLReader::~STLReader() {}
+
 void STLReader::read(string stlFilePath, vector<Triangle>& lot, vector<Point3D>& lop) {
     map<Point3D, int> comparisonMap;
     ifstream stlFile;
@@ -19,7 +19,7 @@ void STLReader::read(string stlFilePath, vector<Triangle>& lot, vector<Point3D>&
         cerr << "Error opening file!" << endl;
     }
     int triangleIndices[3] = { 0,0,0 };
-    int triangleIndicesCurrentIndex = 0; // 
+    int triangleIndicesCurrentIndex = 0;
     int lopCurrentIndex = 0;
     while (getline(stlFile, stlLine)) { // checking everyline
         int positionVertex = stlLine.find("vertex ");
@@ -56,14 +56,5 @@ void STLReader::read(string stlFilePath, vector<Triangle>& lot, vector<Point3D>&
             lot.emplace_back(triangleIndices[0], triangleIndices[1], triangleIndices[2]);
             triangleIndicesCurrentIndex = 0;
         }
-
     }
-    // the below commented code writes the coordinates to console in a structured way
-    /*
-    for (auto& k : lot) {
-        cout <<"triangle:\nVertex1 => X: " << lop[k.v1()].x() << " Y: " << lop[k.v1()].y() << " Z: " << lop[k.v1()].z() << endl;
-        cout<<"\nVertex2 => X: " << lop[k.v2()].x() << " Y: " << lop[k.v2()].y() << " Z: " << lop[k.v3()].z() << endl;
-        cout<<"\nVertex3 => X: " << lop[k.v3()].x() << " Y: " << lop[k.v3()].y() << " Z: " << lop[k.v3()].z() << endl;
-
-    } */
 }

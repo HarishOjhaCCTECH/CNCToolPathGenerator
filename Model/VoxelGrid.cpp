@@ -3,8 +3,10 @@
 
 VoxelGrid::VoxelGrid() {}
 VoxelGrid::~VoxelGrid() {}
+
 QVector<GLfloat> VoxelGrid::GridVers() { return mGridVertices; }
 QVector<GLfloat> VoxelGrid::GridColrs() { return mGridColors; }
+
 void VoxelGrid::stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double size)
 {
 	int xDimension = int((box.Maxima().X() - box.Minima().X()) / size) + 1;

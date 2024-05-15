@@ -4,7 +4,6 @@
 #include "DataManager.h"
 #include "chrono"
 #include "thread"
-
 using namespace std;
 
 class OpenGLWindow;
@@ -38,8 +37,13 @@ private:
     QToolBar* mMainToolBar;
     QWidget* mCentralWidget;
     QStatusBar* mStatusBar;
+    QBoxLayout* mToolLayout;
+    QToolBar* toolBar;
+    QBoxLayout* contentsLayout;
+
     OpenGLWindow* mRenderer;
     DataManager* mDataManager;
+
     QAction* mOpenSTLAction;
     QAction* mSelectToolSizeAction;
     QAction* mSimulateOperationAction;
@@ -49,9 +53,6 @@ private:
     QAction* mShowToolPathAction;
     QAction* mShowSTLShapeAction;
 
-    QBoxLayout* mToolLayout;
-    QToolBar* toolBar;
-    QBoxLayout* contentsLayout;
     string mFilePath;
     bool mIsPaused;
 };

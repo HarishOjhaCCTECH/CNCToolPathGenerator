@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include"Triangulation.h"
 #include <vector>
-Triangulation::Triangulation() {} // default constructor
-Triangulation::~Triangulation() {} // destructor
-std::vector<Triangle>& Triangulation::listOfTriangles() { // getter
-    return mListOflistOfTriangles;
-}
-std::vector<Point3D>& Triangulation::listOfPoints() { // getter
-    return mUniquelistOfPoints;
-}
+
+Triangulation::Triangulation() {}
+Triangulation::~Triangulation() {}
+
+vector<Triangle>& Triangulation::listOfTriangles() { return mListOflistOfTriangles; }
+vector<Point3D>& Triangulation::listOfPoints() { return mUniquelistOfPoints;}

@@ -17,7 +17,6 @@ public:
     QVector<GLfloat>& GridVertices();
 	QVector<GLfloat>& GridColors();
 
-	//void setConstituentSize(double size);
 	void findMinimaMaxima(const vector<Point3D>& lop);
 	void processVertices(double size);
 
