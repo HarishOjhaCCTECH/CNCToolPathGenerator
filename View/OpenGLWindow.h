@@ -4,6 +4,8 @@
 #include <QOpenGLBuffer>
 #include "StockMaterial.h"
 #include "VoxelGrid.h"
+#include "ToolPath.h"
+#include "ToolCylinder.h"
 using namespace std;
 class QOpenGLTexture;
 class QOpenGLShader;
@@ -18,7 +20,7 @@ public:
     OpenGLWindow(const QColor& background, QMainWindow* parent);
     ~OpenGLWindow();
 
-    void setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl);
+    void setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl, ToolPath& path, ToolCylinder& tool);
 
     bool mShowSTL = false;
     bool mShowStockMaterial = false;
@@ -73,4 +75,10 @@ private:
 
     QVector<GLfloat> mSTLShapeVertices;
     QVector<GLfloat> mSTLShapeColors;
+
+    QVector<GLfloat> mPathVers;
+    QVector<GLfloat> mPathColrs;
+
+    QVector<GLfloat> mToolPoles;
+    QVector<GLfloat> mToolPoleColors;
 };

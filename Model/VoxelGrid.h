@@ -13,6 +13,7 @@ public:
 
 	QVector<GLfloat> GridVers();
 	QVector<GLfloat> GridColrs();
+	vector<vector<vector<bool>>>& STLGrid();
 
 	void stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double size);
 

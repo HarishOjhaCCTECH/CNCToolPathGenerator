@@ -6,15 +6,16 @@ VoxelGrid::~VoxelGrid() {}
 
 QVector<GLfloat> VoxelGrid::GridVers() { return mGridVertices; }
 QVector<GLfloat> VoxelGrid::GridColrs() { return mGridColors; }
+vector<vector<vector<bool>>>& VoxelGrid::STLGrid() { return mSTLGrid; }
 
 void VoxelGrid::stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double size)
 {
 	int xDimension = int((box.Maxima().X() - box.Minima().X()) / size) + 1;
-	int yDimension = int((box.Maxima().Y() - box.Minima().Y()) / size) + 1;
-	int zDimension = int((box.Maxima().Z() - box.Minima().Z()) / size) + 1;
+	int yDimension = int((box.Maxima().Y() - box.Minima().Y()) / size) + 2;
+	int zDimension = int((box.Maxima().Z() - box.Minima().Z()) / size) + 2;
 	mSTLGrid.resize(xDimension, vector<vector<bool>>(yDimension, vector<bool>(zDimension)));
 
-	Point3D startPoint(box.Minima().X(), box.Minima().Y(), box.Minima().Z());
+	Point3D stockStartPoint(box.Minima().X(), box.Minima().Y(), box.Minima().Z());
 
     for (auto& p : lop)
     {
@@ -29,13 +30,13 @@ void VoxelGrid::stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double si
 			{
 				for (int k = 0; k < zDimension; k++)
 				{
-					float x_min = startPoint.X() + (i * size);
+					float x_min = stockStartPoint.X() + (i * size);
 					float x_max = x_min + (size);
 
-					float y_min = startPoint.Y() + (j * size);
+					float y_min = stockStartPoint.Y() + (j * size);
 					float y_max = y_min + (size);
 
-					float z_min = startPoint.Z() + (k * size);
+					float z_min = stockStartPoint.Z() + (k * size);
 					float z_max = z_min + (size);
 
 
@@ -80,7 +81,7 @@ void VoxelGrid::stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double si
 
 						for (int ind = 0; ind < 24; ind++)
 						{
-							mGridColors << 1 << 0 << 0;
+							mGridColors << 0.4180 <<  0.9844<< 0.0117;
 						}
 					}
 				}

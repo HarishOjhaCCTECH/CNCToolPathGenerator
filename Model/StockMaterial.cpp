@@ -39,10 +39,10 @@ void StockMaterial::processVertices(double size)
 {
 	mConstituentSize = size;
 	int xDimension = int((mGridBoundingBox.Maxima().X() - mGridBoundingBox.Minima().X()) / size) + 1;
-	int yDimension = int((mGridBoundingBox.Maxima().Y() - mGridBoundingBox.Minima().Y()) / size) + 1;
-	int zDimension = int((mGridBoundingBox.Maxima().Z() - mGridBoundingBox.Minima().Z()) / size) + 1;
+	int yDimension = int((mGridBoundingBox.Maxima().Y() - mGridBoundingBox.Minima().Y()) / size) + 2;
+	int zDimension = int((mGridBoundingBox.Maxima().Z() - mGridBoundingBox.Minima().Z()) / size) + 2;
 
-	Point3D startPoint(mGridBoundingBox.Minima().X(), mGridBoundingBox.Minima().Y(), mGridBoundingBox.Minima().Z());
+	Point3D stockStartPoint(mGridBoundingBox.Minima().X(), mGridBoundingBox.Minima().Y(), mGridBoundingBox.Minima().Z());
 
 	// making vector for rendering stock material
 	for (int i = 0; i < xDimension; i++)
@@ -51,13 +51,13 @@ void StockMaterial::processVertices(double size)
 		{
 			for (int k = 0; k < zDimension; k++)
 			{
-				float x_min = startPoint.X() + (i * mConstituentSize);
+				float x_min = stockStartPoint.X() + (i * mConstituentSize);
 				float x_max = x_min + (mConstituentSize);
 
-				float y_min = startPoint.Y() + (j * mConstituentSize);
+				float y_min = stockStartPoint.Y() + (j * mConstituentSize);
 				float y_max = y_min + (mConstituentSize);
 
-				float z_min = startPoint.Z() + (k * mConstituentSize);
+				float z_min = stockStartPoint.Z() + (k * mConstituentSize);
 				float z_max = z_min + (mConstituentSize);
 
 				// front face
@@ -98,7 +98,7 @@ void StockMaterial::processVertices(double size)
 
 				for (int ind = 0; ind < 24; ind++)
 				{
-					mGridColors << 1 << 0 << 0;
+					mGridColors << 0.0117 << 0.8086 << 0.9844;
 				}
 			}
 		}

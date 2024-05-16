@@ -84,6 +84,61 @@ void OpenGLWindow::paintGL()
 		glDrawArrays(GL_POLYGON, 0, mSTLShapeVertices.size() / 3);
 
 	}
+
+	// rendering tool path
+	if (mShowToolPath)
+	{
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mPathVers.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mPathColrs.data());
+		glDrawArrays(GL_LINE_STRIP, 0, mPathVers.size() / 3);
+
+	}
+
+	// rendering tool
+	if (mShowToolCylinder) {
+		glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, mToolPoles.data());
+		glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, mToolPoleColors.data());
+		glDrawArrays(GL_LINES, 0, mToolPoles.size() / 3);
+
+	}
+
+	//rendering x-axis
+	
+	QVector<GLfloat> axisVertices;
+	QVector<GLfloat> axisColors;
+	axisVertices << 0 << 0 << 0;
+	axisVertices << 80 << 0 << 0;
+	axisColors << 1 << 0 << 0;
+	axisColors << 1 << 0 << 0;
+	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, axisVertices.data());
+	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, axisColors.data());
+	glDrawArrays(GL_LINES, 0, axisVertices.size() / 3);
+	axisVertices.clear();
+	axisColors.clear();
+
+	// rendering y-axis
+	axisVertices << 0 << 0 << 0;
+	axisVertices << 0 << 80 << 0;
+	axisColors << 0 << 1 << 0;
+	axisColors << 0 << 1 << 0;
+	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, axisVertices.data());
+	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, axisColors.data());
+	glDrawArrays(GL_LINES, 0, axisVertices.size() / 3);
+	axisVertices.clear();
+	axisColors.clear();
+
+	//rendering z-axis
+	axisVertices << 0 << 0 << 0;
+	axisVertices << 0 << 0 << 80;
+	axisColors << 0 << 0 << 1;
+	axisColors << 0 << 0 << 1;
+	glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, axisVertices.data());
+	glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, axisColors.data());
+	glDrawArrays(GL_LINES, 0, axisVertices.size() / 3);
+	axisVertices.clear();
+	axisColors.clear();
+	
+
 	glDisableVertexAttribArray(m_colAttr);
 	glDisableVertexAttribArray(m_posAttr);
 }
@@ -197,15 +252,23 @@ void OpenGLWindow::zoomOut()
 	update();
 }
 
-void OpenGLWindow::setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl)
+void OpenGLWindow::setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl, ToolPath& path, ToolCylinder& tool)
 {
 	mStockMaterialVertices.clear();
 	mStockMaterialColors.clear();
 	mSTLShapeVertices.clear();
 	mSTLShapeColors.clear();
+	mPathVers.clear();
+	mPathColrs.clear();
+	mToolPoles.clear();
+	mToolPoleColors.clear();
 
 	mStockMaterialVertices = stock.GridVertices();
 	mStockMaterialColors = stock.GridColors();
 	mSTLShapeVertices = stl.GridVers();
 	mSTLShapeColors = stl.GridColrs();
+	mPathVers = path.PathVertices();
+	mPathColrs = path.PathColors();
+	mToolPoles = tool.PoleVertices();
+	mToolPoleColors = tool.PolColors();
 }

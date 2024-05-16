@@ -78,7 +78,7 @@ void Visualizer::setupUi()
 
 void Visualizer::dataPass()
 {
-    mRenderer->setRenderingAttributes(mDataManager->Stock(), mDataManager->StlVoxels());
+    mRenderer->setRenderingAttributes(mDataManager->Stock(), mDataManager->StlVoxels(), mDataManager->Path(), mDataManager->Tool());
 }
 
 void Visualizer::onOpenSTLActionClicked()
@@ -97,8 +97,9 @@ void Visualizer::onSelectToolSizeActionClicked()
     if (ok && !size.isEmpty()) {
         double sizeValue = size.toDouble(&ok);
         if (ok) {
-            const double minimumSize = 5.0; // minimum value of tool
+            const double minimumSize = 4.0; // minimum value of tool
             if (sizeValue >= minimumSize) {
+                mToolSize = sizeValue;
                 mDataManager->processData(sizeValue, mFilePath);
                 dataPass();
                 mRenderer->mShowStockMaterial = true;
@@ -127,9 +128,10 @@ void Visualizer::onSimulateOperationActionClicked()
     mRenderer->mShowToolPath = true;
     mRenderer->mShowToolCylinder = true;
 
-    for (int i = 0; i < 5; i++)
+    int movement = mDataManager->Path().PathVertices().size()/3;
+    for (int i = 0; i < movement; i++)
     {
-        //mDataManager->simulate();
+        mDataManager->simulate(mToolSize, i);
         dataPass();
         mRenderer->update();
         delay(1000);

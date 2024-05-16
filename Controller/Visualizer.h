@@ -55,4 +55,5 @@ private:
 
     string mFilePath;
     bool mIsPaused;
+    double mToolSize;
 };

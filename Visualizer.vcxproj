@@ -123,6 +123,8 @@
     <ClCompile Include="Model\BoundingBox.cpp" />
     <ClCompile Include="Model\DataManager.cpp" />
     <ClCompile Include="Model\Point3D.cpp" />
+    <ClCompile Include="Model\ToolCylinder.cpp" />
+    <ClCompile Include="Model\ToolPath.cpp" />
     <ClCompile Include="Model\STLReader.cpp" />
     <ClCompile Include="Model\StockMaterial.cpp" />
     <ClCompile Include="Model\Triangle.cpp" />
@@ -143,6 +145,8 @@
     <ClInclude Include="Model\StockMaterial.h" />
     <ClInclude Include="Model\Point3D.h" />
     <ClInclude Include="Model\STLReader.h" />
+    <ClInclude Include="Model\ToolCylinder.h" />
+    <ClInclude Include="Model\ToolPath.h" />
     <ClInclude Include="Model\Triangle.h" />
     <ClInclude Include="Model\Triangulation.h" />
     <ClInclude Include="Model\VoxelGrid.h" />
