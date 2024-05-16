@@ -37,6 +37,9 @@ void StockMaterial::findMinimaMaxima(const vector<Point3D>& lop)
 
 void StockMaterial::processVertices(double size)
 {
+	mGridVertices.clear();
+	mGridColors.clear();
+
 	mConstituentSize = size;
 	int xDimension = int((mGridBoundingBox.Maxima().X() - mGridBoundingBox.Minima().X()) / size) + 1;
 	int yDimension = int((mGridBoundingBox.Maxima().Y() - mGridBoundingBox.Minima().Y()) / size) + 2;

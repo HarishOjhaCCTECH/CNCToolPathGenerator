@@ -10,6 +10,8 @@ vector<vector<vector<bool>>>& VoxelGrid::STLGrid() { return mSTLGrid; }
 
 void VoxelGrid::stlVoxelFinding(vector<Point3D>& lop, BoundingBox box, double size)
 {
+	mGridVertices.clear();
+	mGridColors.clear();
 	int xDimension = int((box.Maxima().X() - box.Minima().X()) / size) + 1;
 	int yDimension = int((box.Maxima().Y() - box.Minima().Y()) / size) + 2;
 	int zDimension = int((box.Maxima().Z() - box.Minima().Z()) / size) + 2;

@@ -8,6 +8,7 @@
 #include "VoxelGrid.h"
 #include "ToolPath.h"
 #include "ToolCylinder.h"
+#include "ToolPathTxtWriter.h"
 using namespace std;
 
 class DataManager
@@ -23,6 +24,7 @@ public:
 
     void processData(double size, string filePath);
     void simulate(double size, int position);
+    void saveFile();
 
 private:
     Triangulation triangulation;
@@ -31,4 +33,5 @@ private:
     VoxelGrid* mStlVoxels;
     ToolPath* mPath;
     ToolCylinder* mTool;
+    ToolPathTxtWriter* mWriter;
 };

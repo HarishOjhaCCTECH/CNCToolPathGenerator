@@ -7,9 +7,10 @@ ToolPath::~ToolPath() {}
 QVector<GLfloat>& ToolPath::PathVertices() { return mPathVertices; }
 QVector<GLfloat>& ToolPath::PathColors() { return mPathColors; }
 
-
 void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, double size)
 {
+	mPathVertices.clear();
+	mPathColors.clear();
 	bool upAndDown = false;
 	int prevHeight = 0;
 	int maxHeight = 0;
@@ -19,8 +20,6 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 
 	Point3D stockStartPoint(box.Minima().X(), box.Minima().Y(), box.Minima().Z());
 
-	/*mPathVertices << box.Maxima().X() << box.Maxima().Y()-(size/2) << box.Maxima().Z()+size;
-	mPathColors << 0 << 0 << 0;*/
 	for (int i = xDimension - 1; i >= 0; i--)
 	{
 		for (int j = yDimension - 1; j >= 0; j--)
@@ -48,11 +47,10 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 				float currentPathPointX = (x_min + x_max) / 2;
 				float currentPathPointY = (y_min + y_max) / 2;
 				float currentPathPointZ = (z_min + z_max) / 2;
+								
+				if (!stl[i][j][k]) { // execute it when non stlcubes are encountered
 
-				
-				if (!stl[i][j][k]) {// straight
-
-					if (upAndDown)
+					if (upAndDown) // to check previous path deviation
 					{
 						mPathVertices << currentPathPointX << currentPathPointY+size << currentPathPointZ;
 						mPathColors << 0.9844 << 0.7578 << 0.0117;
@@ -60,19 +58,17 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 					mPathVertices << currentPathPointX << currentPathPointY << currentPathPointZ;
 					mPathColors << 0.9844 << 0.7578 << 0.0117;
 					upAndDown = false;
-
-
 				}
 				else
-				{
+				{   
 					int currentHeight = 0;
 					int currentJpos = j;
 					currentJpos++;
-					while (stl[i][currentJpos][k]) {
+					while (stl[i][currentJpos][k]) { // checking the height of stlcubes above the current stlcube
 						currentJpos++;
 					}
 					currentHeight = currentJpos - j;
-					if (currentHeight > prevHeight) // climb
+					if (currentHeight > prevHeight) // climb around the stlcubes
 					{
 						for (int toolsteps = 1; toolsteps <= (currentJpos - j); toolsteps++) {
 							if (!stl[i][j + toolsteps][k + 1])
@@ -84,7 +80,7 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 						mPathVertices << currentPathPointX << currentPathPointY + (size * (currentJpos - j)) << currentPathPointZ;
 						mPathColors << 0.9844 << 0.7578 << 0.0117;
 					}
-					else if (currentHeight<prevHeight) // plunge
+					else if (currentHeight<prevHeight) // plunge around the stlcubes
 					{
 						QVector<GLfloat> tempVertices;
 						for (int toolsteps = prevHeight; toolsteps >= currentHeight; toolsteps--)
@@ -92,7 +88,7 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 							mPathVertices << currentPathPointX << currentPathPointY + (size * (toolsteps - j)) << currentPathPointZ;
 						}
 					}
-					else //  continuos over stlcubes
+					else // continuous straight path over stlcubes
 					{
 						mPathVertices << currentPathPointX << currentPathPointY + (size * (currentHeight-j)) << currentPathPointZ;
 						mPathColors << 0.9844 << 0.7578 << 0.0117;
@@ -100,11 +96,9 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 					upAndDown = true;
 					prevHeight = currentHeight;
 					if (currentHeight > maxHeight) { maxHeight = currentHeight; }
-
 				}
 
-				// end of the line
-
+				// end of the line(return the tool back to starting position)
 				if (k == 0)
 				{
 					mPathVertices << currentPathPointX << currentPathPointY + (size * (maxHeight - j)) << currentPathPointZ;
@@ -112,11 +106,8 @@ void ToolPath::findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, doub
 
 					mPathVertices << currentPathPointX << currentPathPointY + (size * (maxHeight - j)) << currentPathPointZ + (size*(zDimension));
 					mPathColors << 0.9844 << 0.7578 << 0.0117;
-
 				}
 			}
-			
-
 		}
 	}
 }

@@ -73,6 +73,9 @@
     <ClCompile Include="Model\ToolCylinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\ToolPathTxtWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View\OpenGLWindow.h">
@@ -140,6 +143,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\ToolCylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ToolPathTxtWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

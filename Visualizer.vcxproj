@@ -127,6 +127,7 @@
     <ClCompile Include="Model\ToolPath.cpp" />
     <ClCompile Include="Model\STLReader.cpp" />
     <ClCompile Include="Model\StockMaterial.cpp" />
+    <ClCompile Include="Model\ToolPathTxtWriter.cpp" />
     <ClCompile Include="Model\Triangle.cpp" />
     <ClCompile Include="Model\Triangulation.cpp" />
     <ClCompile Include="Model\VoxelGrid.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Model\STLReader.h" />
     <ClInclude Include="Model\ToolCylinder.h" />
     <ClInclude Include="Model\ToolPath.h" />
+    <ClInclude Include="Model\ToolPathTxtWriter.h" />
     <ClInclude Include="Model\Triangle.h" />
     <ClInclude Include="Model\Triangulation.h" />
     <ClInclude Include="Model\VoxelGrid.h" />

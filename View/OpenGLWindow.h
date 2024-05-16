@@ -21,6 +21,7 @@ public:
     ~OpenGLWindow();
 
     void setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl, ToolPath& path, ToolCylinder& tool);
+    void resetOpenGLState();
 
     bool mShowSTL = false;
     bool mShowStockMaterial = false;

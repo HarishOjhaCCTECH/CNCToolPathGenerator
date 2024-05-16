@@ -16,8 +16,6 @@ public:
 	void findPath(vector<vector<vector<bool>>>& stl, BoundingBox box, double size);
 
 private:
-	void pathfinder(vector<vector<vector<bool>>>& stl, int i, int j, int k, double currentPathPointX, double currentPathPointY, double currentPathPointZ, double size, bool goneUp, bool goneDown, Point3D toolstart);
-private:
 	QVector<GLfloat> mPathVertices;
 	QVector<GLfloat> mPathColors;
 };

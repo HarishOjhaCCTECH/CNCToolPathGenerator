@@ -272,3 +272,19 @@ void OpenGLWindow::setRenderingAttributes(StockMaterial& stock, VoxelGrid& stl, 
 	mToolPoles = tool.PoleVertices();
 	mToolPoleColors = tool.PolColors();
 }
+
+void OpenGLWindow::resetOpenGLState()
+{
+	mStockMaterialVertices.clear();
+	mStockMaterialColors.clear();
+	mSTLShapeVertices.clear();
+	mSTLShapeColors.clear();
+	mPathVers.clear();
+	mPathColrs.clear();
+	mToolPoles.clear();
+	mToolPoleColors.clear();
+
+	rotationAngle = QQuaternion::fromAxisAndAngle(180.0f, 0.0f, 1.0f, 0.0f);
+
+	update();
+}

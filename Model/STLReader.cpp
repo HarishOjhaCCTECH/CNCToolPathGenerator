@@ -10,6 +10,8 @@ STLReader::STLReader() {}
 STLReader::~STLReader() {}
 
 void STLReader::read(string stlFilePath, vector<Triangle>& lot, vector<Point3D>& lop) {
+    lot.clear();
+    lot.clear();
     map<Point3D, int> comparisonMap;
     ifstream stlFile;
     string stlLine;

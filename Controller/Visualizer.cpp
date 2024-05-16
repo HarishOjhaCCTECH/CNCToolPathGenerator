@@ -86,8 +86,11 @@ void Visualizer::onOpenSTLActionClicked()
     QString filePath = QFileDialog::getOpenFileName(this, tr("Open STL File"), "C:/Users/Harish Ojha/Downloads", tr("STL Files (*.stl)"));
     if (!filePath.isEmpty()) {
         qDebug() << "Selected file: " << filePath;
+        mFilePath = filePath.toStdString();
+
+        // Reset OpenGL rendering
+        mRenderer->resetOpenGLState();
     }
-    mFilePath = filePath.toStdString();
 }
 
 void Visualizer::onSelectToolSizeActionClicked()
@@ -97,9 +100,10 @@ void Visualizer::onSelectToolSizeActionClicked()
     if (ok && !size.isEmpty()) {
         double sizeValue = size.toDouble(&ok);
         if (ok) {
-            const double minimumSize = 4.0; // minimum value of tool
+            const double minimumSize = 4.0; // minimum value of tool size
             if (sizeValue >= minimumSize) {
                 mToolSize = sizeValue;
+
                 mDataManager->processData(sizeValue, mFilePath);
                 dataPass();
                 mRenderer->mShowStockMaterial = true;
@@ -155,7 +159,7 @@ void Visualizer::onFinishAndSaveActionClicked()
     mRenderer->mShowToolCylinder = false;
     mRenderer->update();
     QCoreApplication::processEvents();
-    //mDataManager->savefile();
+    mDataManager->saveFile();
 }
 
 void Visualizer::updatePauseResumeTooltip()

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DataManager.h"
 
-DataManager::DataManager():mStockMaterial(new StockMaterial()), mStlVoxels(new VoxelGrid()), mPath(new ToolPath()), mTool(new ToolCylinder()) {}
+DataManager::DataManager():mStockMaterial(new StockMaterial()), mStlVoxels(new VoxelGrid()), mPath(new ToolPath()), mTool(new ToolCylinder()), mWriter(new ToolPathTxtWriter()) {}
 DataManager::~DataManager() {}
 
 StockMaterial& DataManager::Stock() { return *mStockMaterial; }
@@ -29,6 +29,6 @@ void DataManager::processData(double size, string filePath)
 void DataManager::simulate(double size, int position)
 {
 	mTool = new ToolCylinder(size / 2, mPath->PathVertices().at(position), mPath->PathVertices().at(position + 1), mPath->PathVertices().at(position + 2));
-	
-
 }
+
+void DataManager::saveFile() { mWriter->generateFile(mPath->PathVertices()); }
